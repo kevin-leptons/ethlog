@@ -1,0 +1,41 @@
+{
+  "name": "ethlog",
+  "version": "0.1.0",
+  "description": "Best effort for retrive logs from ETH-like JSON RPC endpoints",
+  "engines": {
+    "node": "14"
+  },
+  "main": "lib/index.js",
+  "directories": {
+    "doc": "docs",
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha --recursive --timeout 10000",
+    "standardize": "palmito",
+    "doc": "jsdoc --destination docs --configure doc/jsdoc.json lib doc/jsdoc_home.md",
+    "doc-server": "http-server docs",
+    "doc-clean": "rm -rf docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevin-leptons/ethlog.git"
+  },
+  "keywords": [
+    "eth",
+    "log",
+    "json_rpc"
+  ],
+  "author": "Kevin Leptons",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kevin-leptons/ethlog/issues"
+  },
+  "homepage": "https://github.com/kevin-leptons/ethlog#readme",
+  "devDependencies": {
+    "docdash": "^1.2.0",
+    "http-server": "^14.0.0",
+    "jsdoc": "^3.6.7"
+  }
+}
