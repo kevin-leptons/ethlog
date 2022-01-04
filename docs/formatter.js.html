@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Home - Documentation</title>
+    <title>formatter.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -34,42 +34,90 @@
 
 <div id="main">
     
+    <h1 class="page-title">formatter.js</h1>
+    
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict'
 
+const {
+    isUint,
+    isHeximal,
+} = require('./validator')
+const {
+    UBigInt,
+    Heximal
+} = require('./type')
 
-    <section class="package">
-        <h3> </h3>		
+/**
+ * 
+ * @param {Heximal} value 
+ * @returns {UBigInt | DataError}
+ */
+function heximalToBigInt(value) {
+    if (!isHeximal(value)) {
+        return new DataError('not a heximal: value')
+    }
+    return BigInt(value)
+}
+
+/**
+ *
+ * @param {any} number
+ * @param {Heximal} defaultValue
+ * @returns {Heximal | undefined}
+ */
+function numberToHeximal(number, defaultValue=undefined) {
+    if (number === undefined) {
+        return defaultValue
+    }
+
+    if (!Number.isInteger(number) || number &lt; 0) {
+        return undefined
+    }
+
+    return '0x' + number.toString(16)
+}
+
+/**
+ *
+ * @param {any} heximal
+ * @param {number} defaultValue
+ * @returns {number}
+ */
+function heximalToNumber(heximal, defaultValue=undefined) {
+    if (heximal === undefined) {
+        return defaultValue
+    }
+
+    return Number(heximal)
+}
+
+/**
+ * @param {any} value
+ * @returns {Heximal}
+ */
+function uIntToHeximal(value) {
+    if (!isUint(value)) {
+        return undefined
+    }
+    return '0x' + value.toString(16)
+}
+
+module.exports = {
+    numberToHeximal,
+    uIntToHeximal,
+    heximalToNumber,
+}
+</code></pre>
+        </article>
     </section>
-
-
-
-
-
-
-
-
-
-    
-
-
-
-    <section class="readme usertext">
-        <article><h1>ethlog</h1>
-<ul>
-<li>Best effort for retrive logs from ETH-like JSON RPC endpoints.</li>
-<li>Source code at <a href="https://github.com/kevin-leptons/ethlog">github.com</a>.</li>
-</ul>
-<h1>Getting Started</h1>
-<pre class="prettyprint source lang-js"><code>const {} = require('ethlog')
-</code></pre></article>
-    </section>
-
-
 
 
 

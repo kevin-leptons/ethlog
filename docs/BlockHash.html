@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>BlockHash - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Address.html">Address</a><ul class='methods'><li data-type='method'><a href="Address.html#.assertInstance">assertInstance</a></li><li data-type='method'><a href="Address.html#.fromHeximal">fromHeximal</a></li></ul></li><li><a href="Block.html">Block</a><ul class='methods'><li data-type='method'><a href="Block.html#.assertInstance">assertInstance</a></li><li data-type='method'><a href="Block.html#.fromRpcResult">fromRpcResult</a></li></ul></li><li><a href="BlockHash.html">BlockHash</a><ul class='methods'><li data-type='method'><a href="BlockHash.html#.assertInstance">assertInstance</a></li><li data-type='method'><a href="BlockHash.html#.fromHeximal">fromHeximal</a></li></ul></li><li><a href="ByteArray.html">ByteArray</a><ul class='methods'><li data-type='method'><a href="ByteArray.html#.assertInstance">assertInstance</a></li><li data-type='method'><a href="ByteArray.html#.fromHeximal">fromHeximal</a></li></ul></li><li><a href="DataError.html">DataError</a><ul class='methods'><li data-type='method'><a href="DataError.html#.throw">throw</a></li></ul></li><li><a href="Log.html">Log</a><ul class='methods'><li data-type='method'><a href="Log.html#.assertInstance">assertInstance</a></li><li data-type='method'><a href="Log.html#.fromRpcResult">fromRpcResult</a></li></ul></li><li><a href="LogFilter.html">LogFilter</a><ul class='methods'><li data-type='method'><a href="LogFilter.html#.assertInstance">assertInstance</a></li></ul></li><li><a href="LogTopicCombination.html">LogTopicCombination</a><ul class='methods'><li data-type='method'><a href="LogTopicCombination.html#.assertInstance">assertInstance</a></li></ul></li><li><a href="Node.html">Node</a><ul class='methods'><li data-type='method'><a href="Node.html#_requestJsonRpc">_requestJsonRpc</a></li><li data-type='method'><a href="Node.html#getBlockByNumber">getBlockByNumber</a></li><li data-type='method'><a href="Node.html#getBlockNumber">getBlockNumber</a></li><li data-type='method'><a href="Node.html#getLogs">getLogs</a></li><li data-type='method'><a href="Node.html#getTransactionByHash">getTransactionByHash</a></li></ul></li><li><a href="Timestamp.html">Timestamp</a><ul class='methods'><li data-type='method'><a href="Timestamp.html#.assertInstance">assertInstance</a></li><li data-type='method'><a href="Timestamp.html#.fromHeximal">fromHeximal</a></li></ul></li><li><a href="TransactionHash.html">TransactionHash</a><ul class='methods'><li data-type='method'><a href="TransactionHash.html#.assertInstance">assertInstance</a></li><li data-type='method'><a href="TransactionHash.html#.fromHeximal">fromHeximal</a></li></ul></li><li><a href="UBigInt.html">UBigInt</a><ul class='methods'><li data-type='method'><a href="UBigInt.html#.assertInstance">assertInstance</a></li><li data-type='method'><a href="UBigInt.html#.fromHeximal">fromHeximal</a></li><li data-type='method'><a href="UBigInt.html#toHeximal">toHeximal</a></li></ul></li><li><a href="UInt.html">UInt</a><ul class='methods'><li data-type='method'><a href="UInt.html#.assertInstance">assertInstance</a></li><li data-type='method'><a href="UInt.html#.fromHeximal">fromHeximal</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#getUnkownAttribute">getUnkownAttribute</a></li><li><a href="global.html#Heximal">Heximal</a></li><li><a href="global.html#heximalToBigInt">heximalToBigInt</a></li><li><a href="global.html#heximalToBuffer">heximalToBuffer</a></li><li><a href="global.html#heximalToNumber">heximalToNumber</a></li><li><a href="global.html#isAbi">isAbi</a></li><li><a href="global.html#isEthAddressHeximal">isEthAddressHeximal</a></li><li><a href="global.html#isHeximal">isHeximal</a></li><li><a href="global.html#isPositiveInteger">isPositiveInteger</a></li><li><a href="global.html#isTransactionHashHeximal">isTransactionHashHeximal</a></li><li><a href="global.html#isUint">isUint</a></li><li><a href="global.html#isUnsignedInteger">isUnsignedInteger</a></li><li><a href="global.html#isValidEndpoint">isValidEndpoint</a></li><li><a href="global.html#isValidHttpUrl">isValidHttpUrl</a></li><li><a href="global.html#NodeConfig">NodeConfig</a></li><li><a href="global.html#numberToHeximal">numberToHeximal</a></li><li><a href="global.html#standardizeConfig">standardizeConfig</a></li><li><a href="global.html#uIntToHeximal">uIntToHeximal</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">BlockHash</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        BlockHash
+        </h2>
+        
+            <div class="class-description usertext"><p>32 bytes, has of a block.</p></div>
+        
+    
+</header>
+
+<article>
+    
+        <div class="container-overview">
+        
+            
+
+    
+    <h2>Constructor</h2>
+    
+
+    <h4 class="name" id="BlockHash"><span class="type-signature"></span>new BlockHash<span class="signature">(value)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="type.js.html">type.js</a>, <a href="type.js.html#line291">line 291</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Buffer</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>32 bytes buffer.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        </div>
+    
+
+    
+
+    
+
+    
+    
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="value"><span class="type-signature"></span>value<span class="type-signature"> :Buffer</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="type.js.html">type.js</a>, <a href="type.js.html#line308">line 308</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>32 bytes buffer.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Buffer</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id=".assertInstance"><span class="type-signature">(static) </span>assertInstance<span class="signature">(value, hint)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="type.js.html">type.js</a>, <a href="type.js.html#line328">line 328</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">any</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>hint</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    <code>oops!, no more information</code>
+                
+                </td>
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Throws:</h5>
+
+        
+
+    <div class="param-desc usertext">
+    
+        
+<span class="param-type"><a href="DataError.html">DataError</a></span>
+
+
+    
+    </div>
+
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".fromHeximal"><span class="type-signature">(static) </span>fromHeximal<span class="signature">(value)</span><span class="type-signature"> &rarr; {<a href="BlockHash.html">BlockHash</a>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="type.js.html">type.js</a>, <a href="type.js.html#line317">line 317</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#Heximal">Heximal</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="BlockHash.html">BlockHash</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Tue Jan 04 2022 03:56:36 GMT-0800 (Pacific Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/search.js" defer></script>
+
+
+
+</body>
+</html>

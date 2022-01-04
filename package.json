@@ -13,7 +13,7 @@
   },
   "scripts": {
     "test": "mocha --recursive --timeout 10000",
-    "standardize": "palmito",
+    "standardize": "palmito -i '**/docs/**' -i '**/*.tgz'",
     "doc": "jsdoc --destination docs --configure doc/jsdoc.json lib doc/jsdoc_home.md",
     "doc-server": "http-server docs",
     "doc-clean": "rm -rf docs"
@@ -36,6 +36,10 @@
   "devDependencies": {
     "docdash": "^1.2.0",
     "http-server": "^14.0.0",
-    "jsdoc": "^3.6.7"
+    "jsdoc": "^3.6.7",
+    "palmito": "^0.2.2"
+  },
+  "dependencies": {
+    "axios": "^0.24.0"
   }
 }
