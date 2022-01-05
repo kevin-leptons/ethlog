@@ -12,7 +12,7 @@ describe('Node.getBlockNumber', () => {
             endpoint: 'https://bsc-dataseed.binance.org'
         })
     })
-    it('return UBigInt', async () => {
+    it('return UBigInt', async() => {
         let actualResult = await node.getBlockNumber()
         assert.strictEqual(actualResult instanceof UBigInt, true)
     })

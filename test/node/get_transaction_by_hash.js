@@ -1,9 +1,11 @@
 'use strict'
 
+/* eslint-disable max-len */
+
 const assert = require('assert')
 const {Node} = require('../../lib/node')
 
-describe('Node.getBlockNumber', () => {
+describe('Node.getTransactionByHash', () => {
     let node
     before(() => {
         node = new Node({
@@ -11,7 +13,7 @@ describe('Node.getBlockNumber', () => {
             endpoint: 'https://bsc-dataseed.binance.org'
         })
     })
-    it('return a transaction', async () => {
+    it('return a transaction', async() => {
         let hash = '0x456d75c7a1a397f7cfea511e932aeeccc36e727db56724df7a424beb14877c5f'
         let actualResult = await node.getTransactionByHash(hash)
         let expectedResult = {
@@ -31,7 +33,6 @@ describe('Node.getBlockNumber', () => {
             r: '0x8d5ea39feb9214ab8cefbd6b67a5e6fa712a76173f75d5cafa05aec8c1b3563c',
             s: '0x43c9b5e8d80b3a89a7d3f0a5afdc8b1a0d01fb6d415f62d8fecedf3320763277'
         }
-
         assert.deepStrictEqual(actualResult, expectedResult)
     })
 })

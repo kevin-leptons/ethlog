@@ -11,11 +11,10 @@ describe('Node._requestJsonRpc', () => {
             endpoint: 'https://bsc-dataseed.binance.org'
         })
     })
-    it('try eth_getBlockByNumber', async () => {
+    it('try eth_getBlockByNumber', async() => {
         let method = 'eth_getBlockByNumber'
         let params = ['0x1b4', false]
         let actualResult = await node._requestJsonRpc(method, params)
-
         assert.strictEqual(actualResult.number, '0x1b4')
     })
 })

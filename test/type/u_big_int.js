@@ -1,5 +1,7 @@
 'use strict'
 
+/* eslint-disable max-lines-per-function */
+
 const assert = require('assert')
 const {UBigInt} = require('../../lib/type')
 
@@ -17,7 +19,6 @@ describe('type.UBigInt.constructor successfully', () => {
         })
     }
 })
-
 describe('type.UBigInt.constructor failure', () => {
     let specs = [
         [
@@ -40,7 +41,7 @@ describe('type.UBigInt.constructor failure', () => {
                 name: 'DataError',
                 message: 'not a unsigned BigInt: value'
             }
-        ],
+        ]
     ]
     for (let spec of specs) {
         let description = spec[2] || `${spec[0]}, throw error`
@@ -52,7 +53,6 @@ describe('type.UBigInt.constructor failure', () => {
         })
     }
 })
-
 describe('type.UBigInt.fromHeximal successfully', () => {
     let specs = [
         ['0x1', BigInt(1)],
@@ -73,7 +73,6 @@ describe('type.UBigInt.fromHeximal successfully', () => {
         })
     }
 })
-
 describe('type.UBigInt.fromHeximal failure', () => {
     let specs = [
         [

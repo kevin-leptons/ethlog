@@ -1,9 +1,18 @@
 'use strict'
 
+/* eslint-disable max-len */
+
 const assert = require('assert')
 const {Node} = require('../../lib/node')
+const {
+    UBigInt,
+    Address,
+    LogTopic,
+    LogTopicCombination,
+    LogFilter
+} = require('../../lib/type')
 
-describe('Node.getBlockNumber', () => {
+describe('Node.getLogs', () => {
     let node
     before(() => {
         node = new Node({
@@ -11,15 +20,19 @@ describe('Node.getBlockNumber', () => {
             endpoint: 'https://bsc-dataseed.binance.org'
         })
     })
-    it('return list of logs', async () => {
-        let logs = await node.getLogs({
-            fromBlock: 13458853,
-            toBlock: 13458853,
+    it('return list of logs', async() => {
+        let filter = new LogFilter({
+            fromBlock: new UBigInt(14098157),
+            toBlock: new UBigInt(14098157),
             addresses: [
-                '0x804678fa97d91b974ec2af3c843270886528a9e6'
-            ]
+                Address.fromHeximal('0x804678fa97d91b974ec2af3c843270886528a9e6')
+            ],
+            topics: new LogTopicCombination([
+                LogTopic.fromHeximal('0xd78ad95fa46c994b6551d0da85fc275fe613ce37657fb8d5e3d130840159d822')
+            ])
         })
-
+        let logs = await node.getLogs(filter)
         assert.strictEqual(Array.isArray(logs), true)
+        assert.strictEqual(logs.length, 1)
     })
 })
