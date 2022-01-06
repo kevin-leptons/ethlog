@@ -12,7 +12,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha --recursive --timeout 10000",
+    "test": "mocha --exit --recursive --timeout 10000",
     "standardize": "palmito -i '**/docs/**' -i '**/*.tgz'",
     "doc": "jsdoc --destination docs --configure doc/jsdoc.json lib doc/jsdoc_home.md",
     "doc-server": "http-server docs",
@@ -34,6 +34,7 @@
   },
   "homepage": "https://github.com/kevin-leptons/ethlog#readme",
   "devDependencies": {
+    "axios-mock-adapter": "^1.20.0",
     "docdash": "^1.2.0",
     "http-server": "^14.0.0",
     "jsdoc": "^3.6.7",

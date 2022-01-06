@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Log - Documentation</title>
+    <title>client.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -34,480 +34,82 @@
 
 <div id="main">
     
-    <h1 class="page-title">Log</h1>
-    
-
-    
-
-
-
-
-<section>
-
-<header>
-    
-        <h2>
-        Log
-        </h2>
-        
-            <div class="class-description usertext"><p>A log record from EVM.</p></div>
-        
-    
-</header>
-
-<article>
-    
-        <div class="container-overview">
-        
-            
-
-    
-    <h2>Constructor</h2>
-    
-
-    <h4 class="name" id="Log"><span class="type-signature"></span>new Log<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="type.js.html">type.js</a>, <a href="type.js.html#line808">line 808</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-        </div>
-    
-
-    
-
-    
-
-    
-    
-    
-
-     
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-
-    
-
-    <h4 class="name" id=".assertInstance"><span class="type-signature">(static) </span>assertInstance<span class="signature">(value, hint)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="type.js.html">type.js</a>, <a href="type.js.html#line865">line 865</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>value</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">any</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>hint</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Throws:</h5>
-
-        
-
-    <div class="param-desc usertext">
-    
-        
-<span class="param-type"><a href="DataError.html">DataError</a></span>
-
-
-    
-    </div>
-
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id=".fromRpcResult"><span class="type-signature">(static) </span>fromRpcResult<span class="signature">(value)</span><span class="type-signature"> &rarr; {<a href="Log.html">Log</a>}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="type.js.html">type.js</a>, <a href="type.js.html#line842">line 842</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>value</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Throws:</h5>
-
-        
-
-    <div class="param-desc usertext">
-    
-        
-<span class="param-type"><a href="DataError.html">DataError</a></span>
-
-
-    
-    </div>
-
-
-    
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type"><a href="Log.html">Log</a></span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-        
-    
-
-    
-
-    
-</article>
-
-</section>
+    <h1 class="page-title">client.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict'
+
+const {
+    HttpEndpoint,
+    LogFilter,
+    LogSegment,
+    assertObject,
+    assertArray
+} = require('./type')
+const {ClientLayer1} = require('./client_layer_1')
+const {ClientLayer2} = require('./client_layer_2')
+const {ClientLayer3} = require('./client_layer_3')
+
+class Client {
+    /**
+     *
+     * @param {object} config
+     * @param {Array&lt;HttpEndpoint>} config.mainEndpoints
+     * @param {Array&lt;HttpEndpoint>} [config.publicEndpoints]
+     * @param {Array&lt;HttpEndpoint>} [config.backupEndpoints]
+     */
+    constructor(config) {
+        assertObject(config, 'config')
+        let {mainEndpoints, publicEndpoints, backupEndpoints} = config
+        assertArray(mainEndpoints)
+        mainEndpoints.forEach((item, index) => {
+            HttpEndpoint.assertInstance(item, `config.mainEndpoints[${index}]`)
+        })
+        publicEndpoints = publicEndpoints || []
+        assertArray(publicEndpoints)
+        publicEndpoints.forEach((item, index) => {
+            HttpEndpoint.assertInstance(item, `config.publicEndpoints[${index}]`)
+        })
+        backupEndpoints = backupEndpoints || []
+        assertArray(backupEndpoints)
+        backupEndpoints.forEach((item, index) => {
+            HttpEndpoint.assertInstance(item, `config.backupEndpoints[${index}]`)
+        })
+        this._layer3 = new ClientLayer3({
+            endpoints: backupEndpoints
+        })
+        this._layer2 = new ClientLayer2({
+            endpoints: mainEndpoints,
+            lowerLayer: this._layer3
+        })
+        this._layer1 = new ClientLayer1({
+            endpoints: publicEndpoints,
+            lowerLayer: this._layer2
+        })
+    }
+
+    /**
+     *
+     * @param {LogFilter} filter
+     * @returns {Promise&lt;LogSegment>}
+     * @throws {DataError}
+     */
+    async getLogs(filter) {
+        return await this._layer1.getLogs(filter)
+    }
+}
+
+module.exports = Client
+</code></pre>
+        </article>
+    </section>
 
 
 
