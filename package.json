@@ -7,9 +7,7 @@
   },
   "main": "lib/index.js",
   "directories": {
-    "doc": "docs",
-    "lib": "lib",
-    "test": "test"
+    "lib": "lib"
   },
   "scripts": {
     "test": "mocha --exit --recursive --timeout 10000",
@@ -34,6 +32,7 @@
   },
   "homepage": "https://github.com/kevin-leptons/ethlog#readme",
   "devDependencies": {
+    "@trop/gear": "^0.4.2",
     "axios-mock-adapter": "^1.20.0",
     "docdash": "^1.2.0",
     "http-server": "^14.0.0",

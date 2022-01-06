@@ -4,17 +4,17 @@
 /* eslint-disable max-len */
 
 const assert = require('assert')
-const {LogTopic, LogTopicCombination} = require('../../lib/type')
+const {LogTopic, LogTopicFilter} = require('../../lib/type')
 
-describe('type.LogTopicCombination.constructor', () => {
+describe('type.LogTopicFilter.constructor', () => {
     it('undefined, return empty combination', () => {
         let input = undefined
-        let actualResult = new LogTopicCombination(input)
+        let actualResult = new LogTopicFilter(input)
         assert.deepStrictEqual(actualResult.value, [])
     })
     it('no topics, return empty combination', () => {
         let input = []
-        let actualResult = new LogTopicCombination(input)
+        let actualResult = new LogTopicFilter(input)
         assert.deepStrictEqual(actualResult.value, [])
     })
     it('flat topics, return correct combination', () => {
@@ -24,7 +24,7 @@ describe('type.LogTopicCombination.constructor', () => {
             LogTopic.fromHeximal('0xbf3cf4a93253762cec15e2b2898df402924befba04988104b113583646dc0d77'),
             LogTopic.fromHeximal('0x754674f90a27db9ac0452907a2274b087c605ece44f2e668d262f895ebe46618')
         ]
-        let actualResult = new LogTopicCombination(input)
+        let actualResult = new LogTopicFilter(input)
         assert.deepStrictEqual(actualResult.value, [
             LogTopic.fromHeximal('0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768'),
             LogTopic.fromHeximal('0xc3ae1f9b0610d056dc8d9ef4364868ea1a704a4f453c5901a8b6cd62767be012'),
@@ -51,7 +51,7 @@ describe('type.LogTopicCombination.constructor', () => {
                 LogTopic.fromHeximal('0x754674f90a27db9ac0452907a2274b087c605ece44f2e668d262f895ebe46618')
             ]
         ]
-        let actualResult = new LogTopicCombination(input)
+        let actualResult = new LogTopicFilter(input)
         assert.deepStrictEqual(actualResult.value, [
             [
                 LogTopic.fromHeximal('0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768'),
@@ -76,7 +76,7 @@ describe('type.LogTopicCombination.constructor', () => {
             '0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768'
         ]
         assert.throws(
-            () => new LogTopicCombination(input),
+            () => new LogTopicFilter(input),
             {
                 name: 'DataError',
                 message: 'not a topic or array of topics: value[0]'
@@ -89,7 +89,7 @@ describe('type.LogTopicCombination.constructor', () => {
             '0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768'
         ]
         assert.throws(
-            () => new LogTopicCombination(input),
+            () => new LogTopicFilter(input),
             {
                 name: 'DataError',
                 message: 'not a topic or array of topics: value[1]'
@@ -103,7 +103,7 @@ describe('type.LogTopicCombination.constructor', () => {
             '0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768'
         ]
         assert.throws(
-            () => new LogTopicCombination(input),
+            () => new LogTopicFilter(input),
             {
                 name: 'DataError',
                 message: 'not a topic or array of topics: value[2]'
@@ -118,7 +118,7 @@ describe('type.LogTopicCombination.constructor', () => {
             '0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768'
         ]
         assert.throws(
-            () => new LogTopicCombination(input),
+            () => new LogTopicFilter(input),
             {
                 name: 'DataError',
                 message: 'not a topic or array of topics: value[3]'
@@ -130,7 +130,7 @@ describe('type.LogTopicCombination.constructor', () => {
             ['0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768']
         ]
         assert.throws(
-            () => new LogTopicCombination(input),
+            () => new LogTopicFilter(input),
             {
                 name: 'DataError',
                 message: 'not a topic or array of topics: value[0]'
@@ -143,7 +143,7 @@ describe('type.LogTopicCombination.constructor', () => {
             ['0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768']
         ]
         assert.throws(
-            () => new LogTopicCombination(input),
+            () => new LogTopicFilter(input),
             {
                 name: 'DataError',
                 message: 'not a topic or array of topics: value[1]'
@@ -157,7 +157,7 @@ describe('type.LogTopicCombination.constructor', () => {
             ['0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768']
         ]
         assert.throws(
-            () => new LogTopicCombination(input),
+            () => new LogTopicFilter(input),
             {
                 name: 'DataError',
                 message: 'not a topic or array of topics: value[2]'
@@ -172,7 +172,7 @@ describe('type.LogTopicCombination.constructor', () => {
             ['0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768']
         ]
         assert.throws(
-            () => new LogTopicCombination(input),
+            () => new LogTopicFilter(input),
             {
                 name: 'DataError',
                 message: 'not a topic or array of topics: value[3]'
@@ -182,7 +182,7 @@ describe('type.LogTopicCombination.constructor', () => {
     it('not an array, throws error', () => {
         let input = '0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768'
         assert.throws(
-            () => new LogTopicCombination(input),
+            () => new LogTopicFilter(input),
             {
                 name: 'DataError',
                 message: 'not an array: value'
@@ -198,7 +198,7 @@ describe('type.LogTopicCombination.constructor', () => {
             []
         ]
         assert.throws(
-            () => new LogTopicCombination(input),
+            () => new LogTopicFilter(input),
             {
                 name: 'DataError',
                 message: 'too many items, maximum is 4: value'
@@ -206,14 +206,14 @@ describe('type.LogTopicCombination.constructor', () => {
         )
     })
 })
-describe('type.LogTopicCombination.toRpcInput', () => {
+describe('type.LogTopicFilter.toRpcInput', () => {
     it('no topics, return empty array', () => {
-        let topics = new LogTopicCombination()
+        let topics = new LogTopicFilter()
         let actualResult = topics.toRpcInput()
         assert.deepStrictEqual(actualResult, [])
     })
     it('flat topics, return correct result', () => {
-        let topics = new LogTopicCombination([
+        let topics = new LogTopicFilter([
             LogTopic.fromHeximal('0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768'),
             LogTopic.fromHeximal('0xc3ae1f9b0610d056dc8d9ef4364868ea1a704a4f453c5901a8b6cd62767be012'),
             LogTopic.fromHeximal('0xbf3cf4a93253762cec15e2b2898df402924befba04988104b113583646dc0d77'),
@@ -228,7 +228,7 @@ describe('type.LogTopicCombination.toRpcInput', () => {
         ])
     })
     it('nested topics, return correct result', () => {
-        let topics = new LogTopicCombination([
+        let topics = new LogTopicFilter([
             [
                 LogTopic.fromHeximal('0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768'),
                 LogTopic.fromHeximal('0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768')

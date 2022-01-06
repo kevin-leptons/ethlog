@@ -2,5 +2,6 @@
 /tmp
 /doc/
 /docs/
+/test/
 /package-lock.json
 *.tgz

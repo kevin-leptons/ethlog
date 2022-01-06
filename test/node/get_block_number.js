@@ -2,14 +2,21 @@
 
 const assert = require('assert')
 const {Node} = require('../../lib/node')
-const {UBigInt} = require('../../lib/type')
+const {
+    UInt,
+    UBigInt,
+    SafeHttpUrl,
+    HttpEndpoint
+} = require('../../lib/type')
 
 describe('Node.getBlockNumber', () => {
     let node
     before(() => {
         node = new Node({
-            identity: 1,
-            endpoint: 'https://bsc-dataseed.binance.org'
+            identity: new UInt(1),
+            endpoint: new HttpEndpoint({
+                url: new SafeHttpUrl('https://bsc-dataseed.binance.org')
+            })
         })
     })
     it('return UBigInt', async() => {

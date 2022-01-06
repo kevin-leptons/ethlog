@@ -6,8 +6,11 @@
 const assert = require('assert')
 const {Node} = require('../../lib/node')
 const {
+    UInt,
     UBigInt,
     Timestamp,
+    SafeHttpUrl,
+    HttpEndpoint,
     TransactionHash,
     Block
 } = require('../../lib/type')
@@ -16,8 +19,10 @@ describe('Node.getBlockByNumber', () => {
     let node
     before(() => {
         node = new Node({
-            identity: 1,
-            endpoint: 'https://bsc-dataseed.binance.org'
+            identity: new UInt(1),
+            endpoint: new HttpEndpoint({
+                url: new SafeHttpUrl('https://bsc-dataseed.binance.org')
+            })
         })
     })
     it('return a block', async() => {

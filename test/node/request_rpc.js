@@ -1,5 +1,8 @@
 'use strict'
 
+/* eslint-disable max-len */
+/* eslint-disable max-lines-per-function */
+
 const assert = require('assert')
 const AxiosMock = require('axios-mock-adapter')
 const {NodeError, Node} = require('../../lib/node')
@@ -79,7 +82,7 @@ describe('Node._requestRpc', () => {
             }
         )
     })
-    it('node responds non 2xx status, throws error', async() => {
+    it('responds invalid JSON RPC data, throws error', async() => {
         let node = new Node({
             identity: new UInt(1),
             endpoint: new HttpEndpoint({
@@ -89,33 +92,13 @@ describe('Node._requestRpc', () => {
         let method = 'eth_getBlockByNumber'
         let params = ['0x357', false]
         let httpMock = new AxiosMock(node._httpClient)
-        httpMock.onPost('/').reply(400, 'bad request')
+        httpMock.onPost('/').reply(200, '"this is invalid RPC response object"')
         await assert.rejects(
             () => node._requestRpc(method, params),
             {
                 name: 'NodeError',
-                code: NodeError.CODE_RPC_BAD_REQUEST,
-                message: 'status=400'
-            }
-        )
-    })
-    it('node serves invalid JSON RPC response, throws error', async() => {
-        let node = new Node({
-            identity: new UInt(1),
-            endpoint: new HttpEndpoint({
-                url: new SafeHttpUrl('http://foo.bar')
-            })
-        })
-        let method = 'eth_getBlockByNumber'
-        let params = ['0x357', false]
-        let httpMock = new AxiosMock(node._httpClient)
-        httpMock.onPost('/').reply(200, '"this is invalid JSON object"')
-        await assert.rejects(
-            () => node._requestRpc(method, params),
-            {
-                name: 'NodeError',
-                code: NodeError.CODE_RPC_BAD_REQUEST,
-                message: 'not an object: body'
+                code: NodeError.CODE_RPC_BAD_RESPONSE,
+                message: 'not an object: response data'
             }
         )
     })
