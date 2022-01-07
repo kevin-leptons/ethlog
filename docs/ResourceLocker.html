@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>client_layer_2.js - Documentation</title>
+    <title>ResourceLocker - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -34,66 +34,532 @@
 
 <div id="main">
     
-    <h1 class="page-title">client_layer_2.js</h1>
+    <h1 class="page-title">ResourceLocker</h1>
     
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>'use strict'
+        <h2>
+        ResourceLocker
+        </h2>
+        
+            <div class="class-description usertext"><p>Ensure a lock for resource, base on timestamp and quantity.</p></div>
+        
+    
+</header>
 
-const {DataError} = require('./type')
-const {ClientLayer3} = require('./client_layer_3')
-const {Gateway} = require('./gateway')
+<article>
+    
+        <div class="container-overview">
+        
+            
 
-class ClientLayer2 {
-    /**
-     *
-     * @param {Config} config
-     * @param {Array&lt;HttpEndpoint>} config.endpoints
-     * @param {ClientLayer3} config.lowerLayer
-     */
-     constructor(config) {
-        assertObject(config, 'config')
-        let {endpoints, lowerLayer} = config
-        assertArray(endpoints, 'config.endpoints')
-        endpoints.forEach((item, index) => {
-            HttpEndpoint.assertInstance(item, `config.endpoints[${index}]`)
-        })
-        if (lowerLayer instanceof ClientLayer3) {
-            DataError.throw('not a ClientLayer3: config.lowerLayer')
-        }
-        this._lowerLayer = lowerLayer
-        this._gateway = new Gateway({endpoints})
-    }
+    
+    <h2>Constructor</h2>
+    
 
-    /**
-     *
-     * @param {LogFilter} filter
-     * @returns {Promise&lt;LogSegment>}
-     * @throws {DataError}
-     */
-     async getLogs(filter) {
-         try {
-             let node = this._gateway.pick()
-             return await node.getLogs(filter)
-         }
-         catch (error) {
-             return await this._lowerLayer.getLogs(filter)
-         }
-     }
-}
+    <h4 class="name" id="ResourceLocker"><span class="type-signature"></span>new ResourceLocker<span class="signature">(config)</span><span class="type-signature"></span></h4>
 
-module.exports = {
-    ClientLayer2
-}
-</code></pre>
-        </article>
-    </section>
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="tracked_node.js.html">tracked_node.js</a>, <a href="tracked_node.js.html#line30">line 30</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>config</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>quota</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="EndpointQuota.html">EndpointQuota</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        </div>
+    
+
+    
+
+    
+
+    
+    
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="assertConsumption"><span class="type-signature"></span>assertConsumption<span class="signature">(quantity)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="tracked_node.js.html">tracked_node.js</a>, <a href="tracked_node.js.html#line53">line 53</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Ensure resource is available and there is enough quantity. If calling
+successfully then resource is reduce by <code>quantity</code>.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>quantity</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="UInt.html">UInt</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Number of request for consumption.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Throws:</h5>
+
+        
+
+    <div class="param-desc usertext">
+    
+        
+<span class="param-type">NoResourceError</span>
+
+
+    
+    </div>
+
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="lockFor"><span class="type-signature"></span>lockFor<span class="signature">(timespan)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="tracked_node.js.html">tracked_node.js</a>, <a href="tracked_node.js.html#line77">line 77</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Lock in time range [now, now + timespan]. If there is already lock then
+override it. This call locks resource even resource quantity is available.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>timespan</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="UInt.html">UInt</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Time period in miliseconds.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Node - Documentation</title>
+    <title>TrackedNode - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -34,7 +34,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Node</h1>
+    <h1 class="page-title">TrackedNode</h1>
     
 
     
@@ -47,10 +47,14 @@
 <header>
     
         <h2>
-        Node
+        TrackedNode
         </h2>
         
-            <div class="class-description usertext"><p>First layer that interacts with ETH-like node through JSON RPC.</p></div>
+            <div class="class-description usertext"><p>Improvement of <code>Node</code> without modifications of lower layers of ETH JSON RPC.</p>
+<p>Firstly, it handles overloading by recognize errors and reduce number of
+requests or even denie callings in nextime.</p>
+<p>Secondly, it try to avoid or at least reduce incorrect returned data from RPC
+methods such as <code>eth_getLogs</code>.</p></div>
         
     
 </header>
@@ -65,7 +69,7 @@
     <h2>Constructor</h2>
     
 
-    <h4 class="name" id="Node"><span class="type-signature"></span>new Node<span class="signature">(config)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="TrackedNode"><span class="type-signature"></span>new TrackedNode<span class="signature">(config)</span><span class="type-signature"></span></h4>
 
     
 
@@ -77,7 +81,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="node.js.html">node.js</a>, <a href="node.js.html#line96">line 96</a>
+        <a href="tracked_node.js.html">tracked_node.js</a>, <a href="tracked_node.js.html#line91">line 91</a>
     </li></ul></dd>
     
 
@@ -226,6 +230,37 @@
 
         <tr>
             
+                <td class="name"><code>quota</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="EndpointQuota.html">EndpointQuota</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>timeout</code></td>
             
 
@@ -252,7 +287,40 @@
 
             
 
-            <td class="description last"><p>Timeout in miliseconds.</p></td>
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>blockGap</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="BigUInt.html">BigUInt</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
         </tr>
 
     
@@ -279,6 +347,21 @@
 
 
 
+<h5>Throws:</h5>
+
+        
+
+    <div class="param-desc usertext">
+    
+        
+<span class="param-type"><a href="DataError.html">DataError</a></span>
+
+
+    
+    </div>
+
+
+    
 
 
 
@@ -301,18 +384,12 @@
     
 
     
-
-    
-        <h3 class="subsection-title">Methods</h3>
+        <h3 class="subsection-title">Members</h3>
 
         
             
+<h4 class="name" id="isAvailable"><span class="type-signature"></span>isAvailable<span class="type-signature"> :boolean</span></h4>
 
-    
-
-    <h4 class="name" id="getBlockByNumber"><span class="type-signature">(async) </span>getBlockByNumber<span class="signature">(blockNumber)</span><span class="type-signature"> &rarr; {Promise.&lt;<a href="Block.html">Block</a>>}</span></h4>
-
-    
 
 
 
@@ -322,7 +399,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="node.js.html">node.js</a>, <a href="node.js.html#line176">line 176</a>
+        <a href="tracked_node.js.html">tracked_node.js</a>, <a href="tracked_node.js.html#line118">line 118</a>
     </li></ul></dd>
     
 
@@ -361,10 +438,84 @@
 
 
 
-<div class="description usertext">
-    <p>Retrieve a block by it's number.
-RPC: <code>eth_getBlockByNumber</code>.</p>
-</div>
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">boolean</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="getBlockByNumber"><span class="type-signature">(async) </span>getBlockByNumber<span class="signature">(blockNumber)</span><span class="type-signature"> &rarr; {<a href="Block.html">Block</a>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="tracked_node.js.html">tracked_node.js</a>, <a href="tracked_node.js.html#line139">line 139</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
 
 
 
@@ -447,6 +598,9 @@ RPC: <code>eth_getBlockByNumber</code>.</p>
 <span class="param-type"><a href="DataError.html">DataError</a></span>
 |
 
+<span class="param-type">NoResourceError</span>
+|
+
 <span class="param-type"><a href="NotExistedError.html">NotExistedError</a></span>
 |
 
@@ -471,7 +625,7 @@ RPC: <code>eth_getBlockByNumber</code>.</p>
     </dt>
     <dd>
         
-<span class="param-type">Promise.&lt;<a href="Block.html">Block</a>></span>
+<span class="param-type"><a href="Block.html">Block</a></span>
 
 
     </dd>
@@ -486,7 +640,7 @@ RPC: <code>eth_getBlockByNumber</code>.</p>
 
     
 
-    <h4 class="name" id="getBlockNumber"><span class="type-signature">(async) </span>getBlockNumber<span class="signature">()</span><span class="type-signature"> &rarr; {Promise.&lt;<a href="BigUInt.html">BigUInt</a>>}</span></h4>
+    <h4 class="name" id="getBlockNumber"><span class="type-signature">(async) </span>getBlockNumber<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="BigUInt.html">BigUInt</a>}</span></h4>
 
     
 
@@ -498,7 +652,7 @@ RPC: <code>eth_getBlockByNumber</code>.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="node.js.html">node.js</a>, <a href="node.js.html#line124">line 124</a>
+        <a href="tracked_node.js.html">tracked_node.js</a>, <a href="tracked_node.js.html#line124">line 124</a>
     </li></ul></dd>
     
 
@@ -536,11 +690,6 @@ RPC: <code>eth_getBlockByNumber</code>.</p>
 
 
 
-
-<div class="description usertext">
-    <p>Retrive number of latest mined block.
-RPC: <code>eth_blockNumber</code>.</p>
-</div>
 
 
 
@@ -571,7 +720,7 @@ RPC: <code>eth_blockNumber</code>.</p>
     <div class="param-desc usertext">
     
         
-<span class="param-type"><a href="DataError.html">DataError</a></span>
+<span class="param-type">NoResourceError</span>
 |
 
 <span class="param-type"><a href="ProtocolError.html">ProtocolError</a></span>
@@ -595,7 +744,7 @@ RPC: <code>eth_blockNumber</code>.</p>
     </dt>
     <dd>
         
-<span class="param-type">Promise.&lt;<a href="BigUInt.html">BigUInt</a>></span>
+<span class="param-type"><a href="BigUInt.html">BigUInt</a></span>
 
 
     </dd>
@@ -610,7 +759,7 @@ RPC: <code>eth_blockNumber</code>.</p>
 
     
 
-    <h4 class="name" id="getLogs"><span class="type-signature">(async) </span>getLogs<span class="signature">(filter)</span><span class="type-signature"> &rarr; {Promise.&lt;Array.&lt;<a href="Log.html">Log</a>>>}</span></h4>
+    <h4 class="name" id="getLogs"><span class="type-signature">(async) </span>getLogs<span class="signature">(filter)</span><span class="type-signature"> &rarr; {Array.&lt;<a href="LogSegment.html">LogSegment</a>>}</span></h4>
 
     
 
@@ -622,7 +771,7 @@ RPC: <code>eth_blockNumber</code>.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="node.js.html">node.js</a>, <a href="node.js.html#line149">line 149</a>
+        <a href="tracked_node.js.html">tracked_node.js</a>, <a href="tracked_node.js.html#line155">line 155</a>
     </li></ul></dd>
     
 
@@ -660,11 +809,6 @@ RPC: <code>eth_blockNumber</code>.</p>
 
 
 
-
-<div class="description usertext">
-    <p>Retrive log records by filter.
-RPC: <code>eth_getLogs</code>.</p>
-</div>
 
 
 
@@ -747,6 +891,9 @@ RPC: <code>eth_getLogs</code>.</p>
 <span class="param-type"><a href="DataError.html">DataError</a></span>
 |
 
+<span class="param-type">NoResourceError</span>
+|
+
 <span class="param-type"><a href="ProtocolError.html">ProtocolError</a></span>
 
 
@@ -768,7 +915,7 @@ RPC: <code>eth_getLogs</code>.</p>
     </dt>
     <dd>
         
-<span class="param-type">Promise.&lt;Array.&lt;<a href="Log.html">Log</a>>></span>
+<span class="param-type">Array.&lt;<a href="LogSegment.html">LogSegment</a>></span>
 
 
     </dd>
@@ -783,7 +930,7 @@ RPC: <code>eth_getLogs</code>.</p>
 
     
 
-    <h4 class="name" id="getTransactionByHash"><span class="type-signature">(async) </span>getTransactionByHash<span class="signature">(hash)</span><span class="type-signature"> &rarr; {Promise.&lt;<a href="Transaction.html">Transaction</a>>}</span></h4>
+    <h4 class="name" id="getTransactionByHash"><span class="type-signature">(async) </span>getTransactionByHash<span class="signature">(hash)</span><span class="type-signature"> &rarr; {<a href="Transaction.html">Transaction</a>}</span></h4>
 
     
 
@@ -795,7 +942,7 @@ RPC: <code>eth_getLogs</code>.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="node.js.html">node.js</a>, <a href="node.js.html#line208">line 208</a>
+        <a href="tracked_node.js.html">tracked_node.js</a>, <a href="tracked_node.js.html#line189">line 189</a>
     </li></ul></dd>
     
 
@@ -833,11 +980,6 @@ RPC: <code>eth_getLogs</code>.</p>
 
 
 
-
-<div class="description usertext">
-    <p>Retrieve a transaction by it's hash.
-RPC: <code>eth_getTransactionByHash</code>.</p>
-</div>
 
 
 
@@ -920,6 +1062,9 @@ RPC: <code>eth_getTransactionByHash</code>.</p>
 <span class="param-type"><a href="DataError.html">DataError</a></span>
 |
 
+<span class="param-type">NoResourceError</span>
+|
+
 <span class="param-type"><a href="NotExistedError.html">NotExistedError</a></span>
 |
 
@@ -944,7 +1089,7 @@ RPC: <code>eth_getTransactionByHash</code>.</p>
     </dt>
     <dd>
         
-<span class="param-type">Promise.&lt;<a href="Transaction.html">Transaction</a>></span>
+<span class="param-type"><a href="Transaction.html">Transaction</a></span>
 
 
     </dd>

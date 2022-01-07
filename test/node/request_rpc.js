@@ -7,7 +7,6 @@ const assert = require('assert')
 const AxiosMock = require('axios-mock-adapter')
 const {ProtocolError, Node} = require('../../lib/node')
 const {
-    UInt,
     HttpUrl,
     HttpEndpoint
 } = require('../../lib/type')
@@ -15,7 +14,6 @@ const {
 describe('Node._requestRpc', () => {
     it('method=eth_getBlockByNumber, params=["0x1b4", false]', async() => {
         let node = new Node({
-            identity: new UInt(1),
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://foo.bar')
             })
@@ -34,7 +32,6 @@ describe('Node._requestRpc', () => {
     })
     it('method=undefined, params=undefined, throws error', async() => {
         let node = new Node({
-            identity: new UInt(1),
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://foo.bar')
             })
@@ -59,7 +56,6 @@ describe('Node._requestRpc', () => {
     })
     it('method=eth_getTransactionByHash, params=undefined, throws error', async() => {
         let node = new Node({
-            identity: new UInt(1),
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://foo.bar')
             })
@@ -84,7 +80,6 @@ describe('Node._requestRpc', () => {
     })
     it('responds invalid JSON RPC data, throws error', async() => {
         let node = new Node({
-            identity: new UInt(1),
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://foo.bar')
             })

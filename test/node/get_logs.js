@@ -20,7 +20,6 @@ describe('Node.getLogs', () => {
     let node
     before(() => {
         node = new Node({
-            identity: new UInt(1),
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('https://bsc-dataseed.binance.org')
             }),

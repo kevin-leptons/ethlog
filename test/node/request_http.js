@@ -14,7 +14,6 @@ const {
 describe('Node._requestHttp', () => {
     it('IP address that does not listen, throws error ', async() => {
         let node = new Node({
-            identity: new UInt(1),
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://0.0.0.0')
             })
@@ -30,7 +29,6 @@ describe('Node._requestHttp', () => {
     })
     it('IP address which is unable to touch, throws error ', async() => {
         let node = new Node({
-            identity: new UInt(1),
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://172.1.2.3')
             }),
@@ -47,7 +45,6 @@ describe('Node._requestHttp', () => {
     })
     it('not existed domain, throws error ', async() => {
         let node = new Node({
-            identity: new UInt(1),
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('https://foo.bar')
             })
@@ -63,7 +60,6 @@ describe('Node._requestHttp', () => {
     })
     it('timeout, throws error ', async() => {
         let node = new Node({
-            identity: new UInt(1),
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://0.0.0.0')
             }),
@@ -82,7 +78,6 @@ describe('Node._requestHttp', () => {
     })
     it('other network issues, throws error ', async() => {
         let node = new Node({
-            identity: new UInt(1),
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://0.0.0.0')
             }),
@@ -101,7 +96,6 @@ describe('Node._requestHttp', () => {
     })
     it('respond 1xx status, throws error', async() => {
         let node = new Node({
-            identity: new UInt(1),
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://foo.bar')
             })
@@ -119,7 +113,6 @@ describe('Node._requestHttp', () => {
     })
     it('respond 4xx status, throws error', async() => {
         let node = new Node({
-            identity: new UInt(1),
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://foo.bar')
             })
@@ -137,7 +130,6 @@ describe('Node._requestHttp', () => {
     })
     it('respond 5xx status, throws error', async() => {
         let node = new Node({
-            identity: new UInt(1),
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://foo.bar')
             })
@@ -155,7 +147,6 @@ describe('Node._requestHttp', () => {
     })
     it('respond invalid JSON format from body, throws error', async() => {
         let node = new Node({
-            identity: new UInt(1),
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://foo.bar')
             })
@@ -173,7 +164,6 @@ describe('Node._requestHttp', () => {
     })
     it('respond status 429, throws error', async() => {
         let node = new Node({
-            identity: new UInt(1),
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://foo.bar')
             })
@@ -191,7 +181,6 @@ describe('Node._requestHttp', () => {
     })
     it('respond status 503, throws error', async() => {
         let node = new Node({
-            identity: new UInt(1),
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://foo.bar')
             })

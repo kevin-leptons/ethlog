@@ -7,7 +7,6 @@ const assert = require('assert')
 const AxiosMock = require('axios-mock-adapter')
 const {ProtocolError, Node} = require('../../lib/node')
 const {
-    UInt,
     UInt16,
     BigUInt,
     TransactionHash,
@@ -21,7 +20,6 @@ describe('Node.getTransactionByHash', () => {
     let node
     before(() => {
         node = new Node({
-            identity: new UInt(1),
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('https://bsc-dataseed.binance.org')
             })
@@ -53,7 +51,6 @@ describe('Node.getTransactionByHash', () => {
     })
     it('bad RPC data, throws error', async() => {
         let node = new Node({
-            identity: new UInt(1),
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://0.0.0.0')
             })
