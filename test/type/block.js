@@ -6,7 +6,7 @@
 const assert = require('assert')
 const {
     Block,
-    UBigInt,
+    BigUInt,
     Timestamp,
     TransactionHash
 } = require('../../lib/type')
@@ -21,7 +21,7 @@ describe('type.Block.fromRpcResult', () => {
             ]
         }
         let expectedResult = new Block({
-            number: UBigInt.fromHeximal('0x2'),
+            number: BigUInt.fromHeximal('0x2'),
             timestamp: Timestamp.fromHeximal('0x45'),
             transactions: [
                 TransactionHash.fromHeximal('0xe085e95d71717c8a054ac838bc7fdb6c64607adc7b9f8dfaee12d3cd8e8e03af')

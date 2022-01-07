@@ -4,10 +4,10 @@
 
 const assert = require('assert')
 const AxiosMock = require('axios-mock-adapter')
-const {NodeError, Node} = require('../../lib/node')
+const {ProtocolError, Node} = require('../../lib/node')
 const {
     UInt,
-    SafeHttpUrl,
+    HttpUrl,
     HttpEndpoint
 } = require('../../lib/type')
 
@@ -16,14 +16,14 @@ describe('Node._requestHttp', () => {
         let node = new Node({
             identity: new UInt(1),
             endpoint: new HttpEndpoint({
-                url: new SafeHttpUrl('http://0.0.0.0')
+                url: new HttpUrl('http://0.0.0.0')
             })
         })
         await assert.rejects(
             () => node._requestHttp({}),
             {
-                name: 'NodeError',
-                code: NodeError.CODE_NET_BAD_PEER,
+                name: 'ProtocolError',
+                code: ProtocolError.CODE_IMPLICIT_OVERLOAD,
                 message: 'connect ECONNREFUSED 0.0.0.0:80'
             }
         )
@@ -32,15 +32,16 @@ describe('Node._requestHttp', () => {
         let node = new Node({
             identity: new UInt(1),
             endpoint: new HttpEndpoint({
-                url: new SafeHttpUrl('http://172.1.2.3')
-            })
+                url: new HttpUrl('http://172.1.2.3')
+            }),
+            timeout: new UInt(1000)
         })
         await assert.rejects(
             () => node._requestHttp({}),
             {
-                name: 'NodeError',
-                code: NodeError.CODE_NET_BAD_PEER,
-                message: 'timeout of 3000ms exceeded'
+                name: 'ProtocolError',
+                code: ProtocolError.CODE_IMPLICIT_OVERLOAD,
+                message: 'timeout of 1000ms exceeded'
             }
         )
     })
@@ -48,14 +49,14 @@ describe('Node._requestHttp', () => {
         let node = new Node({
             identity: new UInt(1),
             endpoint: new HttpEndpoint({
-                url: new SafeHttpUrl('https://foo.bar')
+                url: new HttpUrl('https://foo.bar')
             })
         })
         await assert.rejects(
             () => node._requestHttp({}),
             {
-                name: 'NodeError',
-                code: NodeError.CODE_NET_BAD_PEER,
+                name: 'ProtocolError',
+                code: ProtocolError.CODE_IMPLICIT_OVERLOAD,
                 message: 'getaddrinfo ENOTFOUND foo.bar'
             }
         )
@@ -64,7 +65,7 @@ describe('Node._requestHttp', () => {
         let node = new Node({
             identity: new UInt(1),
             endpoint: new HttpEndpoint({
-                url: new SafeHttpUrl('http://0.0.0.0')
+                url: new HttpUrl('http://0.0.0.0')
             }),
             timeout: new UInt(1000)
         })
@@ -73,8 +74,8 @@ describe('Node._requestHttp', () => {
         await assert.rejects(
             () => node._requestHttp({}),
             {
-                name: 'NodeError',
-                code: NodeError.CODE_NET_BAD_PEER,
+                name: 'ProtocolError',
+                code: ProtocolError.CODE_IMPLICIT_OVERLOAD,
                 message: 'timeout of 1000ms exceeded'
             }
         )
@@ -83,7 +84,7 @@ describe('Node._requestHttp', () => {
         let node = new Node({
             identity: new UInt(1),
             endpoint: new HttpEndpoint({
-                url: new SafeHttpUrl('http://0.0.0.0')
+                url: new HttpUrl('http://0.0.0.0')
             }),
             timeout: new UInt(1000)
         })
@@ -92,8 +93,8 @@ describe('Node._requestHttp', () => {
         await assert.rejects(
             () => node._requestHttp({}),
             {
-                name: 'NodeError',
-                code: NodeError.CODE_NET_OTHER,
+                name: 'ProtocolError',
+                code: ProtocolError.CODE_BAD_SERVER,
                 message: 'Network Error'
             }
         )
@@ -102,7 +103,7 @@ describe('Node._requestHttp', () => {
         let node = new Node({
             identity: new UInt(1),
             endpoint: new HttpEndpoint({
-                url: new SafeHttpUrl('http://foo.bar')
+                url: new HttpUrl('http://foo.bar')
             })
         })
         let httpMock = new AxiosMock(node._httpClient)
@@ -110,9 +111,9 @@ describe('Node._requestHttp', () => {
         await assert.rejects(
             () => node._requestHttp({}),
             {
-                name: 'NodeError',
-                code: NodeError.CODE_HTTP_OTHER,
-                message: 'response status: 100'
+                name: 'ProtocolError',
+                code: ProtocolError.CODE_BAD_RESPONSE,
+                message: 'server responds invalid status: 100'
             }
         )
     })
@@ -120,7 +121,7 @@ describe('Node._requestHttp', () => {
         let node = new Node({
             identity: new UInt(1),
             endpoint: new HttpEndpoint({
-                url: new SafeHttpUrl('http://foo.bar')
+                url: new HttpUrl('http://foo.bar')
             })
         })
         let httpMock = new AxiosMock(node._httpClient)
@@ -128,9 +129,9 @@ describe('Node._requestHttp', () => {
         await assert.rejects(
             () => node._requestHttp({}),
             {
-                name: 'NodeError',
-                code: NodeError.CODE_HTTP_BAD_REQUEST,
-                message: 'bad request data'
+                name: 'ProtocolError',
+                code: ProtocolError.CODE_BAD_REQUEST,
+                message: 'server responds bad client request'
             }
         )
     })
@@ -138,7 +139,7 @@ describe('Node._requestHttp', () => {
         let node = new Node({
             identity: new UInt(1),
             endpoint: new HttpEndpoint({
-                url: new SafeHttpUrl('http://foo.bar')
+                url: new HttpUrl('http://foo.bar')
             })
         })
         let httpMock = new AxiosMock(node._httpClient)
@@ -146,9 +147,9 @@ describe('Node._requestHttp', () => {
         await assert.rejects(
             () => node._requestHttp({}),
             {
-                name: 'NodeError',
-                code: NodeError.CODE_HTTP_BAD_SERVER,
-                message: 'bad server status'
+                name: 'ProtocolError',
+                code: ProtocolError.CODE_BAD_SERVER,
+                message: 'server responds internal error'
             }
         )
     })
@@ -156,7 +157,7 @@ describe('Node._requestHttp', () => {
         let node = new Node({
             identity: new UInt(1),
             endpoint: new HttpEndpoint({
-                url: new SafeHttpUrl('http://foo.bar')
+                url: new HttpUrl('http://foo.bar')
             })
         })
         let httpMock = new AxiosMock(node._httpClient)
@@ -164,9 +165,9 @@ describe('Node._requestHttp', () => {
         await assert.rejects(
             () => node._requestHttp({}),
             {
-                name: 'NodeError',
-                code: NodeError.CODE_HTTP_BAD_RESPONSE,
-                message: 'invalid JSON format from response body'
+                name: 'ProtocolError',
+                code: ProtocolError.CODE_BAD_RESPONSE,
+                message: 'invalid JSON format from HTTP response body'
             }
         )
     })
@@ -174,7 +175,7 @@ describe('Node._requestHttp', () => {
         let node = new Node({
             identity: new UInt(1),
             endpoint: new HttpEndpoint({
-                url: new SafeHttpUrl('http://foo.bar')
+                url: new HttpUrl('http://foo.bar')
             })
         })
         let httpMock = new AxiosMock(node._httpClient)
@@ -182,9 +183,9 @@ describe('Node._requestHttp', () => {
         await assert.rejects(
             () => node._requestHttp({}),
             {
-                name: 'NodeError',
-                code: NodeError.CODE_HTTP_OVERLOAD,
-                message: 'server overload'
+                name: 'ProtocolError',
+                code: ProtocolError.CODE_EXPLICIT_OVERLOAD,
+                message: 'server responds explicit overload'
             }
         )
     })
@@ -192,7 +193,7 @@ describe('Node._requestHttp', () => {
         let node = new Node({
             identity: new UInt(1),
             endpoint: new HttpEndpoint({
-                url: new SafeHttpUrl('http://foo.bar')
+                url: new HttpUrl('http://foo.bar')
             })
         })
         let httpMock = new AxiosMock(node._httpClient)
@@ -200,9 +201,9 @@ describe('Node._requestHttp', () => {
         await assert.rejects(
             () => node._requestHttp({}),
             {
-                name: 'NodeError',
-                code: NodeError.CODE_HTTP_OVERLOAD,
-                message: 'server overload'
+                name: 'ProtocolError',
+                code: ProtocolError.CODE_EXPLICIT_OVERLOAD,
+                message: 'server responds explicit overload'
             }
         )
     })

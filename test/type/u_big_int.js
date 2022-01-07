@@ -3,9 +3,9 @@
 /* eslint-disable max-lines-per-function */
 
 const assert = require('assert')
-const {UBigInt} = require('../../lib/type')
+const {BigUInt} = require('../../lib/type')
 
-describe('type.UBigInt.constructor successfully', () => {
+describe('type.BigUInt.constructor successfully', () => {
     let specs = [
         BigInt(0),
         BigInt(1),
@@ -13,13 +13,13 @@ describe('type.UBigInt.constructor successfully', () => {
     ]
     for (let spec of specs) {
         it(`${spec}, return an instance`, () => {
-            let actualResult = new UBigInt(spec)
-            assert.strictEqual(actualResult instanceof UBigInt, true)
+            let actualResult = new BigUInt(spec)
+            assert.strictEqual(actualResult instanceof BigUInt, true)
             assert.deepStrictEqual(actualResult.value, spec)
         })
     }
 })
-describe('type.UBigInt.constructor failure', () => {
+describe('type.BigUInt.constructor failure', () => {
     let specs = [
         [
             undefined,
@@ -47,13 +47,13 @@ describe('type.UBigInt.constructor failure', () => {
         let description = spec[2] || `${spec[0]}, throw error`
         it(description, () => {
             assert.throws(
-                () => new UBigInt(spec[0]),
+                () => new BigUInt(spec[0]),
                 spec[1]
             )
         })
     }
 })
-describe('type.UBigInt.fromHeximal successfully', () => {
+describe('type.BigUInt.fromHeximal successfully', () => {
     let specs = [
         ['0x1', BigInt(1)],
         ['0x01', BigInt(1)],
@@ -67,13 +67,13 @@ describe('type.UBigInt.fromHeximal successfully', () => {
     for (let spec of specs) {
         let description = spec[2] || `${spec[0]}, return ${spec[1]}`
         it(description, () => {
-            let actualResult = UBigInt.fromHeximal(spec[0])
-            assert.strictEqual(actualResult instanceof UBigInt, true)
+            let actualResult = BigUInt.fromHeximal(spec[0])
+            assert.strictEqual(actualResult instanceof BigUInt, true)
             assert.strictEqual(actualResult.value, spec[1])
         })
     }
 })
-describe('type.UBigInt.fromHeximal failure', () => {
+describe('type.BigUInt.fromHeximal failure', () => {
     let specs = [
         [
             undefined,
@@ -108,7 +108,7 @@ describe('type.UBigInt.fromHeximal failure', () => {
         let description = spec[2] || `${spec[0]}, throw error`
         it(description, () => {
             assert.throws(
-                () => UBigInt.fromHeximal(spec[0]),
+                () => BigUInt.fromHeximal(spec[0]),
                 spec[1]
             )
         })

@@ -119,7 +119,7 @@ describe('type.Timestamp.fromHeximal failure', () => {
             '0xffffffffffffffff',
             {
                 name: 'DataError',
-                message: 'overflow 53 bits integer number: value'
+                message: 'overflow 53 bits unsigned integer number: value'
             },
             'overflow 53 bits integer number'
         ]

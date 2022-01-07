@@ -5,10 +5,10 @@
 
 const assert = require('assert')
 const AxiosMock = require('axios-mock-adapter')
-const {NodeError, Node} = require('../../lib/node')
+const {ProtocolError, Node} = require('../../lib/node')
 const {
     UInt,
-    SafeHttpUrl,
+    HttpUrl,
     HttpEndpoint
 } = require('../../lib/type')
 
@@ -17,7 +17,7 @@ describe('Node._requestRpc', () => {
         let node = new Node({
             identity: new UInt(1),
             endpoint: new HttpEndpoint({
-                url: new SafeHttpUrl('http://foo.bar')
+                url: new HttpUrl('http://foo.bar')
             })
         })
         let method = 'eth_getBlockByNumber'
@@ -32,11 +32,11 @@ describe('Node._requestRpc', () => {
         let actualResult = await node._requestRpc(method, params)
         assert.strictEqual(actualResult.number, '0x1b4')
     })
-    it('method=undefined, params=undefined, throws error ', async() => {
+    it('method=undefined, params=undefined, throws error', async() => {
         let node = new Node({
             identity: new UInt(1),
             endpoint: new HttpEndpoint({
-                url: new SafeHttpUrl('http://foo.bar')
+                url: new HttpUrl('http://foo.bar')
             })
         })
         let method = undefined
@@ -51,17 +51,17 @@ describe('Node._requestRpc', () => {
         await assert.rejects(
             () => node._requestRpc(method, params),
             {
-                name: 'NodeError',
-                code: NodeError.CODE_RPC_BAD_REQUEST,
+                name: 'ProtocolError',
+                code: ProtocolError.CODE_BAD_REQUEST,
                 message: 'invalid request'
             }
         )
     })
-    it('method=eth_getTransactionByHash, params=undefined, throws error ', async() => {
+    it('method=eth_getTransactionByHash, params=undefined, throws error', async() => {
         let node = new Node({
             identity: new UInt(1),
             endpoint: new HttpEndpoint({
-                url: new SafeHttpUrl('http://foo.bar')
+                url: new HttpUrl('http://foo.bar')
             })
         })
         let method = 'eth_getTransactionByHash'
@@ -76,8 +76,8 @@ describe('Node._requestRpc', () => {
         await assert.rejects(
             () => node._requestRpc(method, params),
             {
-                name: 'NodeError',
-                code: NodeError.CODE_RPC_BAD_REQUEST,
+                name: 'ProtocolError',
+                code: ProtocolError.CODE_BAD_REQUEST,
                 message: 'missing value for required argument 0'
             }
         )
@@ -86,7 +86,7 @@ describe('Node._requestRpc', () => {
         let node = new Node({
             identity: new UInt(1),
             endpoint: new HttpEndpoint({
-                url: new SafeHttpUrl('http://foo.bar')
+                url: new HttpUrl('http://foo.bar')
             })
         })
         let method = 'eth_getBlockByNumber'
@@ -96,9 +96,9 @@ describe('Node._requestRpc', () => {
         await assert.rejects(
             () => node._requestRpc(method, params),
             {
-                name: 'NodeError',
-                code: NodeError.CODE_RPC_BAD_RESPONSE,
-                message: 'not an object: response data'
+                name: 'ProtocolError',
+                code: ProtocolError.CODE_BAD_RESPONSE,
+                message: 'server responds invalid JSON RPC'
             }
         )
     })

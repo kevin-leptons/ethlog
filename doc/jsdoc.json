@@ -6,7 +6,9 @@
     "docdash": {
         "search": true,
         "typedefs": true,
-        "sort": true
+        "collapse": true
     },
-    "plugins": ["plugins/markdown"]
+    "plugins": [
+        "plugins/markdown"
+    ]
 }

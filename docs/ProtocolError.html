@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>DataError - Documentation</title>
+    <title>ProtocolError - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -34,7 +34,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">DataError</h1>
+    <h1 class="page-title">ProtocolError</h1>
     
 
     
@@ -47,10 +47,10 @@
 <header>
     
         <h2>
-        DataError
+        ProtocolError
         </h2>
         
-            <div class="class-description usertext"><p>Report on any data error, include but not limit: type, format, range.</p></div>
+            <div class="class-description usertext"><p>Report errors from layer JSON RPC to lower ones such as HTTP and network.</p></div>
         
     
 </header>
@@ -65,7 +65,7 @@
     <h2>Constructor</h2>
     
 
-    <h4 class="name" id="DataError"><span class="type-signature"></span>new DataError<span class="signature">(message, originError)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="ProtocolError"><span class="type-signature"></span>new ProtocolError<span class="signature">(code, message, cause<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
 
     
 
@@ -77,7 +77,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="type.js.html">type.js</a>, <a href="type.js.html#line14">line 14</a>
+        <a href="node.js.html">node.js</a>, <a href="node.js.html#line21">line 21</a>
     </li></ul></dd>
     
 
@@ -139,6 +139,8 @@
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
         
 
@@ -147,6 +149,37 @@
     </thead>
 
     <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>code</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>One of constants <code>ProtocolError.CODE_*</code>.</p></td>
+        </tr>
+
     
 
         <tr>
@@ -164,33 +197,54 @@
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>Short description about what going on.</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>originError</code></td>
+                <td class="name"><code>cause</code></td>
             
 
             <td class="type">
             
                 
 <span class="param-type">Error</span>
+|
+
+<span class="param-type">string</span>
 
 
             
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>The original error.</p></td>
         </tr>
 
     
@@ -236,7 +290,7 @@
 
         
             
-<h4 class="name" id="originError"><span class="type-signature"></span>originError<span class="type-signature"> :Error|undefined</span></h4>
+<h4 class="name" id="cause"><span class="type-signature"></span>cause<span class="type-signature"> :Error|string|undefined</span></h4>
 
 
 
@@ -247,89 +301,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="type.js.html">type.js</a>, <a href="type.js.html#line29">line 29</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">Error</span>
-|
-
-<span class="param-type">undefined</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-
-        
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-
-    
-
-    <h4 class="name" id=".throw"><span class="type-signature">(static) </span>throw<span class="signature">(message, originError)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="type.js.html">type.js</a>, <a href="type.js.html#line40">line 40</a>
+        <a href="node.js.html">node.js</a>, <a href="node.js.html#line87">line 87</a>
     </li></ul></dd>
     
 
@@ -369,7 +341,162 @@
 
 
 <div class="description usertext">
-    <p>Shortcut to throw error tranditional way <code>throw new Error()</code>.</p>
+    <p>The original error.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Error</span>
+|
+
+<span class="param-type">string</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="code"><span class="type-signature"></span>code<span class="type-signature"> :number</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="node.js.html">node.js</a>, <a href="node.js.html#line78">line 78</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Error code, one of constants <code>ProtocolError.CODE_*</code>.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="CODE_BAD_REQUEST"><span class="type-signature"></span>CODE_BAD_REQUEST<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="node.js.html">node.js</a>, <a href="node.js.html#line53">line 53</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Server complains about request data from client because it does not
+meet specifications. This error is internal of this library and must
+be fix. If caller has nothing to deal with it then report error and
+terminate process.</p>
 </div>
 
 
@@ -379,114 +506,272 @@
 
 
 
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
         
-        <th>Name</th>
-        
+            
+<h4 class="name" id="CODE_BAD_RESPONSE"><span class="type-signature"></span>CODE_BAD_RESPONSE<span class="type-signature"></span></h4>
 
-        <th>Type</th>
 
-        
 
-        
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
 
-    <tbody>
+<dl class="details">
+
     
-
-        <tr>
-            
-                <td class="name"><code>message</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="node.js.html">node.js</a>, <a href="node.js.html#line45">line 45</a>
+    </li></ul></dd>
+    
 
     
 
-        <tr>
-            
-                <td class="name"><code>originError</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Error</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
+    
 
     
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Throws:</h5>
-
-        
-
-    <div class="param-desc usertext">
-    
-        
-<span class="param-type"><a href="DataError.html">DataError</a></span>
-
 
     
-    </div>
-
 
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Server responds bad data which is not in specifications. It come from
+both HTTP and JSON RPC layer. Client should try later and hope that
+server is fixed.</p>
+</div>
+
+
+
 
 
 
 
 
         
+            
+<h4 class="name" id="CODE_BAD_SERVER"><span class="type-signature"></span>CODE_BAD_SERVER<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="node.js.html">node.js</a>, <a href="node.js.html#line59">line 59</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Server hints that there are errors occurs and it's unable to handle
+it. Client should try later and hope that server is fixed.</p>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="CODE_EXPLICIT_OVERLOAD"><span class="type-signature"></span>CODE_EXPLICIT_OVERLOAD<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="node.js.html">node.js</a>, <a href="node.js.html#line38">line 38</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Client should reduce number of requests and data range to server
+immediately because server shows it clearly. This hint come from HTTP
+layer by status code <code>429 - Too Many Requests</code> or
+<code>503 - Service Unavailable</code>.</p>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="CODE_IMPLICIT_OVERLOAD"><span class="type-signature"></span>CODE_IMPLICIT_OVERLOAD<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="node.js.html">node.js</a>, <a href="node.js.html#line30">line 30</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Client should reduce number of requests and data range to server.
+This error is not always overload from server because there are no
+explicit clues for confirmation. The reasons can be but not limit:
+domain name does not exist, IP address is unreachable, server does
+not serve anything, handshake failure, connection timeout, firewall
+blocks requests, requests in long queue, server limits client requests.</p>
+</div>
+
+
+
+
+
+
+
+
+        
+    
+
     
 
     
