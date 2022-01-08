@@ -3,134 +3,72 @@
 /* eslint-disable max-lines-per-function */
 
 const assert = require('assert')
-const {UInt16} = require('../../lib/type')
+const {Result, ErrorCode, UInt16} = require('../../lib/type')
 
-describe('type.UInt16.constructor successfully', () => {
-    let specs = [
-        [0],
-        [1],
-        [65535, 'maximum 16 bits integer number']
-    ]
-    for (let spec of specs) {
-        let description = spec[1] || `${spec[0]}, return an instance`
-        it(description, () => {
-            let actualResult = new UInt16(spec[0])
-            assert.strictEqual(actualResult instanceof UInt16, true)
-            assert.deepStrictEqual(actualResult.value, spec[0])
-        })
-    }
-})
-describe('type.UInt16.constructor failure', () => {
-    let specs = [
-        [
-            undefined,
-            {
-                name: 'DataError',
-                message: 'not a unsigned integer number: value'
-            }
-        ],
-        [
-            null,
-            {
-                name: 'DataError',
-                message: 'not a unsigned integer number: value'
-            }
-        ],
-        [
-            -1,
-            {
-                name: 'DataError',
-                message: 'not a unsigned integer number: value'
-            }
-        ],
-        [
-            65536,
-            {
-                name: 'DataError',
-                message: 'overflow 16 bits unsigned integer number: value'
-            },
-            'overflow 16 bits integer number'
-        ]
-    ]
-    for (let spec of specs) {
-        let description = spec[2] || `${spec[0]}, throw error`
-        it(description, () => {
-            assert.throws(
-                () => new UInt16(spec[0]),
-                spec[1]
-            )
-        })
-    }
-})
-describe('type.UInt16.fromHeximal successfully', () => {
-    let specs = [
-        ['0x0', 0],
-        ['0x1', 1],
-        ['0x01', 1],
-        ['0x10', 16],
-        [
-            '0xffff',
-            65535,
-            'maximum 16 bits heximal'
-        ]
-    ]
-    for (let spec of specs) {
-        let description = spec[2] || `${spec[0]}, return ${spec[1]}`
-        it(description, () => {
-            let actualResult = UInt16.fromHeximal(spec[0])
-            assert.strictEqual(actualResult instanceof UInt16, true)
-            assert.strictEqual(actualResult.value, spec[1])
-        })
-    }
-})
-describe('type.UInt16.fromHeximal failure', () => {
-    let specs = [
-        [
-            undefined,
-            {
-                name: 'DataError',
-                message: 'not a heximal: value'
-            }
-        ],
-        [
-            null,
-            {
-                name: 'DataError',
-                message: 'not a heximal: value'
-            }
-        ],
-        [
-            '0afb',
-            {
-                name: 'DataError',
-                message: 'not a heximal: value'
-            },
-            'heximal has no prefix `0x`'
-        ],
-        [
-            '0xafbX',
-            {
-                name: 'DataError',
-                message: 'not a heximal: value'
-            },
-            'has invalid heximal digits'
-        ],
-        [
-            '0xffffff',
-            {
-                name: 'DataError',
-                message: 'overflow 16 bits unsigned integer number: value'
-            },
-            'overflow 16 bits unsigned integer number'
-        ]
-    ]
-    for (let spec of specs) {
-        let description = spec[2] || `${spec[0]}, throw error`
-        it(description, () => {
-            assert.throws(
-                () => UInt16.fromHeximal(spec[0]),
-                spec[1]
-            )
-        })
-    }
+describe('type.UInt16.fromHeximal', () => {
+    it('0x0, return correct value', () => {
+        let input = '0x0'
+        let data = new UInt16(0x0)
+        let expectedResult = Result.ok(data)
+        let actualResult = UInt16.fromHeximal(input)
+        assert.deepStrictEqual(actualResult, expectedResult)
+    })
+    it('0x1, return correct value', () => {
+        let input = '0x1'
+        let data = new UInt16(0x1)
+        let expectedResult = Result.ok(data)
+        let actualResult = UInt16.fromHeximal(input)
+        assert.deepStrictEqual(actualResult, expectedResult)
+    })
+    it('0x01, return correct value', () => {
+        let input = '0x01'
+        let data = new UInt16(0x01)
+        let expectedResult = Result.ok(data)
+        let actualResult = UInt16.fromHeximal(input)
+        assert.deepStrictEqual(actualResult, expectedResult)
+    })
+    it('0x10, return correct value', () => {
+        let input = '0x10'
+        let data = new UInt16(0x10)
+        let expectedResult = Result.ok(data)
+        let actualResult = UInt16.fromHeximal(input)
+        assert.deepStrictEqual(actualResult, expectedResult)
+    })
+    it('16 bits all set, return correct value', () => {
+        let input = '0x00ffff'
+        let data = new UInt16(0x00ffff)
+        let expectedResult = Result.ok(data)
+        let actualResult = UInt16.fromHeximal(input)
+        assert.deepStrictEqual(actualResult, expectedResult)
+    })
+    it('undefined, error not heximal', () => {
+        let input = undefined
+        let expectedResult = Result.error(ErrorCode.NOT_HEXIMAL)
+        let actualResult = UInt16.fromHeximal(input)
+        assert.deepStrictEqual(actualResult, expectedResult)
+    })
+    it('null, error not heximal', () => {
+        let input = null
+        let expectedResult = Result.error(ErrorCode.NOT_HEXIMAL)
+        let actualResult = UInt16.fromHeximal(input)
+        assert.deepStrictEqual(actualResult, expectedResult)
+    })
+    it('0afb, error not heximal', () => {
+        let input = '0afb'
+        let expectedResult = Result.error(ErrorCode.NOT_HEXIMAL)
+        let actualResult = UInt16.fromHeximal(input)
+        assert.deepStrictEqual(actualResult, expectedResult)
+    })
+    it('0xafbX, error not heximal', () => {
+        let input = '0xafbX'
+        let expectedResult = Result.error(ErrorCode.NOT_HEXIMAL)
+        let actualResult = UInt16.fromHeximal(input)
+        assert.deepStrictEqual(actualResult, expectedResult)
+    })
+    it('bit 17th is set, error overflow', () => {
+        let input = '0x0010000'
+        let expectedResult = Result.error(ErrorCode.OVERFLOW_U_INT_16)
+        let actualResult = UInt16.fromHeximal(input)
+        assert.deepStrictEqual(actualResult, expectedResult)
+    })
 })

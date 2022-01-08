@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Client - Documentation</title>
+    <title>Result - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -34,7 +34,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Client</h1>
+    <h1 class="page-title">Result</h1>
     
 
     
@@ -47,7 +47,7 @@
 <header>
     
         <h2>
-        Client
+        Result
         </h2>
         
     
@@ -61,7 +61,7 @@
 
     
 
-    <h4 class="name" id="Client"><span class="type-signature"></span>new Client<span class="signature">(config)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Result"><span class="type-signature"></span>new Result<span class="signature">(error, data, metadata)</span><span class="type-signature"></span></h4>
 
     
 
@@ -73,7 +73,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client.js.html">client.js</a>, <a href="client.js.html#line22">line 22</a>
+        <a href="node.js.html">node.js</a>, <a href="node.js.html#line98">line 98</a>
     </li></ul></dd>
     
 
@@ -147,70 +147,18 @@
 
         <tr>
             
-                <td class="name"><code>config</code></td>
+                <td class="name"><code>error</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type"><a href="global.html#ErrorCode">ErrorCode</a></span>
 
 
             
             </td>
 
-            
-
-            
-
-            <td class="description last">
-                <h6>Properties</h6>
-                
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>mainEndpoints</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array.&lt;HttpEndpoint></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
             
 
             
@@ -222,73 +170,46 @@
 
         <tr>
             
-                <td class="name"><code>publicEndpoints</code></td>
+                <td class="name"><code>data</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;HttpEndpoint></span>
+<span class="param-type">T</span>
 
 
             
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>Specific data from calls.</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>backupEndpoints</code></td>
+                <td class="name"><code>metadata</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;HttpEndpoint></span>
+<span class="param-type"><a href="Metadata.html">Metadata</a></span>
 
 
             
             </td>
 
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
             
 
             
 
             <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
         </tr>
 
     
@@ -330,18 +251,12 @@
     
 
     
-
-    
-        <h3 class="subsection-title">Methods</h3>
+        <h3 class="subsection-title">Members</h3>
 
         
             
+<h4 class="name" id="data"><span class="type-signature">(readonly) </span>data<span class="type-signature"> :T</span></h4>
 
-    
-
-    <h4 class="name" id="getLogs"><span class="type-signature">(async) </span>getLogs<span class="signature">(filter)</span><span class="type-signature"> &rarr; {Promise.&lt;LogSegment>}</span></h4>
-
-    
 
 
 
@@ -351,7 +266,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client.js.html">client.js</a>, <a href="client.js.html#line58">line 58</a>
+        <a href="node.js.html">node.js</a>, <a href="node.js.html#line109">line 109</a>
     </li></ul></dd>
     
 
@@ -392,114 +307,162 @@
 
 
 
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">T</span>
+
+
+        </li>
+    </ul>
 
 
 
 
 
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
 
         
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
             
-                <td class="name"><code>filter</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">LogFilter</span>
+<h4 class="name" id="error"><span class="type-signature">(readonly) </span>error<span class="type-signature"> :<a href="global.html#ErrorCode">ErrorCode</a></span></h4>
 
 
-            
-            </td>
 
-            
 
-            
 
-            <td class="description last"></td>
-        </tr>
+<dl class="details">
 
     
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Throws:</h5>
-
-        
-
-    <div class="param-desc usertext">
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="node.js.html">node.js</a>, <a href="node.js.html#line103">line 103</a>
+    </li></ul></dd>
     
-        
-<span class="param-type">DataError</span>
-
-
-    
-    </div>
-
 
     
 
+    
 
-<h5>Returns:</h5>
+    
 
-        
+    
 
+    
 
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise.&lt;LogSegment></span>
+    
 
+    
 
-    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
 </dl>
 
-    
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="global.html#ErrorCode">ErrorCode</a></span>
+
+
+        </li>
+    </ul>
+
+
+
 
 
 
         
+            
+<h4 class="name" id="metadata"><span class="type-signature">(readonly) </span>metadata<span class="type-signature"> :<a href="Metadata.html">Metadata</a></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="node.js.html">node.js</a>, <a href="node.js.html#line115">line 115</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="Metadata.html">Metadata</a></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+    
+
     
 
     

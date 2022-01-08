@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Client - Documentation</title>
+    <title>HttpEndpoint - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -34,7 +34,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Client</h1>
+    <h1 class="page-title">HttpEndpoint</h1>
     
 
     
@@ -47,8 +47,12 @@
 <header>
     
         <h2>
-        Client
+            <span class="ancestors"><a href="module-type.html">type</a>~</span>
+        
+        HttpEndpoint
         </h2>
+        
+            <div class="class-description usertext"><p>Information to interact with HTTP such as URL, authentication.</p></div>
         
     
 </header>
@@ -60,8 +64,10 @@
             
 
     
+    <h2>Constructor</h2>
+    
 
-    <h4 class="name" id="Client"><span class="type-signature"></span>new Client<span class="signature">(config)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="HttpEndpoint"><span class="type-signature"></span>new HttpEndpoint<span class="signature">(values)</span><span class="type-signature"></span></h4>
 
     
 
@@ -73,7 +79,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client.js.html">client.js</a>, <a href="client.js.html#line22">line 22</a>
+        <a href="type.js.html">type.js</a>, <a href="type.js.html#line556">line 556</a>
     </li></ul></dd>
     
 
@@ -147,7 +153,7 @@
 
         <tr>
             
-                <td class="name"><code>config</code></td>
+                <td class="name"><code>values</code></td>
             
 
             <td class="type">
@@ -191,13 +197,13 @@
 
         <tr>
             
-                <td class="name"><code>mainEndpoints</code></td>
+                <td class="name"><code>url</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;HttpEndpoint></span>
+<span class="param-type">HttpUrl</span>
 
 
             
@@ -222,13 +228,13 @@
 
         <tr>
             
-                <td class="name"><code>publicEndpoints</code></td>
+                <td class="name"><code>username</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;HttpEndpoint></span>
+<span class="param-type">string</span>
 
 
             
@@ -255,13 +261,13 @@
 
         <tr>
             
-                <td class="name"><code>backupEndpoints</code></td>
+                <td class="name"><code>password</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;HttpEndpoint></span>
+<span class="param-type">string</span>
 
 
             
@@ -330,6 +336,223 @@
     
 
     
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="password"><span class="type-signature"></span>password<span class="type-signature"> :string|undefined</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="type.js.html">type.js</a>, <a href="type.js.html#line574">line 574</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">string</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="url"><span class="type-signature"></span>url<span class="type-signature"> :HttpUrl</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="type.js.html">type.js</a>, <a href="type.js.html#line560">line 560</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">HttpUrl</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="username"><span class="type-signature"></span>username<span class="type-signature"> :string|undefined</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="type.js.html">type.js</a>, <a href="type.js.html#line567">line 567</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">string</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+    
 
     
         <h3 class="subsection-title">Methods</h3>
@@ -339,7 +562,7 @@
 
     
 
-    <h4 class="name" id="getLogs"><span class="type-signature">(async) </span>getLogs<span class="signature">(filter)</span><span class="type-signature"> &rarr; {Promise.&lt;LogSegment>}</span></h4>
+    <h4 class="name" id=".fromValues"><span class="type-signature">(static) </span>fromValues<span class="signature">(values)</span><span class="type-signature"> &rarr; {<a href="Result.html">Result</a>.&lt;HttpEndpoint>}</span></h4>
 
     
 
@@ -351,7 +574,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client.js.html">client.js</a>, <a href="client.js.html#line58">line 58</a>
+        <a href="type.js.html">type.js</a>, <a href="type.js.html#line597">line 597</a>
     </li></ul></dd>
     
 
@@ -425,13 +648,13 @@
 
         <tr>
             
-                <td class="name"><code>filter</code></td>
+                <td class="name"><code>values</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">LogFilter</span>
+<span class="param-type">object</span>
 
 
             
@@ -461,21 +684,6 @@
 
 
 
-<h5>Throws:</h5>
-
-        
-
-    <div class="param-desc usertext">
-    
-        
-<span class="param-type">DataError</span>
-
-
-    
-    </div>
-
-
-    
 
 
 <h5>Returns:</h5>
@@ -489,7 +697,7 @@
     </dt>
     <dd>
         
-<span class="param-type">Promise.&lt;LogSegment></span>
+<span class="param-type"><a href="Result.html">Result</a>.&lt;HttpEndpoint></span>
 
 
     </dd>

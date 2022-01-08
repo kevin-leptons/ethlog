@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Client - Documentation</title>
+    <title>BigUInt - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -34,7 +34,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Client</h1>
+    <h1 class="page-title">BigUInt</h1>
     
 
     
@@ -47,8 +47,12 @@
 <header>
     
         <h2>
-        Client
+            <span class="ancestors"><a href="module-type.html">type</a>~</span>
+        
+        BigUInt
         </h2>
+        
+            <div class="class-description usertext"><p>Unsigned, big integer number.</p></div>
         
     
 </header>
@@ -60,8 +64,10 @@
             
 
     
+    <h2>Constructor</h2>
+    
 
-    <h4 class="name" id="Client"><span class="type-signature"></span>new Client<span class="signature">(config)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="BigUInt"><span class="type-signature"></span>new BigUInt<span class="signature">(value)</span><span class="type-signature"></span></h4>
 
     
 
@@ -73,7 +79,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client.js.html">client.js</a>, <a href="client.js.html#line22">line 22</a>
+        <a href="type.js.html">type.js</a>, <a href="type.js.html#line246">line 246</a>
     </li></ul></dd>
     
 
@@ -147,148 +153,23 @@
 
         <tr>
             
-                <td class="name"><code>config</code></td>
+                <td class="name"><code>value</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type">bigint</span>
 
 
             
             </td>
 
-            
-
-            
-
-            <td class="description last">
-                <h6>Properties</h6>
-                
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>mainEndpoints</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array.&lt;HttpEndpoint></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
             
 
             
 
             <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>publicEndpoints</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array.&lt;HttpEndpoint></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>backupEndpoints</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array.&lt;HttpEndpoint></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
         </tr>
 
     
@@ -330,6 +211,79 @@
     
 
     
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="value"><span class="type-signature"></span>value<span class="type-signature"> :bigint</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="type.js.html">type.js</a>, <a href="type.js.html#line250">line 250</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">bigint</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+    
 
     
         <h3 class="subsection-title">Methods</h3>
@@ -339,7 +293,7 @@
 
     
 
-    <h4 class="name" id="getLogs"><span class="type-signature">(async) </span>getLogs<span class="signature">(filter)</span><span class="type-signature"> &rarr; {Promise.&lt;LogSegment>}</span></h4>
+    <h4 class="name" id=".fromHeximal"><span class="type-signature">(static) </span>fromHeximal<span class="signature">(value)</span><span class="type-signature"> &rarr; {<a href="Result.html">Result</a>.&lt;BigUInt>}</span></h4>
 
     
 
@@ -351,7 +305,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client.js.html">client.js</a>, <a href="client.js.html#line58">line 58</a>
+        <a href="type.js.html">type.js</a>, <a href="type.js.html#line274">line 274</a>
     </li></ul></dd>
     
 
@@ -425,13 +379,13 @@
 
         <tr>
             
-                <td class="name"><code>filter</code></td>
+                <td class="name"><code>value</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">LogFilter</span>
+<span class="param-type">Heximal</span>
 
 
             
@@ -461,21 +415,6 @@
 
 
 
-<h5>Throws:</h5>
-
-        
-
-    <div class="param-desc usertext">
-    
-        
-<span class="param-type">DataError</span>
-
-
-    
-    </div>
-
-
-    
 
 
 <h5>Returns:</h5>
@@ -489,7 +428,108 @@
     </dt>
     <dd>
         
-<span class="param-type">Promise.&lt;LogSegment></span>
+<span class="param-type"><a href="Result.html">Result</a>.&lt;BigUInt></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="toHeximal"><span class="type-signature"></span>toHeximal<span class="signature">()</span><span class="type-signature"> &rarr; {Heximal}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="type.js.html">type.js</a>, <a href="type.js.html#line265">line 265</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Heximal</span>
 
 
     </dd>

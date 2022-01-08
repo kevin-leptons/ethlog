@@ -4,192 +4,146 @@
 /* eslint-disable max-len */
 
 const assert = require('assert')
-const {LogTopic, LogTopicFilter} = require('../../lib/type')
+const {
+    LogTopicFilter,
+    ByteData32,
+    Result,
+    ErrorCode
+} = require('../../lib/type')
 
-describe('type.LogTopicFilter.constructor', () => {
-    it('undefined, return empty combination', () => {
+describe('type.LogTopicFilter.fromArray', () => {
+    it('undefined, return error', () => {
         let input = undefined
-        let actualResult = new LogTopicFilter(input)
-        assert.deepStrictEqual(actualResult.value, [])
+        let expectedResult = Result.error(ErrorCode.NOT_ARRAY, 'value')
+        let actualResult = LogTopicFilter.fromArray(input)
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
-    it('no topics, return empty combination', () => {
+    it('no topics, return empty filter', () => {
         let input = []
-        let actualResult = new LogTopicFilter(input)
-        assert.deepStrictEqual(actualResult.value, [])
+        let data = new LogTopicFilter()
+        let expectedResult = Result.ok(data)
+        let actualResult = LogTopicFilter.fromArray(input)
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('flat topics, return correct combination', () => {
         let input = [
-            LogTopic.fromHeximal('0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768'),
-            LogTopic.fromHeximal('0xc3ae1f9b0610d056dc8d9ef4364868ea1a704a4f453c5901a8b6cd62767be012'),
-            LogTopic.fromHeximal('0xbf3cf4a93253762cec15e2b2898df402924befba04988104b113583646dc0d77'),
-            LogTopic.fromHeximal('0x754674f90a27db9ac0452907a2274b087c605ece44f2e668d262f895ebe46618')
+            ByteData32.fromHeximal('0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768').open(),
+            ByteData32.fromHeximal('0xc3ae1f9b0610d056dc8d9ef4364868ea1a704a4f453c5901a8b6cd62767be012').open(),
+            ByteData32.fromHeximal('0xbf3cf4a93253762cec15e2b2898df402924befba04988104b113583646dc0d77').open(),
+            ByteData32.fromHeximal('0x754674f90a27db9ac0452907a2274b087c605ece44f2e668d262f895ebe46618').open()
         ]
-        let actualResult = new LogTopicFilter(input)
-        assert.deepStrictEqual(actualResult.value, [
-            LogTopic.fromHeximal('0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768'),
-            LogTopic.fromHeximal('0xc3ae1f9b0610d056dc8d9ef4364868ea1a704a4f453c5901a8b6cd62767be012'),
-            LogTopic.fromHeximal('0xbf3cf4a93253762cec15e2b2898df402924befba04988104b113583646dc0d77'),
-            LogTopic.fromHeximal('0x754674f90a27db9ac0452907a2274b087c605ece44f2e668d262f895ebe46618')
-        ])
+        let data = new LogTopicFilter(input)
+        let expectedResult = Result.ok(data)
+        let actualResult = LogTopicFilter.fromArray(input)
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('nested topics as array, return correct combination', () => {
         let input = [
             [
-                LogTopic.fromHeximal('0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768'),
-                LogTopic.fromHeximal('0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768')
+                ByteData32.fromHeximal('0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768').open(),
+                ByteData32.fromHeximal('0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768').open()
             ],
             [
-                LogTopic.fromHeximal('0xc3ae1f9b0610d056dc8d9ef4364868ea1a704a4f453c5901a8b6cd62767be012'),
-                LogTopic.fromHeximal('0xc3ae1f9b0610d056dc8d9ef4364868ea1a704a4f453c5901a8b6cd62767be012')
+                ByteData32.fromHeximal('0xc3ae1f9b0610d056dc8d9ef4364868ea1a704a4f453c5901a8b6cd62767be012').open(),
+                ByteData32.fromHeximal('0xc3ae1f9b0610d056dc8d9ef4364868ea1a704a4f453c5901a8b6cd62767be012').open()
             ],
             [
-                LogTopic.fromHeximal('0xbf3cf4a93253762cec15e2b2898df402924befba04988104b113583646dc0d77'),
-                LogTopic.fromHeximal('0xbf3cf4a93253762cec15e2b2898df402924befba04988104b113583646dc0d77')
+                ByteData32.fromHeximal('0xbf3cf4a93253762cec15e2b2898df402924befba04988104b113583646dc0d77').open(),
+                ByteData32.fromHeximal('0xbf3cf4a93253762cec15e2b2898df402924befba04988104b113583646dc0d77').open()
             ],
             [
-                LogTopic.fromHeximal('0x754674f90a27db9ac0452907a2274b087c605ece44f2e668d262f895ebe46618'),
-                LogTopic.fromHeximal('0x754674f90a27db9ac0452907a2274b087c605ece44f2e668d262f895ebe46618')
+                ByteData32.fromHeximal('0x754674f90a27db9ac0452907a2274b087c605ece44f2e668d262f895ebe46618').open(),
+                ByteData32.fromHeximal('0x754674f90a27db9ac0452907a2274b087c605ece44f2e668d262f895ebe46618').open()
             ]
         ]
-        let actualResult = new LogTopicFilter(input)
-        assert.deepStrictEqual(actualResult.value, [
-            [
-                LogTopic.fromHeximal('0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768'),
-                LogTopic.fromHeximal('0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768')
-            ],
-            [
-                LogTopic.fromHeximal('0xc3ae1f9b0610d056dc8d9ef4364868ea1a704a4f453c5901a8b6cd62767be012'),
-                LogTopic.fromHeximal('0xc3ae1f9b0610d056dc8d9ef4364868ea1a704a4f453c5901a8b6cd62767be012')
-            ],
-            [
-                LogTopic.fromHeximal('0xbf3cf4a93253762cec15e2b2898df402924befba04988104b113583646dc0d77'),
-                LogTopic.fromHeximal('0xbf3cf4a93253762cec15e2b2898df402924befba04988104b113583646dc0d77')
-            ],
-            [
-                LogTopic.fromHeximal('0x754674f90a27db9ac0452907a2274b087c605ece44f2e668d262f895ebe46618'),
-                LogTopic.fromHeximal('0x754674f90a27db9ac0452907a2274b087c605ece44f2e668d262f895ebe46618')
-            ]
-        ])
+        let data = new LogTopicFilter(input)
+        let expectedResult = Result.ok(data)
+        let actualResult = LogTopicFilter.fromArray(input)
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
-    it('invalid topic 0 as single value, throws error', () => {
+    it('invalid topic 0 as single value, return error', () => {
         let input = [
             '0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768'
         ]
-        assert.throws(
-            () => new LogTopicFilter(input),
-            {
-                name: 'DataError',
-                message: 'not a topic or array of topics: value[0]'
-            }
-        )
+        let expectedResult = Result.error(ErrorCode.NOT_ARRAY_OR_BYTE_DATA_32, 'value[0]')
+        let actualResult = LogTopicFilter.fromArray(input)
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
-    it('invalid topic 1 as single value, throws error', () => {
+    it('invalid topic 1 as single value, return error', () => {
         let input = [
             [],
             '0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768'
         ]
-        assert.throws(
-            () => new LogTopicFilter(input),
-            {
-                name: 'DataError',
-                message: 'not a topic or array of topics: value[1]'
-            }
-        )
+        let expectedResult = Result.error(ErrorCode.NOT_ARRAY_OR_BYTE_DATA_32, 'value[1]')
+        let actualResult = LogTopicFilter.fromArray(input)
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
-    it('invalid topic 2 as single value, throws error', () => {
+    it('invalid topic 2 as single value, return error', () => {
         let input = [
             [],
             [],
             '0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768'
         ]
-        assert.throws(
-            () => new LogTopicFilter(input),
-            {
-                name: 'DataError',
-                message: 'not a topic or array of topics: value[2]'
-            }
-        )
+        let expectedResult = Result.error(ErrorCode.NOT_ARRAY_OR_BYTE_DATA_32, 'value[2]')
+        let actualResult = LogTopicFilter.fromArray(input)
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
-    it('invalid topic 3 as single value, throws error', () => {
+    it('invalid topic 3 as single value, return error', () => {
         let input = [
             [],
             [],
             [],
             '0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768'
         ]
-        assert.throws(
-            () => new LogTopicFilter(input),
-            {
-                name: 'DataError',
-                message: 'not a topic or array of topics: value[3]'
-            }
-        )
+        let expectedResult = Result.error(ErrorCode.NOT_ARRAY_OR_BYTE_DATA_32, 'value[3]')
+        let actualResult = LogTopicFilter.fromArray(input)
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
-    it('invalid topic 0 as an array, throws error', () => {
+    it('invalid topic 0 as an array, return error', () => {
         let input = [
             ['0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768']
         ]
-        assert.throws(
-            () => new LogTopicFilter(input),
-            {
-                name: 'DataError',
-                message: 'not a topic or array of topics: value[0]'
-            }
-        )
+        let expectedResult = Result.error(ErrorCode.NOT_ARRAY_OR_BYTE_DATA_32, 'value[0]')
+        let actualResult = LogTopicFilter.fromArray(input)
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
-    it('invalid topic 1 as an array, throws error', () => {
+    it('invalid topic 1 as an array, return error', () => {
         let input = [
             [],
             ['0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768']
         ]
-        assert.throws(
-            () => new LogTopicFilter(input),
-            {
-                name: 'DataError',
-                message: 'not a topic or array of topics: value[1]'
-            }
-        )
+        let expectedResult = Result.error(ErrorCode.NOT_ARRAY_OR_BYTE_DATA_32, 'value[1]')
+        let actualResult = LogTopicFilter.fromArray(input)
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
-    it('invalid topic 2 as an array, throws error', () => {
+    it('invalid topic 2 as an array, return error', () => {
         let input = [
             [],
             [],
             ['0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768']
         ]
-        assert.throws(
-            () => new LogTopicFilter(input),
-            {
-                name: 'DataError',
-                message: 'not a topic or array of topics: value[2]'
-            }
-        )
+        let expectedResult = Result.error(ErrorCode.NOT_ARRAY_OR_BYTE_DATA_32, 'value[2]')
+        let actualResult = LogTopicFilter.fromArray(input)
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
-    it('invalid topic 3 as an array, throws error', () => {
+    it('invalid topic 3 as an array, return error', () => {
         let input = [
             [],
             [],
             [],
             ['0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768']
         ]
-        assert.throws(
-            () => new LogTopicFilter(input),
-            {
-                name: 'DataError',
-                message: 'not a topic or array of topics: value[3]'
-            }
-        )
+        let expectedResult = Result.error(ErrorCode.NOT_ARRAY_OR_BYTE_DATA_32, 'value[3]')
+        let actualResult = LogTopicFilter.fromArray(input)
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
-    it('not an array, throws error', () => {
+    it('not an array, return error', () => {
         let input = '0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768'
-        assert.throws(
-            () => new LogTopicFilter(input),
-            {
-                name: 'DataError',
-                message: 'not an array: value'
-            }
-        )
+        let expectedResult = new Result(ErrorCode.NOT_ARRAY, undefined, 'value')
+        let actualResult = LogTopicFilter.fromArray(input)
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
-    it('too many topics, throws error', () => {
+    it('too many topics, return error', () => {
         let input = [
             [],
             [],
@@ -197,13 +151,9 @@ describe('type.LogTopicFilter.constructor', () => {
             [],
             []
         ]
-        assert.throws(
-            () => new LogTopicFilter(input),
-            {
-                name: 'DataError',
-                message: 'too many items, maximum is 4: value'
-            }
-        )
+        let expectedResult = Result.error(ErrorCode.NOT_ACCEPTED_SIZE, 'value')
+        let actualResult = LogTopicFilter.fromArray(input)
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
 })
 describe('type.LogTopicFilter.toRpcInput', () => {
@@ -214,10 +164,10 @@ describe('type.LogTopicFilter.toRpcInput', () => {
     })
     it('flat topics, return correct result', () => {
         let topics = new LogTopicFilter([
-            LogTopic.fromHeximal('0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768'),
-            LogTopic.fromHeximal('0xc3ae1f9b0610d056dc8d9ef4364868ea1a704a4f453c5901a8b6cd62767be012'),
-            LogTopic.fromHeximal('0xbf3cf4a93253762cec15e2b2898df402924befba04988104b113583646dc0d77'),
-            LogTopic.fromHeximal('0x754674f90a27db9ac0452907a2274b087c605ece44f2e668d262f895ebe46618')
+            ByteData32.fromHeximal('0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768').open(),
+            ByteData32.fromHeximal('0xc3ae1f9b0610d056dc8d9ef4364868ea1a704a4f453c5901a8b6cd62767be012').open(),
+            ByteData32.fromHeximal('0xbf3cf4a93253762cec15e2b2898df402924befba04988104b113583646dc0d77').open(),
+            ByteData32.fromHeximal('0x754674f90a27db9ac0452907a2274b087c605ece44f2e668d262f895ebe46618').open()
         ])
         let actualResult = topics.toRpcInput()
         assert.deepStrictEqual(actualResult, [
@@ -230,20 +180,20 @@ describe('type.LogTopicFilter.toRpcInput', () => {
     it('nested topics, return correct result', () => {
         let topics = new LogTopicFilter([
             [
-                LogTopic.fromHeximal('0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768'),
-                LogTopic.fromHeximal('0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768')
+                ByteData32.fromHeximal('0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768').open(),
+                ByteData32.fromHeximal('0xb0bbb0213c85d84ff38a4a76188369ba5356b3392b6c28730a578e6d254d9768').open()
             ],
             [
-                LogTopic.fromHeximal('0xc3ae1f9b0610d056dc8d9ef4364868ea1a704a4f453c5901a8b6cd62767be012'),
-                LogTopic.fromHeximal('0xc3ae1f9b0610d056dc8d9ef4364868ea1a704a4f453c5901a8b6cd62767be012')
+                ByteData32.fromHeximal('0xc3ae1f9b0610d056dc8d9ef4364868ea1a704a4f453c5901a8b6cd62767be012').open(),
+                ByteData32.fromHeximal('0xc3ae1f9b0610d056dc8d9ef4364868ea1a704a4f453c5901a8b6cd62767be012').open()
             ],
             [
-                LogTopic.fromHeximal('0xbf3cf4a93253762cec15e2b2898df402924befba04988104b113583646dc0d77'),
-                LogTopic.fromHeximal('0xbf3cf4a93253762cec15e2b2898df402924befba04988104b113583646dc0d77')
+                ByteData32.fromHeximal('0xbf3cf4a93253762cec15e2b2898df402924befba04988104b113583646dc0d77').open(),
+                ByteData32.fromHeximal('0xbf3cf4a93253762cec15e2b2898df402924befba04988104b113583646dc0d77').open()
             ],
             [
-                LogTopic.fromHeximal('0x754674f90a27db9ac0452907a2274b087c605ece44f2e668d262f895ebe46618'),
-                LogTopic.fromHeximal('0x754674f90a27db9ac0452907a2274b087c605ece44f2e668d262f895ebe46618')
+                ByteData32.fromHeximal('0x754674f90a27db9ac0452907a2274b087c605ece44f2e668d262f895ebe46618').open(),
+                ByteData32.fromHeximal('0x754674f90a27db9ac0452907a2274b087c605ece44f2e668d262f895ebe46618').open()
             ]
         ])
         let actualResult = topics.toRpcInput()

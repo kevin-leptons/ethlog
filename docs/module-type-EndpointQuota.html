@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Client - Documentation</title>
+    <title>EndpointQuota - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -34,7 +34,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Client</h1>
+    <h1 class="page-title">EndpointQuota</h1>
     
 
     
@@ -47,8 +47,12 @@
 <header>
     
         <h2>
-        Client
+            <span class="ancestors"><a href="module-type.html">type</a>~</span>
+        
+        EndpointQuota
         </h2>
+        
+            <div class="class-description usertext"><p>Specific limits of a endpoint.</p></div>
         
     
 </header>
@@ -60,8 +64,10 @@
             
 
     
+    <h2>Constructor</h2>
+    
 
-    <h4 class="name" id="Client"><span class="type-signature"></span>new Client<span class="signature">(config)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="EndpointQuota"><span class="type-signature"></span>new EndpointQuota<span class="signature">(values)</span><span class="type-signature"></span></h4>
 
     
 
@@ -73,7 +79,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client.js.html">client.js</a>, <a href="client.js.html#line22">line 22</a>
+        <a href="type.js.html">type.js</a>, <a href="type.js.html#line625">line 625</a>
     </li></ul></dd>
     
 
@@ -147,7 +153,7 @@
 
         <tr>
             
-                <td class="name"><code>config</code></td>
+                <td class="name"><code>values</code></td>
             
 
             <td class="type">
@@ -177,8 +183,6 @@
         <th>Type</th>
 
         
-        <th>Attributes</th>
-        
 
         
 
@@ -191,97 +195,49 @@
 
         <tr>
             
-                <td class="name"><code>mainEndpoints</code></td>
+                <td class="name"><code>batchLimit</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;HttpEndpoint></span>
+<span class="param-type">UInt</span>
 
 
             
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>Maximum allowd number of request in a
+timespan. If this value is set then <code>batchTimespan</code> must be set too.
+If this value is not set then <code>batchTimespan</code> is ignored.</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>publicEndpoints</code></td>
+                <td class="name"><code>batchTimespan</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;HttpEndpoint></span>
+<span class="param-type">Timespan</span>
 
 
             
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
 
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>backupEndpoints</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array.&lt;HttpEndpoint></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"></td>
+            <td class="description last"><p>How long a batch limit is
+apply for in miliseconds.</p></td>
         </tr>
 
     
@@ -330,6 +286,148 @@
     
 
     
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="batchLimit"><span class="type-signature"></span>batchLimit<span class="type-signature"> :UInt</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="type.js.html">type.js</a>, <a href="type.js.html#line629">line 629</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">UInt</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="batchTimespan"><span class="type-signature"></span>batchTimespan<span class="type-signature"> :Timespan</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="type.js.html">type.js</a>, <a href="type.js.html#line636">line 636</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Timespan</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+    
 
     
         <h3 class="subsection-title">Methods</h3>
@@ -339,7 +437,7 @@
 
     
 
-    <h4 class="name" id="getLogs"><span class="type-signature">(async) </span>getLogs<span class="signature">(filter)</span><span class="type-signature"> &rarr; {Promise.&lt;LogSegment>}</span></h4>
+    <h4 class="name" id=".fromValues"><span class="type-signature">(static) </span>fromValues<span class="signature">(values)</span><span class="type-signature"> &rarr; {<a href="Result.html">Result</a>.&lt;EndpointQuota>}</span></h4>
 
     
 
@@ -351,7 +449,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client.js.html">client.js</a>, <a href="client.js.html#line58">line 58</a>
+        <a href="type.js.html">type.js</a>, <a href="type.js.html#line662">line 662</a>
     </li></ul></dd>
     
 
@@ -425,13 +523,55 @@
 
         <tr>
             
-                <td class="name"><code>filter</code></td>
+                <td class="name"><code>values</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">LogFilter</span>
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>batchLimit</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">UInt</span>
 
 
             
@@ -442,6 +582,36 @@
             
 
             <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>batchTimespan</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Timespan</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
         </tr>
 
     
@@ -461,21 +631,6 @@
 
 
 
-<h5>Throws:</h5>
-
-        
-
-    <div class="param-desc usertext">
-    
-        
-<span class="param-type">DataError</span>
-
-
-    
-    </div>
-
-
-    
 
 
 <h5>Returns:</h5>
@@ -489,7 +644,7 @@
     </dt>
     <dd>
         
-<span class="param-type">Promise.&lt;LogSegment></span>
+<span class="param-type"><a href="Result.html">Result</a>.&lt;EndpointQuota></span>
 
 
     </dd>

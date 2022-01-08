@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Client - Documentation</title>
+    <title>Timespan - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -34,7 +34,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Client</h1>
+    <h1 class="page-title">Timespan</h1>
     
 
     
@@ -47,8 +47,12 @@
 <header>
     
         <h2>
-        Client
+            <span class="ancestors"><a href="module-type.html">type</a>~</span>
+        
+        Timespan
         </h2>
+        
+            <div class="class-description usertext"><p>Time period, 53 bits.</p></div>
         
     
 </header>
@@ -60,8 +64,10 @@
             
 
     
+    <h2>Constructor</h2>
+    
 
-    <h4 class="name" id="Client"><span class="type-signature"></span>new Client<span class="signature">(config)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Timespan"><span class="type-signature"></span>new Timespan<span class="signature">(value)</span><span class="type-signature"></span></h4>
 
     
 
@@ -73,7 +79,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client.js.html">client.js</a>, <a href="client.js.html#line22">line 22</a>
+        <a href="type.js.html">type.js</a>, <a href="type.js.html#line326">line 326</a>
     </li></ul></dd>
     
 
@@ -147,13 +153,13 @@
 
         <tr>
             
-                <td class="name"><code>config</code></td>
+                <td class="name"><code>value</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type">number</span>
 
 
             
@@ -163,132 +169,7 @@
 
             
 
-            <td class="description last">
-                <h6>Properties</h6>
-                
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>mainEndpoints</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array.&lt;HttpEndpoint></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>publicEndpoints</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array.&lt;HttpEndpoint></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>backupEndpoints</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array.&lt;HttpEndpoint></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
+            <td class="description last"><p>Time period in miliseconds.</p></td>
         </tr>
 
     
@@ -330,6 +211,83 @@
     
 
     
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="value"><span class="type-signature"></span>value<span class="type-signature"> :number</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="type.js.html">type.js</a>, <a href="type.js.html#line332">line 332</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Time period in miliseconds.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+    
 
     
         <h3 class="subsection-title">Methods</h3>
@@ -339,7 +297,7 @@
 
     
 
-    <h4 class="name" id="getLogs"><span class="type-signature">(async) </span>getLogs<span class="signature">(filter)</span><span class="type-signature"> &rarr; {Promise.&lt;LogSegment>}</span></h4>
+    <h4 class="name" id=".fromNumber"><span class="type-signature">(static) </span>fromNumber<span class="signature">(value)</span><span class="type-signature"> &rarr; {<a href="Result.html">Result</a>.&lt;Timespan>}</span></h4>
 
     
 
@@ -351,7 +309,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client.js.html">client.js</a>, <a href="client.js.html#line58">line 58</a>
+        <a href="type.js.html">type.js</a>, <a href="type.js.html#line348">line 348</a>
     </li></ul></dd>
     
 
@@ -425,13 +383,13 @@
 
         <tr>
             
-                <td class="name"><code>filter</code></td>
+                <td class="name"><code>value</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">LogFilter</span>
+<span class="param-type">number</span>
 
 
             
@@ -441,7 +399,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>Time period in miliseconds.</p></td>
         </tr>
 
     
@@ -461,21 +419,6 @@
 
 
 
-<h5>Throws:</h5>
-
-        
-
-    <div class="param-desc usertext">
-    
-        
-<span class="param-type">DataError</span>
-
-
-    
-    </div>
-
-
-    
 
 
 <h5>Returns:</h5>
@@ -489,7 +432,7 @@
     </dt>
     <dd>
         
-<span class="param-type">Promise.&lt;LogSegment></span>
+<span class="param-type"><a href="Result.html">Result</a>.&lt;Timespan></span>
 
 
     </dd>

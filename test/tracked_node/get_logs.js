@@ -35,8 +35,8 @@ describe('TrackedNode.getLogs', () => {
     })
     it('filtered, return a log', async() => {
         let filter = new LogFilter({
-            fromBlock: new BigUInt(14154976),
-            toBlock: new BigUInt(141549100),
+            fromBlock: new BigUInt(14161978),
+            toBlock: new BigUInt(14162978),
             addresses: [
                 Address.fromHeximal('0x804678fa97d91b974ec2af3c843270886528a9e6')
             ],
@@ -45,6 +45,7 @@ describe('TrackedNode.getLogs', () => {
             ])
         })
         let logSegment = await node.getLogs(filter)
+        console.log(logSegment);
         assert.strictEqual(logSegment instanceof LogSegment, true)
         assert.strictEqual(logSegment.items.length, 1)
     })

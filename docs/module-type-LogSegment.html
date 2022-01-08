@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Client - Documentation</title>
+    <title>LogSegment - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -34,7 +34,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Client</h1>
+    <h1 class="page-title">LogSegment</h1>
     
 
     
@@ -47,8 +47,12 @@
 <header>
     
         <h2>
-        Client
+            <span class="ancestors"><a href="module-type.html">type</a>~</span>
+        
+        LogSegment
         </h2>
+        
+            <div class="class-description usertext"><p>A list of logs and extra information.</p></div>
         
     
 </header>
@@ -60,8 +64,10 @@
             
 
     
+    <h2>Constructor</h2>
+    
 
-    <h4 class="name" id="Client"><span class="type-signature"></span>new Client<span class="signature">(config)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="LogSegment"><span class="type-signature"></span>new LogSegment<span class="signature">(items, confirmedBlockNumber)</span><span class="type-signature"></span></h4>
 
     
 
@@ -73,7 +79,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client.js.html">client.js</a>, <a href="client.js.html#line22">line 22</a>
+        <a href="type.js.html">type.js</a>, <a href="type.js.html#line1311">line 1311</a>
     </li></ul></dd>
     
 
@@ -147,70 +153,18 @@
 
         <tr>
             
-                <td class="name"><code>config</code></td>
+                <td class="name"><code>items</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type">Array.&lt;Log></span>
 
 
             
             </td>
 
-            
-
-            
-
-            <td class="description last">
-                <h6>Properties</h6>
-                
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>mainEndpoints</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array.&lt;HttpEndpoint></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
             
 
             
@@ -222,73 +176,26 @@
 
         <tr>
             
-                <td class="name"><code>publicEndpoints</code></td>
+                <td class="name"><code>confirmedBlockNumber</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;HttpEndpoint></span>
+<span class="param-type">BigUInt</span>
 
 
             
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
 
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>backupEndpoints</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array.&lt;HttpEndpoint></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
+            <td class="description last"><p>The log segment ensures
+correctness of <code>items</code> in range <code>[filter.fromBlock, confirmedBlock]</code>.
+It does not contain items from remain range
+<code>(confirmedBlock, filter.toBlock)</code>.</p></td>
         </tr>
 
     
@@ -330,18 +237,12 @@
     
 
     
-
-    
-        <h3 class="subsection-title">Methods</h3>
+        <h3 class="subsection-title">Members</h3>
 
         
             
+<h4 class="name" id="confirmedBlockNumber"><span class="type-signature"></span>confirmedBlockNumber<span class="type-signature"> :BigUInt</span></h4>
 
-    
-
-    <h4 class="name" id="getLogs"><span class="type-signature">(async) </span>getLogs<span class="signature">(filter)</span><span class="type-signature"> &rarr; {Promise.&lt;LogSegment>}</span></h4>
-
-    
 
 
 
@@ -351,7 +252,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="client.js.html">client.js</a>, <a href="client.js.html#line58">line 58</a>
+        <a href="type.js.html">type.js</a>, <a href="type.js.html#line1322">line 1322</a>
     </li></ul></dd>
     
 
@@ -392,114 +293,93 @@
 
 
 
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">BigUInt</span>
+
+
+        </li>
+    </ul>
 
 
 
 
 
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
 
         
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
             
-                <td class="name"><code>filter</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">LogFilter</span>
+<h4 class="name" id="items"><span class="type-signature"></span>items<span class="type-signature"> :Array.&lt;Log></span></h4>
 
 
-            
-            </td>
 
-            
 
-            
 
-            <td class="description last"></td>
-        </tr>
+<dl class="details">
 
     
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Throws:</h5>
-
-        
-
-    <div class="param-desc usertext">
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="type.js.html">type.js</a>, <a href="type.js.html#line1315">line 1315</a>
+    </li></ul></dd>
     
-        
-<span class="param-type">DataError</span>
-
-
-    
-    </div>
-
 
     
 
+    
 
-<h5>Returns:</h5>
+    
 
-        
+    
 
+    
 
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise.&lt;LogSegment></span>
+    
 
+    
 
-    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
 </dl>
 
-    
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Array.&lt;Log></span>
+
+
+        </li>
+    </ul>
+
+
+
 
 
 
         
+    
+
     
 
     
