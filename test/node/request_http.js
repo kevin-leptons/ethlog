@@ -4,61 +4,57 @@
 
 const assert = require('assert')
 const AxiosMock = require('axios-mock-adapter')
-const {ProtocolError, Node} = require('../../lib/node')
+const {Node} = require('../../lib/node')
 const {
+    ErrorCode,
+    Result,
     UInt,
     HttpUrl,
     HttpEndpoint
 } = require('../../lib/type')
 
 describe('Node._requestHttp', () => {
-    it('IP address that does not listen, throws error ', async() => {
+    it('IP address that does not listen, return error ', async() => {
         let node = new Node({
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://0.0.0.0')
             })
         })
-        await assert.rejects(
-            () => node._requestHttp({}),
-            {
-                name: 'ProtocolError',
-                code: ProtocolError.CODE_IMPLICIT_OVERLOAD,
-                message: 'connect ECONNREFUSED 0.0.0.0:80'
-            }
+        let expectedResult = Result.error(
+            ErrorCode.ETH_IMPLICIT_OVERLOAD,
+            'connect ECONNREFUSED 0.0.0.0:80'
         )
+        let actualResult = await node._requestHttp({})
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
-    it('IP address which is unable to touch, throws error ', async() => {
+    it('IP address which is unable to touch, return error ', async() => {
         let node = new Node({
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://172.1.2.3')
             }),
             timeout: new UInt(1000)
         })
-        await assert.rejects(
-            () => node._requestHttp({}),
-            {
-                name: 'ProtocolError',
-                code: ProtocolError.CODE_IMPLICIT_OVERLOAD,
-                message: 'timeout of 1000ms exceeded'
-            }
+        let expectedResult = Result.error(
+            ErrorCode.ETH_IMPLICIT_OVERLOAD,
+            'timeout of 1000ms exceeded'
         )
+        let actualResult = await node._requestHttp({})
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
-    it('not existed domain, throws error ', async() => {
+    it('not existed domain, return error ', async() => {
         let node = new Node({
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('https://foo.bar')
             })
         })
-        await assert.rejects(
-            () => node._requestHttp({}),
-            {
-                name: 'ProtocolError',
-                code: ProtocolError.CODE_IMPLICIT_OVERLOAD,
-                message: 'getaddrinfo ENOTFOUND foo.bar'
-            }
+        let expectedResult = Result.error(
+            ErrorCode.ETH_IMPLICIT_OVERLOAD,
+            'getaddrinfo ENOTFOUND foo.bar'
         )
+        let actualResult = await node._requestHttp({})
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
-    it('timeout, throws error ', async() => {
+    it('timeout, return error ', async() => {
         let node = new Node({
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://0.0.0.0')
@@ -67,16 +63,14 @@ describe('Node._requestHttp', () => {
         })
         let httpMock = new AxiosMock(node._httpClient)
         httpMock.onPost('/').timeout()
-        await assert.rejects(
-            () => node._requestHttp({}),
-            {
-                name: 'ProtocolError',
-                code: ProtocolError.CODE_IMPLICIT_OVERLOAD,
-                message: 'timeout of 1000ms exceeded'
-            }
+        let expectedResult = Result.error(
+            ErrorCode.ETH_IMPLICIT_OVERLOAD,
+            'timeout of 1000ms exceeded'
         )
+        let actualResult = await node._requestHttp({})
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
-    it('other network issues, throws error ', async() => {
+    it('other network issues, return error ', async() => {
         let node = new Node({
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://0.0.0.0')
@@ -85,67 +79,59 @@ describe('Node._requestHttp', () => {
         })
         let httpMock = new AxiosMock(node._httpClient)
         httpMock.onPost('/').networkError()
-        await assert.rejects(
-            () => node._requestHttp({}),
-            {
-                name: 'ProtocolError',
-                code: ProtocolError.CODE_BAD_SERVER,
-                message: 'Network Error'
-            }
+        let expectedResult = Result.error(
+            ErrorCode.ETH_BAD_SERVER,
+            'Network Error'
         )
+        let actualResult = await node._requestHttp({})
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
-    it('respond 1xx status, throws error', async() => {
+    it('respond 1xx status, return error', async() => {
         let node = new Node({
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://foo.bar')
             })
         })
         let httpMock = new AxiosMock(node._httpClient)
-        httpMock.onPost('/').reply(100, 'foo.bar')
-        await assert.rejects(
-            () => node._requestHttp({}),
-            {
-                name: 'ProtocolError',
-                code: ProtocolError.CODE_BAD_RESPONSE,
-                message: 'server responds invalid status: 100'
-            }
+        httpMock.onPost('/').reply(100, 'message from server')
+        let expectedResult = Result.error(
+            ErrorCode.ETH_BAD_RESPONSE,
+            'http status: 100'
         )
+        let actualResult = await node._requestHttp({})
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
-    it('respond 4xx status, throws error', async() => {
+    it('respond 4xx status, return error', async() => {
         let node = new Node({
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://foo.bar')
             })
         })
         let httpMock = new AxiosMock(node._httpClient)
-        httpMock.onPost('/').reply(400, 'bad request')
-        await assert.rejects(
-            () => node._requestHttp({}),
-            {
-                name: 'ProtocolError',
-                code: ProtocolError.CODE_BAD_REQUEST,
-                message: 'server responds bad client request'
-            }
+        httpMock.onPost('/').reply(400, 'message from server')
+        let expectedResult = Result.error(
+            ErrorCode.ETH_BAD_REQUEST,
+            'http status: 400'
         )
+        let actualResult = await node._requestHttp({})
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
-    it('respond 5xx status, throws error', async() => {
+    it('respond 5xx status, return error', async() => {
         let node = new Node({
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://foo.bar')
             })
         })
         let httpMock = new AxiosMock(node._httpClient)
-        httpMock.onPost('/').reply(500, 'foo.bar')
-        await assert.rejects(
-            () => node._requestHttp({}),
-            {
-                name: 'ProtocolError',
-                code: ProtocolError.CODE_BAD_SERVER,
-                message: 'server responds internal error'
-            }
+        httpMock.onPost('/').reply(500, 'message from server')
+        let expectedResult = Result.error(
+            ErrorCode.ETH_BAD_SERVER,
+            'http status: 500'
         )
+        let actualResult = await node._requestHttp({})
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
-    it('respond invalid JSON format from body, throws error', async() => {
+    it('respond invalid JSON format from body, return error', async() => {
         let node = new Node({
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://foo.bar')
@@ -153,16 +139,14 @@ describe('Node._requestHttp', () => {
         })
         let httpMock = new AxiosMock(node._httpClient)
         httpMock.onPost('/').reply(200, '{invalid: json_format}')
-        await assert.rejects(
-            () => node._requestHttp({}),
-            {
-                name: 'ProtocolError',
-                code: ProtocolError.CODE_BAD_RESPONSE,
-                message: 'invalid JSON format from HTTP response body'
-            }
+        let expectedResult = Result.error(
+            ErrorCode.ETH_BAD_RESPONSE,
+            'http body: invalid JSON format'
         )
+        let actualResult = await node._requestHttp({})
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
-    it('respond status 429, throws error', async() => {
+    it('respond status 429, return error', async() => {
         let node = new Node({
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://foo.bar')
@@ -170,16 +154,14 @@ describe('Node._requestHttp', () => {
         })
         let httpMock = new AxiosMock(node._httpClient)
         httpMock.onPost('/').reply(429)
-        await assert.rejects(
-            () => node._requestHttp({}),
-            {
-                name: 'ProtocolError',
-                code: ProtocolError.CODE_EXPLICIT_OVERLOAD,
-                message: 'server responds explicit overload'
-            }
+        let expectedResult = Result.error(
+            ErrorCode.ETH_EXPLICIT_OVERLOAD,
+            'http status: 429'
         )
+        let actualResult = await node._requestHttp({})
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
-    it('respond status 503, throws error', async() => {
+    it('respond status 503, return error', async() => {
         let node = new Node({
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://foo.bar')
@@ -187,13 +169,11 @@ describe('Node._requestHttp', () => {
         })
         let httpMock = new AxiosMock(node._httpClient)
         httpMock.onPost('/').reply(503)
-        await assert.rejects(
-            () => node._requestHttp({}),
-            {
-                name: 'ProtocolError',
-                code: ProtocolError.CODE_EXPLICIT_OVERLOAD,
-                message: 'server responds explicit overload'
-            }
+        let expectedResult = Result.error(
+            ErrorCode.ETH_EXPLICIT_OVERLOAD,
+            'http status: 503'
         )
+        let actualResult = await node._requestHttp({})
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
 })

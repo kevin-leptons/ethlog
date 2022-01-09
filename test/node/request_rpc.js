@@ -5,8 +5,10 @@
 
 const assert = require('assert')
 const AxiosMock = require('axios-mock-adapter')
-const {ProtocolError, Node} = require('../../lib/node')
+const {Node} = require('../../lib/node')
 const {
+    ErrorCode,
+    Result,
     HttpUrl,
     HttpEndpoint
 } = require('../../lib/type')
@@ -28,9 +30,10 @@ describe('Node._requestRpc', () => {
         })
         httpMock.onPost('/').reply(200, httpBody)
         let actualResult = await node._requestRpc(method, params)
-        assert.strictEqual(actualResult.number, '0x1b4')
+        let expectedResult = Result.ok({number: '0x1b4'})
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
-    it('method=undefined, params=undefined, throws error', async() => {
+    it('method=undefined, params=undefined, return error', async() => {
         let node = new Node({
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://foo.bar')
@@ -41,20 +44,17 @@ describe('Node._requestRpc', () => {
         let httpMock = new AxiosMock(node._httpClient)
         let httpBody = JSON.stringify({
             error: {
-                message: 'invalid request'
+                message: 'error message from server'
             }
         })
         httpMock.onPost('/').reply(200, httpBody)
-        await assert.rejects(
-            () => node._requestRpc(method, params),
-            {
-                name: 'ProtocolError',
-                code: ProtocolError.CODE_BAD_REQUEST,
-                message: 'invalid request'
-            }
+        let actualResult = await node._requestRpc(method, params)
+        let expectedResult = Result.error(
+            ErrorCode.ETH_BAD_REQUEST, 'error message from server'
         )
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
-    it('method=eth_getTransactionByHash, params=undefined, throws error', async() => {
+    it('method=eth_getTransactionByHash, params=undefined, return error', async() => {
         let node = new Node({
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://foo.bar')
@@ -65,20 +65,17 @@ describe('Node._requestRpc', () => {
         let httpMock = new AxiosMock(node._httpClient)
         let httpBody = JSON.stringify({
             error: {
-                message: 'missing value for required argument 0'
+                message: 'error message from server'
             }
         })
         httpMock.onPost('/').reply(200, httpBody)
-        await assert.rejects(
-            () => node._requestRpc(method, params),
-            {
-                name: 'ProtocolError',
-                code: ProtocolError.CODE_BAD_REQUEST,
-                message: 'missing value for required argument 0'
-            }
+        let actualResult = await node._requestRpc(method, params)
+        let expectedResult = Result.error(
+            ErrorCode.ETH_BAD_REQUEST, 'error message from server'
         )
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
-    it('responds invalid JSON RPC data, throws error', async() => {
+    it('responds invalid JSON RPC data, return error', async() => {
         let node = new Node({
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://foo.bar')
@@ -88,13 +85,10 @@ describe('Node._requestRpc', () => {
         let params = ['0x357', false]
         let httpMock = new AxiosMock(node._httpClient)
         httpMock.onPost('/').reply(200, '"this is invalid RPC response object"')
-        await assert.rejects(
-            () => node._requestRpc(method, params),
-            {
-                name: 'ProtocolError',
-                code: ProtocolError.CODE_BAD_RESPONSE,
-                message: 'server responds invalid JSON RPC'
-            }
+        let actualResult = await node._requestRpc(method, params)
+        let expectedResult = Result.error(
+            ErrorCode.ETH_BAD_RESPONSE, 'json rpc v2: invalid response'
         )
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
 })
