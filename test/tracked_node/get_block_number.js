@@ -13,14 +13,14 @@ const {
     HttpUrl,
     HttpEndpoint,
     Address,
-    ByteData32,
+    LogTopic,
     LogTopicFilter,
     LogFilter,
     EndpointQuota,
     LogSegment
 } = require('../../lib/type')
 
-describe('TrackedNode.getLogs', () => {
+describe('TrackedNode.getBlockNumber', () => {
     let node
     before(() => {
         node = new TrackedNode({
@@ -34,18 +34,10 @@ describe('TrackedNode.getLogs', () => {
             timeout: new UInt(6000)
         })
     })
-    it('return a log segment', async() => {
-        let filter = new LogFilter({
-            fromBlock: BigUInt.fromNumber(14161978).open(),
-            toBlock: BigUInt.fromNumber(14162978).open(),
-            addresses: [
-                Address.fromHeximal('0x804678fa97d91b974ec2af3c843270886528a9e6').open()
-            ],
-            topics: new LogTopicFilter([
-                ByteData32.fromHeximal('0xd78ad95fa46c994b6551d0da85fc275fe613ce37657fb8d5e3d130840159d822').open()
-            ])
-        })
-        let actualResult = await node.getLogs(filter)
+    it('return block number', async() => {
+        let actualResult = await node.getBlockNumber()
         assert.strictEqual(actualResult instanceof Result, true)
+        assert.strictEqual(actualResult.error, ErrorCode.NONE)
+        assert.strictEqual(actualResult.data instanceof BigUInt, true)
     })
 })

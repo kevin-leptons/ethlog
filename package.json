@@ -40,6 +40,7 @@
     "palmito": "^0.2.2"
   },
   "dependencies": {
-    "axios": "^0.24.0"
+    "axios": "^0.24.0",
+    "stdio_log": "^0.4.2"
   }
 }
