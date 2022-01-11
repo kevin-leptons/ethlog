@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>client.js - Documentation</title>
+    <title>log_stream.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -34,7 +34,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">client.js</h1>
+    <h1 class="page-title">log_stream.js</h1>
     
 
     
@@ -47,95 +47,34 @@
             <pre class="prettyprint source linenums"><code>'use strict'
 
 const {
-    ErrorCode,
-    ResultError,
-    Result,
     UInt64,
-    ByteData32,
-    Endpoint,
-    LogFilter,
-    assertObjectAttributes,
-    assertInstance,
-    assertArray
+    Metadata,
+    LogTopicFilter,
+    Log,
 } = require('./type')
-const {Gateway} = require('./gateway')
 
-class Client {
+/**
+ * @name LogHandler
+ * @function
+ * @param {Array&lt;Log>} logs
+ * @param {Metadata | undefined} metadata
+ * @returns {Promise&lt;undefined>}
+ */
+
+class LogStream {
     /**
      *
      * @param {object} config
-     * @param {Array&lt;Endpoint>} config.endpoints
-     * @param {Array&lt;Endpoint>} [config.backupEndpoints]
+     * @param {Client} config.client
+     * @param {LogHandler} config.handler
+     * @param {UInt64} [config.fromBlock]
+     * @param {Array&lt;addresses>} [config.addresses]
+     * @param {LogTopicFilter} [config.LogTopicFilter]
      */
-    constructor(config) {
-        assertObjectAttributes(config, ['endpoints', 'backupEndpoints'])
-        let {endpoints, backupEndpoints} = config
-        assertArray(endpoints, 'endpoints')
-        if (endpoints.length &lt;= 0) {
-            throw new ResultError(ErrorCode.TYPE_BAD_SIZE, '>= 1')
-        }
-        endpoints.forEach((v, i) => {
-            assertInstance(v, Endpoint, `endpoints[${i}]`)
-        })
-        backupEndpoints = backupEndpoints || []
-        assertArray(backupEndpoints)
-        backupEndpoints.forEach((v, i) => {
-            assertInstance(v, Endpoint, `endpoints[${i}]`)
-        })
-        this._layer2 = new Gateway({
-            endpoints: backupEndpoints
-        })
-        this._layer1 = new Gateway({
-            endpoints: endpoints,
-            lowerLayer: this._layer2
-        })
-    }
-
-    /**
-     * It is similar to `SafeNode.getBlockNumber()`.
-     *
-     * @returns {Promise&lt;Result&lt;UInt64, undefined>>}
-     */
-    async getBlockNumber() {
-        return await this._layer1.proxy('getBlockNumber')
-    }
-
-    /**
-     * It is similar to `SafeNode.getBlockByNumber()`.
-     *
-     * @param {UInt64} blockNumber
-     * @return {Promise&lt;Result&lt;Block, Metadata>>}
-     */
-    async getBlockByNumber(blockNumber) {
-        assertInstance(blockNumber, UInt64)
-        return await this._layer1.proxy('getBlockByNumber', [blockNumber])
-    }
-
-    /**
-     *
-     * @param {ByteData32} hash
-     * @return {Promise&lt;Result&lt;Transaction, undefined>>}
-     */
-    async getTransaction(hash) {
-        assertInstance(hash, ByteData32)
-        return await this._layer1.proxy('getTransaction', [hash])
-    }
-
-    /**
-     * It is similar to `SafeNode.getLogs()`.
-     *
-     * @param {LogFilter} filter
-     * @return {Promise&lt;Result&lt;Array&lt;Log>, Metadata>>}
-     */
-    async getLogs(filter) {
-        assertInstance(filter, LogFilter)
-        return await this._layer1.proxy('getLogs', [filter])
-    }
+    constructor(config) {}
 }
 
-module.exports = {
-    Client
-}
+module.exports = LogStream
 </code></pre>
         </article>
     </section>

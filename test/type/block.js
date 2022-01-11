@@ -8,7 +8,7 @@ const {
     ErrorCode,
     Result,
     Block,
-    BigUInt,
+    UInt64,
     Timestamp,
     ByteData32
 } = require('../../lib/type')
@@ -23,7 +23,7 @@ describe('type.Block.fromRpcResult', () => {
             ]
         }
         let block = new Block({
-            number: BigUInt.fromHeximal('0x2').data,
+            number: UInt64.fromHeximal('0x2').data,
             timestamp: Timestamp.fromHeximal('0x45').data,
             transactions: [
                 ByteData32.fromHeximal('0xe085e95d71717c8a054ac838bc7fdb6c64607adc7b9f8dfaee12d3cd8e8e03af').data
@@ -41,7 +41,7 @@ describe('type.Block.fromRpcResult', () => {
                 '0xe085e95d71717c8a054ac838bc7fdb6c64607adc7b9f8dfaee12d3cd8e8e03af'
             ]
         }
-        let expectedResult = Result.error(ErrorCode.NOT_HEXIMAL, 'values.number')
+        let expectedResult = Result.error(ErrorCode.TYPE_HEXIMAL, 'number')
         let actualResult = Block.fromRpcResult(rpcResult)
         assert.deepStrictEqual(actualResult, expectedResult)
     })
@@ -53,7 +53,7 @@ describe('type.Block.fromRpcResult', () => {
                 '0xe085e95d71717c8a054ac838bc7fdb6c64607adc7b9f8dfaee12d3cd8e8e03af'
             ]
         }
-        let expectedResult = Result.error(ErrorCode.NOT_HEXIMAL, 'values.timestamp')
+        let expectedResult = Result.error(ErrorCode.TYPE_HEXIMAL, 'timestamp')
         let actualResult = Block.fromRpcResult(rpcResult)
         assert.deepStrictEqual(actualResult, expectedResult)
     })
@@ -63,7 +63,7 @@ describe('type.Block.fromRpcResult', () => {
             timestamp: '0x45',
             transactions: '0xe085e95d71717c8a054ac838bc7fdb6c64607adc7b9f8dfaee12d3cd8e8e03af'
         }
-        let expectedResult = new Result(ErrorCode.NOT_ARRAY, undefined, 'values.transactions')
+        let expectedResult = new Result(ErrorCode.TYPE_ARRAY, undefined, 'transactions')
         let actualResult = Block.fromRpcResult(rpcResult)
         assert.deepStrictEqual(actualResult, expectedResult)
     })
@@ -75,7 +75,7 @@ describe('type.Block.fromRpcResult', () => {
                 '0xf712befa13df56c5c11799078b793c49fe121XXX'
             ]
         }
-        let expectedResult = new Result(ErrorCode.NOT_HEXIMAL, undefined, 'values.transactions[0]')
+        let expectedResult = new Result(ErrorCode.TYPE_HEXIMAL, undefined, 'transactions[0]')
         let actualResult = Block.fromRpcResult(rpcResult)
         assert.deepStrictEqual(actualResult, expectedResult)
     })

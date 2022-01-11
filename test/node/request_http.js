@@ -8,7 +8,7 @@ const {Node} = require('../../lib/node')
 const {
     ErrorCode,
     Result,
-    UInt,
+    Timespan,
     HttpUrl,
     HttpEndpoint
 } = require('../../lib/type')
@@ -21,7 +21,7 @@ describe('Node._requestHttp', () => {
             })
         })
         let expectedResult = Result.error(
-            ErrorCode.ETH_IMPLICIT_OVERLOAD,
+            ErrorCode.ETH_IMPLICIT_OVERLOADING,
             'connect ECONNREFUSED 0.0.0.0:80'
         )
         let actualResult = await node._requestHttp({})
@@ -30,12 +30,12 @@ describe('Node._requestHttp', () => {
     it('IP address which is unable to touch, return error ', async() => {
         let node = new Node({
             endpoint: new HttpEndpoint({
-                url: new HttpUrl('http://172.1.2.3')
-            }),
-            timeout: new UInt(1000)
+                url: new HttpUrl('http://172.1.2.3'),
+                timeout: new Timespan(1000)
+            })
         })
         let expectedResult = Result.error(
-            ErrorCode.ETH_IMPLICIT_OVERLOAD,
+            ErrorCode.ETH_IMPLICIT_OVERLOADING,
             'timeout of 1000ms exceeded'
         )
         let actualResult = await node._requestHttp({})
@@ -48,7 +48,7 @@ describe('Node._requestHttp', () => {
             })
         })
         let expectedResult = Result.error(
-            ErrorCode.ETH_IMPLICIT_OVERLOAD,
+            ErrorCode.ETH_IMPLICIT_OVERLOADING,
             'getaddrinfo ENOTFOUND foo.bar'
         )
         let actualResult = await node._requestHttp({})
@@ -57,14 +57,14 @@ describe('Node._requestHttp', () => {
     it('timeout, return error ', async() => {
         let node = new Node({
             endpoint: new HttpEndpoint({
-                url: new HttpUrl('http://0.0.0.0')
+                url: new HttpUrl('http://0.0.0.0'),
+                timeout: new Timespan(1000)
             }),
-            timeout: new UInt(1000)
         })
         let httpMock = new AxiosMock(node._httpClient)
         httpMock.onPost('/').timeout()
         let expectedResult = Result.error(
-            ErrorCode.ETH_IMPLICIT_OVERLOAD,
+            ErrorCode.ETH_IMPLICIT_OVERLOADING,
             'timeout of 1000ms exceeded'
         )
         let actualResult = await node._requestHttp({})
@@ -73,9 +73,9 @@ describe('Node._requestHttp', () => {
     it('other network issues, return error ', async() => {
         let node = new Node({
             endpoint: new HttpEndpoint({
-                url: new HttpUrl('http://0.0.0.0')
-            }),
-            timeout: new UInt(1000)
+                url: new HttpUrl('http://0.0.0.0'),
+                timeout: new Timespan(1000)
+            })
         })
         let httpMock = new AxiosMock(node._httpClient)
         httpMock.onPost('/').networkError()
@@ -155,7 +155,7 @@ describe('Node._requestHttp', () => {
         let httpMock = new AxiosMock(node._httpClient)
         httpMock.onPost('/').reply(429)
         let expectedResult = Result.error(
-            ErrorCode.ETH_EXPLICIT_OVERLOAD,
+            ErrorCode.ETH_EXPLICIT_OVERLOADING,
             'http status: 429'
         )
         let actualResult = await node._requestHttp({})
@@ -170,7 +170,7 @@ describe('Node._requestHttp', () => {
         let httpMock = new AxiosMock(node._httpClient)
         httpMock.onPost('/').reply(503)
         let expectedResult = Result.error(
-            ErrorCode.ETH_EXPLICIT_OVERLOAD,
+            ErrorCode.ETH_EXPLICIT_OVERLOADING,
             'http status: 503'
         )
         let actualResult = await node._requestHttp({})

@@ -17,49 +17,49 @@ describe('type.heximalToFixedBuffer', () => {
     it('size is not a number, return error', () => {
         let heximal = '0x0f0f'
         let size = '2'
-        let expectedResult = Result.error(ErrorCode.NOT_U_INT)
+        let expectedResult = Result.error(ErrorCode.TYPE_U_INT)
         let actualResult = heximalToFixedBuffer(heximal, size)
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('heximal is undefined, return error', () => {
         let heximal = undefined
         let size = 2
-        let expectedResult = Result.error(ErrorCode.NOT_HEXIMAL)
+        let expectedResult = Result.error(ErrorCode.TYPE_HEXIMAL)
         let actualResult = heximalToFixedBuffer(heximal, size)
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('heximal is null, return error', () => {
         let heximal = null
         let size = 2
-        let expectedResult = Result.error(ErrorCode.NOT_HEXIMAL)
+        let expectedResult = Result.error(ErrorCode.TYPE_HEXIMAL)
         let actualResult = heximalToFixedBuffer(heximal, size)
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('heximal has no prefix Ox, return error', () => {
         let heximal = '0f0f'
         let size = 2
-        let expectedResult = Result.error(ErrorCode.NOT_HEXIMAL)
+        let expectedResult = Result.error(ErrorCode.TYPE_HEXIMAL)
         let actualResult = heximalToFixedBuffer(heximal, size)
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('heximal has invalid digits, return error', () => {
         let heximal = '0x0fX'
         let size = 2
-        let expectedResult = Result.error(ErrorCode.NOT_HEXIMAL)
+        let expectedResult = Result.error(ErrorCode.TYPE_HEXIMAL)
         let actualResult = heximalToFixedBuffer(heximal, size)
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('heximal is too short, return error', () => {
         let heximal = '0x0f'
         let size = 2
-        let expectedResult = Result.error(ErrorCode.NOT_ACCEPTED_SIZE)
+        let expectedResult = Result.error(ErrorCode.TYPE_BAD_SIZE, '2 bytes')
         let actualResult = heximalToFixedBuffer(heximal, size)
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('heximal is too long, return error', () => {
         let heximal = '0x0f0f0f'
         let size = 2
-        let expectedResult = Result.error(ErrorCode.NOT_ACCEPTED_SIZE)
+        let expectedResult = Result.error(ErrorCode.TYPE_BAD_SIZE, '2 bytes')
         let actualResult = heximalToFixedBuffer(heximal, size)
         assert.deepStrictEqual(actualResult, expectedResult)
     })

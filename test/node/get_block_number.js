@@ -9,7 +9,7 @@ const {Node} = require('../../lib/node')
 const {
     ErrorCode,
     Result,
-    BigUInt,
+    UInt64,
     HttpUrl,
     HttpEndpoint
 } = require('../../lib/type')
@@ -26,7 +26,7 @@ describe('Node.getBlockNumber', () => {
             result: '0x453'
         })
         httpMock.onPost('/').reply(200, responseBody)
-        let blockNumber = new BigUInt(0x453n)
+        let blockNumber = new UInt64(0x453n)
         let expectedResult = Result.ok(blockNumber)
         let actualResult = await node.getBlockNumber()
         assert.deepStrictEqual(actualResult, expectedResult)

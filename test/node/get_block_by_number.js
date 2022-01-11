@@ -9,7 +9,7 @@ const {Node} = require('../../lib/node')
 const {
     ErrorCode,
     Result,
-    BigUInt,
+    UInt64,
     Timestamp,
     HttpUrl,
     HttpEndpoint,
@@ -36,7 +36,7 @@ describe('Node.getBlockByNumber', () => {
         })
         httpMock.onPost('/').reply(200, responseBody)
         let block = new Block({
-            number: new BigUInt(13458853n),
+            number: new UInt64(13458853n),
             timestamp: new Timestamp(0x61B82374),
             transactions: [
                 ByteData32.fromHeximal('0xabe913f1c2dfe5a759e301d6d27e20766a78fc11a4e0298a6a50c52ff06e95bb').open()
@@ -57,7 +57,7 @@ describe('Node.getBlockByNumber', () => {
             result: null
         })
         httpMock.onPost('/').reply(200, responseBody)
-        let blockNumber = new BigUInt(0xffffffffffffffn)
+        let blockNumber = new UInt64(0xffffffffffffffn)
         let expectedResult = Result.error(ErrorCode.ETH_NO_BLOCK, 'missing or not mined yet')
         let actualResult = await node.getBlockByNumber(blockNumber)
         assert.deepStrictEqual(actualResult, expectedResult)
@@ -68,7 +68,7 @@ describe('Node.getBlockByNumber', () => {
                 url: new HttpUrl('http://0.0.0.0')
             })
         })
-        let blockNumber = new BigUInt(0x1n)
+        let blockNumber = new UInt64(0x1n)
         let httpMock = new AxiosMock(node._httpClient)
         let responseBody = JSON.stringify({
             result: '0x'

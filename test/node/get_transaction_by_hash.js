@@ -10,7 +10,7 @@ const {
     ErrorCode,
     Result,
     UInt16,
-    BigUInt,
+    UInt64,
     ByteData32,
     Address,
     HttpUrl,
@@ -40,7 +40,7 @@ describe('Node.getTransactionByHash', () => {
             hash: ByteData32.fromHeximal('0x456d75c7a1a397f7cfea511e932aeeccc36e727db56724df7a424beb14877c5f').open(),
             from: Address.fromHeximal('0xe2d3a739effcd3a99387d015e260eefac72ebea1').open(),
             to: Address.fromHeximal('0x0000000000000000000000000000000000001000').open(),
-            blockNumber: new BigUInt(13495100n),
+            blockNumber: new UInt64(13495100n),
             transactionIndex: new UInt16(368)
         })
         let expectedResult = Result.ok(transaction)

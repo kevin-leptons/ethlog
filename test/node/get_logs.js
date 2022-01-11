@@ -10,7 +10,7 @@ const {
     ErrorCode,
     Result,
     UInt16,
-    BigUInt,
+    UInt64,
     ByteData,
     ByteData32,
     HttpUrl,
@@ -48,8 +48,8 @@ describe('Node.getLogs', () => {
         })
         httpMock.onPost('/').reply(200, responseBody)
         let filter = new LogFilter({
-            fromBlock: new BigUInt(14098157),
-            toBlock: new BigUInt(14098157),
+            fromBlock: new UInt64(14098157n),
+            toBlock: new UInt64(14098157n),
             addresses: [
                 Address.fromHeximal('0x804678fa97d91b974ec2af3c843270886528a9e6').open()
             ],
@@ -60,7 +60,7 @@ describe('Node.getLogs', () => {
         let logs = [
             new Log({
                 address: Address.fromHeximal('0xe56db5cd954774478dd59b889bbd7b7d4d1f3b00').open(),
-                blockNumber: new BigUInt(0x123n),
+                blockNumber: new UInt64(0x123n),
                 logIndex: new UInt16(0x321),
                 transactionIndex: new UInt16(0x54),
                 topics: new LogTopicCombination([
@@ -82,8 +82,8 @@ describe('Node.getLogs', () => {
             })
         })
         let filter = new LogFilter({
-            fromBlock: new BigUInt(14127894n),
-            toBlock: new BigUInt(14127894n)
+            fromBlock: new UInt64(14127894n),
+            toBlock: new UInt64(14127894n)
         })
         let actualResult = await node.getLogs(filter)
         assert.strictEqual(actualResult.error, ErrorCode.NONE)
@@ -98,8 +98,8 @@ describe('Node.getLogs', () => {
         })
         let randomAddress = Address.fromHeximal('0x5e985727192314df7749976bfe4785a000908715').open()
         let filter = new LogFilter({
-            fromBlock: new BigUInt(0),
-            toBlock: new BigUInt(0),
+            fromBlock: new UInt64(0n),
+            toBlock: new UInt64(0n),
             addresses: [
                 randomAddress
             ]
@@ -117,8 +117,8 @@ describe('Node.getLogs', () => {
         })
         let randomTopic = ByteData32.fromHeximal('0x2a41ddd08781e68b373a0872bbac4e7ae7aaeea0d02b7b107351f5e0f771a398').open()
         let filter = new LogFilter({
-            fromBlock: new BigUInt(0),
-            toBlock: new BigUInt(0),
+            fromBlock: new UInt64(0n),
+            toBlock: new UInt64(0n),
             topics: new LogTopicFilter([
                 randomTopic
             ])
@@ -136,8 +136,8 @@ describe('Node.getLogs', () => {
         })
         let randomTopic = ByteData32.fromHeximal('0x2a41ddd08781e68b373a0872bbac4e7ae7aaeea0d02b7b107351f5e0f771a398').open()
         let filter = new LogFilter({
-            fromBlock: new BigUInt(0),
-            toBlock: new BigUInt(5001),
+            fromBlock: new UInt64(0n),
+            toBlock: new UInt64(5001n),
             topics: new LogTopicFilter([
                 randomTopic
             ])

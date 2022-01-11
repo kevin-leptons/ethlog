@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>client.js - Documentation</title>
+    <title>Endpoint - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -34,111 +34,855 @@
 
 <div id="main">
     
-    <h1 class="page-title">client.js</h1>
+    <h1 class="page-title">Endpoint</h1>
     
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>'use strict'
+        <h2>
+            <span class="ancestors"><a href="module-type.html">type</a>~</span>
+        
+        Endpoint
+        </h2>
+        
+            <div class="class-description usertext"><p>Configuration for a ETH endpoint.</p></div>
+        
+    
+</header>
 
-const {
-    ErrorCode,
-    ResultError,
-    Result,
-    UInt64,
-    ByteData32,
-    Endpoint,
-    LogFilter,
-    assertObjectAttributes,
-    assertInstance,
-    assertArray
-} = require('./type')
-const {Gateway} = require('./gateway')
+<article>
+    
+        <div class="container-overview">
+        
+            
 
-class Client {
-    /**
-     *
-     * @param {object} config
-     * @param {Array&lt;Endpoint>} config.endpoints
-     * @param {Array&lt;Endpoint>} [config.backupEndpoints]
-     */
-    constructor(config) {
-        assertObjectAttributes(config, ['endpoints', 'backupEndpoints'])
-        let {endpoints, backupEndpoints} = config
-        assertArray(endpoints, 'endpoints')
-        if (endpoints.length &lt;= 0) {
-            throw new ResultError(ErrorCode.TYPE_BAD_SIZE, '>= 1')
-        }
-        endpoints.forEach((v, i) => {
-            assertInstance(v, Endpoint, `endpoints[${i}]`)
-        })
-        backupEndpoints = backupEndpoints || []
-        assertArray(backupEndpoints)
-        backupEndpoints.forEach((v, i) => {
-            assertInstance(v, Endpoint, `endpoints[${i}]`)
-        })
-        this._layer2 = new Gateway({
-            endpoints: backupEndpoints
-        })
-        this._layer1 = new Gateway({
-            endpoints: endpoints,
-            lowerLayer: this._layer2
-        })
-    }
+    
+    <h2>Constructor</h2>
+    
 
-    /**
-     * It is similar to `SafeNode.getBlockNumber()`.
-     *
-     * @returns {Promise&lt;Result&lt;UInt64, undefined>>}
-     */
-    async getBlockNumber() {
-        return await this._layer1.proxy('getBlockNumber')
-    }
+    <h4 class="name" id="Endpoint"><span class="type-signature"></span>new Endpoint<span class="signature">(values)</span><span class="type-signature"></span></h4>
 
-    /**
-     * It is similar to `SafeNode.getBlockByNumber()`.
-     *
-     * @param {UInt64} blockNumber
-     * @return {Promise&lt;Result&lt;Block, Metadata>>}
-     */
-    async getBlockByNumber(blockNumber) {
-        assertInstance(blockNumber, UInt64)
-        return await this._layer1.proxy('getBlockByNumber', [blockNumber])
-    }
+    
 
-    /**
-     *
-     * @param {ByteData32} hash
-     * @return {Promise&lt;Result&lt;Transaction, undefined>>}
-     */
-    async getTransaction(hash) {
-        assertInstance(hash, ByteData32)
-        return await this._layer1.proxy('getTransaction', [hash])
-    }
 
-    /**
-     * It is similar to `SafeNode.getLogs()`.
-     *
-     * @param {LogFilter} filter
-     * @return {Promise&lt;Result&lt;Array&lt;Log>, Metadata>>}
-     */
-    async getLogs(filter) {
-        assertInstance(filter, LogFilter)
-        return await this._layer1.proxy('getLogs', [filter])
-    }
-}
 
-module.exports = {
-    Client
-}
-</code></pre>
-        </article>
-    </section>
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="type.js.html">type.js</a>, <a href="type.js.html#line790">line 790</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>values</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>url</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">HttpUrl</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>username</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>password</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>timeout</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Timespan</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>quota</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">EndpointQuota</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>safeBlockGap</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">UInt64</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Throws:</h5>
+
+        
+
+    <div class="param-desc usertext">
+    
+        
+<span class="param-type">Result</span>
+
+
+    
+    </div>
+
+
+    
+
+
+
+
+
+        
+        </div>
+    
+
+    
+
+    
+
+    
+    
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="password"><span class="type-signature"></span>password<span class="type-signature"> :string|undefined</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="type.js.html">type.js</a>, <a href="type.js.html#line808">line 808</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">string</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="quota"><span class="type-signature"></span>quota<span class="type-signature"> :EndpointQuota</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="type.js.html">type.js</a>, <a href="type.js.html#line822">line 822</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">EndpointQuota</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="safeBlockGap"><span class="type-signature"></span>safeBlockGap<span class="type-signature"> :UInt64</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="type.js.html">type.js</a>, <a href="type.js.html#line829">line 829</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">UInt64</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="timeout"><span class="type-signature"></span>timeout<span class="type-signature"> :Timespan</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="type.js.html">type.js</a>, <a href="type.js.html#line815">line 815</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Timespan</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="url"><span class="type-signature"></span>url<span class="type-signature"> :HttpUrl</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="type.js.html">type.js</a>, <a href="type.js.html#line794">line 794</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">HttpUrl</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="username"><span class="type-signature"></span>username<span class="type-signature"> :string|undefined</span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="type.js.html">type.js</a>, <a href="type.js.html#line801">line 801</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">string</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

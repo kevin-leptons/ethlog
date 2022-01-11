@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>client.js - Documentation</title>
+    <title>LogStream - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -34,111 +34,375 @@
 
 <div id="main">
     
-    <h1 class="page-title">client.js</h1>
+    <h1 class="page-title">LogStream</h1>
     
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>'use strict'
+        <h2>
+        LogStream
+        </h2>
+        
+    
+</header>
 
-const {
-    ErrorCode,
-    ResultError,
-    Result,
-    UInt64,
-    ByteData32,
-    Endpoint,
-    LogFilter,
-    assertObjectAttributes,
-    assertInstance,
-    assertArray
-} = require('./type')
-const {Gateway} = require('./gateway')
+<article>
+    
+        <div class="container-overview">
+        
+            
 
-class Client {
-    /**
-     *
-     * @param {object} config
-     * @param {Array&lt;Endpoint>} config.endpoints
-     * @param {Array&lt;Endpoint>} [config.backupEndpoints]
-     */
-    constructor(config) {
-        assertObjectAttributes(config, ['endpoints', 'backupEndpoints'])
-        let {endpoints, backupEndpoints} = config
-        assertArray(endpoints, 'endpoints')
-        if (endpoints.length &lt;= 0) {
-            throw new ResultError(ErrorCode.TYPE_BAD_SIZE, '>= 1')
-        }
-        endpoints.forEach((v, i) => {
-            assertInstance(v, Endpoint, `endpoints[${i}]`)
-        })
-        backupEndpoints = backupEndpoints || []
-        assertArray(backupEndpoints)
-        backupEndpoints.forEach((v, i) => {
-            assertInstance(v, Endpoint, `endpoints[${i}]`)
-        })
-        this._layer2 = new Gateway({
-            endpoints: backupEndpoints
-        })
-        this._layer1 = new Gateway({
-            endpoints: endpoints,
-            lowerLayer: this._layer2
-        })
-    }
+    
 
-    /**
-     * It is similar to `SafeNode.getBlockNumber()`.
-     *
-     * @returns {Promise&lt;Result&lt;UInt64, undefined>>}
-     */
-    async getBlockNumber() {
-        return await this._layer1.proxy('getBlockNumber')
-    }
+    <h4 class="name" id="LogStream"><span class="type-signature"></span>new LogStream<span class="signature">(config)</span><span class="type-signature"></span></h4>
 
-    /**
-     * It is similar to `SafeNode.getBlockByNumber()`.
-     *
-     * @param {UInt64} blockNumber
-     * @return {Promise&lt;Result&lt;Block, Metadata>>}
-     */
-    async getBlockByNumber(blockNumber) {
-        assertInstance(blockNumber, UInt64)
-        return await this._layer1.proxy('getBlockByNumber', [blockNumber])
-    }
+    
 
-    /**
-     *
-     * @param {ByteData32} hash
-     * @return {Promise&lt;Result&lt;Transaction, undefined>>}
-     */
-    async getTransaction(hash) {
-        assertInstance(hash, ByteData32)
-        return await this._layer1.proxy('getTransaction', [hash])
-    }
 
-    /**
-     * It is similar to `SafeNode.getLogs()`.
-     *
-     * @param {LogFilter} filter
-     * @return {Promise&lt;Result&lt;Array&lt;Log>, Metadata>>}
-     */
-    async getLogs(filter) {
-        assertInstance(filter, LogFilter)
-        return await this._layer1.proxy('getLogs', [filter])
-    }
-}
 
-module.exports = {
-    Client
-}
-</code></pre>
-        </article>
-    </section>
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="log_stream.js.html">log_stream.js</a>, <a href="log_stream.js.html#line28">line 28</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>config</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>client</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Client.html">Client</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>handler</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#LogHandler">LogHandler</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>fromBlock</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">UInt64</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>addresses</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;addresses></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>LogTopicFilter</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">LogTopicFilter</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        </div>
+    
+
+    
+
+    
+
+    
+    
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
