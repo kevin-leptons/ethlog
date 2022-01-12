@@ -73,6 +73,7 @@ describe('Node.getLogs', () => {
         ]
         let expectedResult = Result.ok(logs)
         let actualResult = await node.getLogs(filter)
+        actualResult._metadata = undefined
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('no address and topic filter, return logs', async() => {
@@ -144,6 +145,7 @@ describe('Node.getLogs', () => {
         })
         let expectedResult = Result.error(ErrorCode.ETH_BAD_REQUEST, 'exceed maximum block range: 5000')
         let actualResult = await node.getLogs(filter)
+        actualResult._metadata = undefined
         assert.deepStrictEqual(actualResult, expectedResult)
     })
 })

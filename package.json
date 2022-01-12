@@ -1,6 +1,6 @@
 {
   "name": "ethlog",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Best effort for retrive logs from ETH-like JSON RPC endpoints",
   "engines": {
     "node": "14"
@@ -11,7 +11,7 @@
   },
   "scripts": {
     "test": "mocha --exit --recursive --timeout 10000",
-    "standardize": "palmito -i '**/docs/**' -i '**/*.tgz'",
+    "standardize": "palmito -i '**/docs/**' -i '**/*.tgz' -i '**/tmp/**' -i '**/doc/**'",
     "doc": "jsdoc --destination docs --configure doc/jsdoc.json lib doc/jsdoc_home.md",
     "doc-server": "http-server docs",
     "doc-clean": "rm -rf docs"
@@ -32,15 +32,16 @@
   },
   "homepage": "https://github.com/kevin-leptons/ethlog#readme",
   "devDependencies": {
-    "@trop/gear": "^0.4.2",
-    "axios-mock-adapter": "^1.20.0",
-    "docdash": "^1.2.0",
-    "http-server": "^14.0.0",
-    "jsdoc": "^3.6.7",
-    "palmito": "^0.2.2"
+    "axios-mock-adapter": "1.20.0",
+    "docdash": "1.2.0",
+    "http-server": "14.0.0",
+    "jsdoc": "3.6.7",
+    "palmito": "0.3.0"
   },
   "dependencies": {
-    "axios": "^0.24.0",
-    "stdio_log": "^0.4.2"
+    "@ethersproject/abi": "5.5.0",
+    "@trop/gear": "0.4.2",
+    "axios": "0.24.0",
+    "stdio_log": "0.6.0"
   }
 }

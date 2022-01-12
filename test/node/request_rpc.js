@@ -31,6 +31,7 @@ describe('Node._requestRpc', () => {
         httpMock.onPost('/').reply(200, httpBody)
         let actualResult = await node._requestRpc(method, params)
         let expectedResult = Result.ok({number: '0x1b4'})
+        actualResult._metadata = undefined
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('method=undefined, params=undefined, return error', async() => {
@@ -52,6 +53,7 @@ describe('Node._requestRpc', () => {
         let expectedResult = Result.error(
             ErrorCode.ETH_BAD_REQUEST, 'error message from server'
         )
+        actualResult._metadata = undefined
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('method=eth_getTransactionByHash, params=undefined, return error', async() => {
@@ -70,6 +72,7 @@ describe('Node._requestRpc', () => {
         })
         httpMock.onPost('/').reply(200, httpBody)
         let actualResult = await node._requestRpc(method, params)
+        actualResult._metadata = undefined
         let expectedResult = Result.error(
             ErrorCode.ETH_BAD_REQUEST, 'error message from server'
         )
@@ -86,6 +89,7 @@ describe('Node._requestRpc', () => {
         let httpMock = new AxiosMock(node._httpClient)
         httpMock.onPost('/').reply(200, '"this is invalid RPC response object"')
         let actualResult = await node._requestRpc(method, params)
+        actualResult._metadata = undefined
         let expectedResult = Result.error(
             ErrorCode.ETH_BAD_RESPONSE, 'json rpc v2: invalid response'
         )

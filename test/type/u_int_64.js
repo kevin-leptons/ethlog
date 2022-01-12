@@ -1,5 +1,6 @@
 'use strict'
 
+/* eslint-disable max-len */
 /* eslint-disable max-lines-per-function */
 
 const assert = require('assert')
@@ -29,7 +30,7 @@ describe('type.UInt64.constructor', () => {
             () => new UInt64(-1n),
             {
                 constructor: ResultError,
-                error: ErrorCode.TYPE_BIG_U_INT,
+                error: ErrorCode.TYPE_BIG_U_INT
             }
         )
     })

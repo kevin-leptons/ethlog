@@ -25,13 +25,14 @@ describe('Node._requestHttp', () => {
             'connect ECONNREFUSED 0.0.0.0:80'
         )
         let actualResult = await node._requestHttp({})
+        actualResult._metadata = undefined
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('IP address which is unable to touch, return error ', async() => {
         let node = new Node({
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://172.1.2.3'),
-                timeout: new Timespan(1000)
+                timeout: new Timespan(1000n)
             })
         })
         let expectedResult = Result.error(
@@ -39,6 +40,7 @@ describe('Node._requestHttp', () => {
             'timeout of 1000ms exceeded'
         )
         let actualResult = await node._requestHttp({})
+        actualResult._metadata = undefined
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('not existed domain, return error ', async() => {
@@ -52,14 +54,15 @@ describe('Node._requestHttp', () => {
             'getaddrinfo ENOTFOUND foo.bar'
         )
         let actualResult = await node._requestHttp({})
+        actualResult._metadata = undefined
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('timeout, return error ', async() => {
         let node = new Node({
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://0.0.0.0'),
-                timeout: new Timespan(1000)
-            }),
+                timeout: new Timespan(1000n)
+            })
         })
         let httpMock = new AxiosMock(node._httpClient)
         httpMock.onPost('/').timeout()
@@ -68,13 +71,14 @@ describe('Node._requestHttp', () => {
             'timeout of 1000ms exceeded'
         )
         let actualResult = await node._requestHttp({})
+        actualResult._metadata = undefined
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('other network issues, return error ', async() => {
         let node = new Node({
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://0.0.0.0'),
-                timeout: new Timespan(1000)
+                timeout: new Timespan(1000n)
             })
         })
         let httpMock = new AxiosMock(node._httpClient)
@@ -84,6 +88,7 @@ describe('Node._requestHttp', () => {
             'Network Error'
         )
         let actualResult = await node._requestHttp({})
+        actualResult._metadata = undefined
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('respond 1xx status, return error', async() => {
@@ -99,6 +104,7 @@ describe('Node._requestHttp', () => {
             'http status: 100'
         )
         let actualResult = await node._requestHttp({})
+        actualResult._metadata = undefined
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('respond 4xx status, return error', async() => {
@@ -114,6 +120,7 @@ describe('Node._requestHttp', () => {
             'http status: 400'
         )
         let actualResult = await node._requestHttp({})
+        actualResult._metadata = undefined
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('respond 5xx status, return error', async() => {
@@ -129,6 +136,7 @@ describe('Node._requestHttp', () => {
             'http status: 500'
         )
         let actualResult = await node._requestHttp({})
+        actualResult._metadata = undefined
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('respond invalid JSON format from body, return error', async() => {
@@ -144,6 +152,7 @@ describe('Node._requestHttp', () => {
             'http body: invalid JSON format'
         )
         let actualResult = await node._requestHttp({})
+        actualResult._metadata = undefined
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('respond status 429, return error', async() => {
@@ -159,6 +168,7 @@ describe('Node._requestHttp', () => {
             'http status: 429'
         )
         let actualResult = await node._requestHttp({})
+        actualResult._metadata = undefined
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('respond status 503, return error', async() => {
@@ -174,6 +184,7 @@ describe('Node._requestHttp', () => {
             'http status: 503'
         )
         let actualResult = await node._requestHttp({})
+        actualResult._metadata = undefined
         assert.deepStrictEqual(actualResult, expectedResult)
     })
 })

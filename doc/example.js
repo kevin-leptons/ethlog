@@ -1,16 +1,8 @@
-# ethlog
-
-* Best effort for retrive logs from ETH-like JSON RPC endpoints.
-* Source code at [github.com](https://github.com/kevin-leptons/ethlog).
-
-# Getting Started
-
-```js
 'use strict'
 
 const {
-    LogStream, UInt64, HttpUrl, Endpoint, Address, LogTopicFilter, ByteData32,
-    Log, Client
+    LogStream, UInt64, HttpUrl, Endpoint, Address, Log, Client,
+    Metadata
 } = require('ethlog')
 
 /**
@@ -46,4 +38,3 @@ async function main() {
 }
 
 main().catch(console.error)
-```

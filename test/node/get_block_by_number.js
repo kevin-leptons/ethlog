@@ -37,13 +37,14 @@ describe('Node.getBlockByNumber', () => {
         httpMock.onPost('/').reply(200, responseBody)
         let block = new Block({
             number: new UInt64(13458853n),
-            timestamp: new Timestamp(0x61B82374),
+            timestamp: new Timestamp(0x61B82374n),
             transactions: [
                 ByteData32.fromHeximal('0xabe913f1c2dfe5a759e301d6d27e20766a78fc11a4e0298a6a50c52ff06e95bb').open()
             ]
         })
         let expectedResult = Result.ok(block)
         let actualResult = await node.getBlockByNumber(block.number)
+        actualResult._metadata = undefined
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('block is not existed, return error', async() => {

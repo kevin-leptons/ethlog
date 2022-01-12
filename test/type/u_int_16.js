@@ -1,5 +1,6 @@
 'use strict'
 
+/* eslint-disable max-len */
 /* eslint-disable max-lines-per-function */
 
 const assert = require('assert')
@@ -11,7 +12,7 @@ describe('type.UInt16.constructor', () => {
             () => new UInt16(-1),
             {
                 constructor: ResultError,
-                error: ErrorCode.TYPE_U_INT,
+                error: ErrorCode.TYPE_U_INT
             }
         )
     })
@@ -43,7 +44,6 @@ describe('type.UInt16.constructor', () => {
         )
     })
 })
-
 describe('type.UInt16.fromHeximal', () => {
     it('0x0, return correct value', () => {
         let input = '0x0'
