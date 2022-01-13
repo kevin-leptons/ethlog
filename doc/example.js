@@ -2,7 +2,7 @@
 
 const {
     LogStream, UInt64, HttpUrl, Endpoint, Address, Log, Client,
-    Metadata
+    Metadata, LogLevel
 } = require('ethlog')
 
 /**
@@ -19,8 +19,8 @@ async function handler(logs, metadata, client) {
 async function main() {
     let mainEndpoints = [
         new Endpoint({
-            url: new HttpUrl('https://bsc-dataseed.binance.org')
-        })
+            url: new HttpUrl('https://bsc-dataseed.binance.orgx')
+        }),
     ]
     let backupEndpoints = [
         new Endpoint({
@@ -32,7 +32,7 @@ async function main() {
     ]
     let fromBlock = new UInt64(10111222n)
     let stream = new LogStream({
-        handler, mainEndpoints, backupEndpoints, addresses, fromBlock
+        handler, mainEndpoints, backupEndpoints, addresses, fromBlock, logLevel: LogLevel.ERROR
     })
     await stream.start()
 }
