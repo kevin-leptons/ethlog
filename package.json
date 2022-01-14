@@ -1,6 +1,6 @@
 {
   "name": "ethlog",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Best effort for retrive logs from ETH-like JSON RPC endpoints",
   "engines": {
     "node": "14"
