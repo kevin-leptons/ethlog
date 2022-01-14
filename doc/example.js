@@ -19,16 +19,16 @@ async function handler(logs, metadata, client) {
 async function main() {
     let mainEndpoints = [
         new EthEndpoint({
-            url: new HttpUrl('https://bsc-dataseed.binance.orgx')
+            url: new HttpUrl('https://bsc-dataseed.binance.org')
         }),
     ]
     let backupEndpoints = [
-        new EthEndpoint({
-            url: new HttpUrl('https://bsc-dataseed1.ninicoin.io/')
-        })
+        // new EthEndpoint({
+        //     url: new HttpUrl('https://bsc-dataseed1.ninicoin.io/')
+        // })
     ]
     let addresses = [
-        Address.fromHeximal('0x804678fa97d91b974ec2af3c843270886528a9e6').open()
+        Address.fromHeximal('0x3114c0b418c3798339a765d32391440355da9dde').open()
     ]
     let fromBlock = new UInt64(10111222n)
     let stream = new LogStream({
