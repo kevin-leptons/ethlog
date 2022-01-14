@@ -13,7 +13,7 @@ const {
     UInt64,
     Timespan,
     HttpUrl,
-    Endpoint,
+    EthEndpoint,
     EndpointQuota
 } = require('../../lib/type')
 
@@ -21,7 +21,7 @@ describe('SafeNode.getBlockNumber', () => {
     let node
     before(() => {
         node = new SafeNode({
-            endpoint: new Endpoint({
+            endpoint: new EthEndpoint({
                 url: new HttpUrl('https://bsc-dataseed.binance.org'),
                 quota: new EndpointQuota({
                     batchLimit: new UInt(10000),

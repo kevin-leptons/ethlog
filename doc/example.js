@@ -1,7 +1,7 @@
 'use strict'
 
 const {
-    LogStream, UInt64, HttpUrl, Endpoint, Address, Log, Client,
+    LogStream, UInt64, HttpUrl, EthEndpoint, Address, Log, Client,
     Metadata, LogLevel
 } = require('ethlog')
 
@@ -18,12 +18,12 @@ async function handler(logs, metadata, client) {
 
 async function main() {
     let mainEndpoints = [
-        new Endpoint({
+        new EthEndpoint({
             url: new HttpUrl('https://bsc-dataseed.binance.orgx')
         }),
     ]
     let backupEndpoints = [
-        new Endpoint({
+        new EthEndpoint({
             url: new HttpUrl('https://bsc-dataseed1.ninicoin.io/')
         })
     ]
