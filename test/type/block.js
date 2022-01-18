@@ -4,12 +4,9 @@
 /* eslint-disable max-lines-per-function */
 
 const assert = require('assert')
+const {Result, UInt64, Timestamp} = require('minitype')
 const {
-    ErrorCode,
-    Result,
     Block,
-    UInt64,
-    Timestamp,
     ByteData32
 } = require('../../lib/type')
 
@@ -23,10 +20,10 @@ describe('type.Block.fromRpcResult', () => {
             ]
         }
         let block = new Block({
-            number: UInt64.fromHeximal('0x2').data,
-            timestamp: Timestamp.fromHeximal('0x45').data,
+            number: UInt64.fromHeximal('0x2').open(),
+            timestamp: Timestamp.fromHeximal('0x45').open(),
             transactions: [
-                ByteData32.fromHeximal('0xe085e95d71717c8a054ac838bc7fdb6c64607adc7b9f8dfaee12d3cd8e8e03af').data
+                ByteData32.fromHeximal('0xe085e95d71717c8a054ac838bc7fdb6c64607adc7b9f8dfaee12d3cd8e8e03af').open()
             ]
         })
         let expectedResult = Result.ok(block)
@@ -41,7 +38,7 @@ describe('type.Block.fromRpcResult', () => {
                 '0xe085e95d71717c8a054ac838bc7fdb6c64607adc7b9f8dfaee12d3cd8e8e03af'
             ]
         }
-        let expectedResult = Result.error(ErrorCode.TYPE_HEXIMAL, 'number')
+        let expectedResult = Result.error('number: expect a heximal')
         let actualResult = Block.fromRpcResult(rpcResult)
         assert.deepStrictEqual(actualResult, expectedResult)
     })
@@ -53,7 +50,7 @@ describe('type.Block.fromRpcResult', () => {
                 '0xe085e95d71717c8a054ac838bc7fdb6c64607adc7b9f8dfaee12d3cd8e8e03af'
             ]
         }
-        let expectedResult = Result.error(ErrorCode.TYPE_HEXIMAL, 'timestamp')
+        let expectedResult = Result.error('timestamp: expect a heximal')
         let actualResult = Block.fromRpcResult(rpcResult)
         assert.deepStrictEqual(actualResult, expectedResult)
     })
@@ -63,7 +60,7 @@ describe('type.Block.fromRpcResult', () => {
             timestamp: '0x45',
             transactions: '0xe085e95d71717c8a054ac838bc7fdb6c64607adc7b9f8dfaee12d3cd8e8e03af'
         }
-        let expectedResult = new Result(ErrorCode.TYPE_ARRAY, undefined, 'transactions')
+        let expectedResult = new Result('transactions: expect an array')
         let actualResult = Block.fromRpcResult(rpcResult)
         assert.deepStrictEqual(actualResult, expectedResult)
     })
@@ -75,7 +72,7 @@ describe('type.Block.fromRpcResult', () => {
                 '0xf712befa13df56c5c11799078b793c49fe121XXX'
             ]
         }
-        let expectedResult = new Result(ErrorCode.TYPE_HEXIMAL, undefined, 'transactions[0]')
+        let expectedResult = new Result('transactions: [0]: expect a heximal')
         let actualResult = Block.fromRpcResult(rpcResult)
         assert.deepStrictEqual(actualResult, expectedResult)
     })

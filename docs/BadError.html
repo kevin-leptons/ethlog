@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>client.js - Documentation</title>
+    <title>BadError - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -34,132 +34,582 @@
 
 <div id="main">
     
-    <h1 class="page-title">client.js</h1>
+    <h1 class="page-title">BadError</h1>
     
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>'use strict'
+        <h2>
+        BadError
+        </h2>
+        
+    
+</header>
 
-const {Log: StdioLog} = require('stdio_log')
-const {Metadata} = require('./safe_node')
-const {
-    ErrorCode,
-    ResultError,
-    Result,
-    UInt64,
-    ByteData32,
-    EthEndpoint,
-    LogFilter,
-    Log,
-    Block,
-    assertObjectAttributes,
-    assertInstance,
-    assertArray
-} = require('./type')
-const {Gateway} = require('./gateway')
+<article>
+    
+        <div class="container-overview">
+        
+            
 
-class Client {
-    /**
-     *
-     * @param {object} config
-     * @param {Array&lt;EthEndpoint>} config.mainEndpoints
-     * @param {Array&lt;EthEndpoint>} [config.backupEndpoints]
-     * @param {StdioLog} [config.log]
-     */
-    constructor(config) {
-        assertObjectAttributes(config, [
-            'mainEndpoints', 'backupEndpoints', 'log'
-        ])
-        let {mainEndpoints, backupEndpoints, log} = config
-        assertArray(mainEndpoints, 'endpoints')
-        if (mainEndpoints.length &lt;= 0) {
-            throw new ResultError(ErrorCode.TYPE_BAD_SIZE, '>= 1')
-        }
-        mainEndpoints.forEach((v, i) => {
-            assertInstance(v, EthEndpoint, `endpoints[${i}]`)
-        })
-        backupEndpoints = backupEndpoints || []
-        assertArray(backupEndpoints)
-        backupEndpoints.forEach((v, i) => {
-            assertInstance(v, EthEndpoint, `endpoints[${i}]`)
-        })
-        assertInstance(log, StdioLog, 'log')
-        this._layer2 = new Gateway({
-            endpoints: backupEndpoints,
-            log: log
-        })
-        this._layer1 = new Gateway({
-            endpoints: mainEndpoints,
-            lowerLayer: this._layer2,
-            log: log
-        })
-    }
+    
 
-    /**
-     * It is similar to `SafeNode.getBlockNumber()`.
-     *
-     * @return {Promise&lt;Result&lt;UInt64, undefined>>}
-     */
-    async getBlockNumber() {
-        return await this._layer1.proxy('getBlockNumber')
-    }
+    <h4 class="name" id="BadError"><span class="type-signature"></span>new BadError<span class="signature">(code, message, data)</span><span class="type-signature"></span></h4>
 
-    /**
-     * It is similar to `SafeNode.getBlockByNumber()`.
-     *
-     * @param {UInt64} blockNumber
-     * @return {Promise&lt;Result&lt;Block, Metadata>>}
-     */
-    async getBlockByNumber(blockNumber) {
-        assertInstance(blockNumber, UInt64)
-        return await this._layer1.proxy('getBlockByNumber', [blockNumber])
-    }
+    
 
-    /**
-     * It is similar to `SafeNode.getBlockByNumberUnsafe()`.
-     *
-     * @param {UInt64} blockNumber
-     * @return {Promise&lt;Result&lt;Block, Metadata>>}
-     */
-    async getBlockByNumberUnsafe(blockNumber) {
-        assertInstance(blockNumber, UInt64)
-        return await this._layer1.proxy('getBlockByNumberUnsafe', [blockNumber])
-    }
 
-    /**
-     *
-     * @param {ByteData32} hash
-     * @return {Promise&lt;Result&lt;ByteData32, undefined>>}
-     */
-    async getTransactionByHash(hash) {
-        assertInstance(hash, ByteData32)
-        return await this._layer1.proxy('getTransactionByHash', [hash])
-    }
 
-    /**
-     * It is similar to `SafeNode.getLogs()`.
-     *
-     * @param {LogFilter} filter
-     * @return {Promise&lt;Result&lt;Array&lt;Log>, Metadata>>}
-     */
-    async getLogs(filter) {
-        assertInstance(filter, LogFilter)
-        return await this._layer1.proxy('getLogs', [filter])
-    }
-}
 
-module.exports = {
-    Client
-}
-</code></pre>
-        </article>
-    </section>
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="type.js.html">type.js</a>, <a href="type.js.html#line67">line 67</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>code</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#ErrorCode">ErrorCode</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>message</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">any</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        </div>
+    
+
+    
+
+    
+
+    
+    
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id=".noData"><span class="type-signature">(static) </span>noData<span class="signature">(code, message)</span><span class="type-signature"> &rarr; {<a href="BadError.html">BadError</a>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="type.js.html">type.js</a>, <a href="type.js.html#line93">line 93</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>code</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#ErrorCode">ErrorCode</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>message</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="BadError.html">BadError</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".noMessage"><span class="type-signature">(static) </span>noMessage<span class="signature">(code, data)</span><span class="type-signature"> &rarr; {<a href="BadError.html">BadError</a>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="type.js.html">type.js</a>, <a href="type.js.html#line83">line 83</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>code</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#ErrorCode">ErrorCode</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">any</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="BadError.html">BadError</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
@@ -171,7 +621,7 @@ module.exports = {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Tue Jan 18 2022 05:06:51 GMT-0800 (Pacific Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Tue Jan 18 2022 05:06:52 GMT-0800 (Pacific Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

@@ -36,12 +36,14 @@
     "docdash": "1.2.0",
     "http-server": "14.0.0",
     "jsdoc": "3.6.7",
+    "mockdate": "^3.0.5",
     "palmito": "0.3.0"
   },
   "dependencies": {
     "@ethersproject/abi": "5.5.0",
     "@trop/gear": "0.4.2",
     "axios": "0.24.0",
+    "minitype": "^0.1.0",
     "stdio_log": "0.6.0"
   }
 }

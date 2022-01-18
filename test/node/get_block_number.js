@@ -4,17 +4,30 @@
 /* eslint-disable max-lines-per-function */
 
 const assert = require('assert')
+const mockDate = require('mockdate')
 const AxiosMock = require('axios-mock-adapter')
-const {Node} = require('../../lib/node')
 const {
-    ErrorCode,
-    Result,
     UInt64,
+    Timespan,
+    DataSize
+} = require('minitype')
+const {Node, NodeResponse, RpcResponse} = require('../../lib/node')
+const {
+    Result,
     HttpUrl,
     HttpEndpoint
 } = require('../../lib/type')
+const {
+    NODE_BAD_RESPONSE
+} = require('../../lib/type').ErrorCode
 
 describe('Node.getBlockNumber', () => {
+    before(() => {
+        mockDate.set(0)
+    })
+    after(() => {
+        mockDate.reset()
+    })
     it('return correct result', async() => {
         let node = new Node({
             endpoint: new HttpEndpoint({
@@ -26,8 +39,13 @@ describe('Node.getBlockNumber', () => {
             result: '0x453'
         })
         httpMock.onPost('/').reply(200, responseBody)
-        let blockNumber = new UInt64(0x453n)
-        let expectedResult = Result.ok(blockNumber)
+        let blockNumber = UInt64.fromNumber(0x453).open()
+        let data = new NodeResponse(
+            blockNumber,
+            Timespan.fromMiliseconds(0).open(),
+            DataSize.fromBytes(18).open()
+        )
+        let expectedResult = Result.ok(data)
         let actualResult = await node.getBlockNumber()
         assert.deepStrictEqual(actualResult, expectedResult)
     })
@@ -42,7 +60,14 @@ describe('Node.getBlockNumber', () => {
             result: '0x'
         })
         httpMock.onPost('/').reply(200, responseBody)
-        let expectedResult = Result.error(ErrorCode.ETH_BAD_RESPONSE, 'bad block number')
+        let rpcResponse = new RpcResponse({
+            data: '0x',
+            time: Timespan.fromMiliseconds(0).open(),
+            size: DataSize.fromBytes(15).open()
+        })
+        let expectedResult = Result.badError(
+            NODE_BAD_RESPONSE, 'expect a heximal', rpcResponse
+        )
         let actualResult = await node.getBlockNumber()
         assert.deepStrictEqual(actualResult, expectedResult)
     })

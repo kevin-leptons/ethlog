@@ -5,12 +5,11 @@
 
 const assert = require('assert')
 const AxiosMock = require('axios-mock-adapter')
-const {Node} = require('../../lib/node')
+const {UInt16, UInt64, Timespan, DataSize} = require('minitype')
+const mockDate = require('mockdate')
+const {Node, NodeResponse} = require('../../lib/node')
 const {
-    ErrorCode,
     Result,
-    UInt16,
-    UInt64,
     ByteData,
     ByteData32,
     HttpUrl,
@@ -21,9 +20,18 @@ const {
     LogFilter,
     Log
 } = require('../../lib/type')
+const {
+    NODE_BAD_REQUEST
+} = require('../../lib/type').ErrorCode
 
 describe('Node.getLogs', () => {
-    it('filtered, return a log', async() => {
+    before(() => {
+        mockDate.set(0)
+    })
+    after(() => {
+        mockDate.reset()
+    })
+    it('return a log', async() => {
         let node = new Node({
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://0.0.0.0')
@@ -48,8 +56,8 @@ describe('Node.getLogs', () => {
         })
         httpMock.onPost('/').reply(200, responseBody)
         let filter = new LogFilter({
-            fromBlock: new UInt64(14098157n),
-            toBlock: new UInt64(14098157n),
+            fromBlock: UInt64.fromNumber(14098157).open(),
+            toBlock: UInt64.fromNumber(14098157).open(),
             addresses: [
                 Address.fromHeximal('0x804678fa97d91b974ec2af3c843270886528a9e6').open()
             ],
@@ -60,9 +68,9 @@ describe('Node.getLogs', () => {
         let logs = [
             new Log({
                 address: Address.fromHeximal('0xe56db5cd954774478dd59b889bbd7b7d4d1f3b00').open(),
-                blockNumber: new UInt64(0x123n),
-                logIndex: new UInt16(0x321),
-                transactionIndex: new UInt16(0x54),
+                blockNumber: UInt64.fromNumber(0x123).open(),
+                logIndex: UInt16.fromNumber(0x321).open(),
+                transactionIndex: UInt16.fromNumber(0x54).open(),
                 topics: new LogTopicCombination([
                     ByteData32.fromHeximal('0xd78ad95fa46c994b6551d0da85fc275fe613ce37657fb8d5e3d130840159d822').open()
                 ]),
@@ -71,9 +79,13 @@ describe('Node.getLogs', () => {
                 transactionHash: ByteData32.fromHeximal('0x6c08b5ef6a44c677216e971c38b6d273ba38875d98b27127dd61bb3366cafef2').open()
             })
         ]
-        let expectedResult = Result.ok(logs)
+        let data = new NodeResponse(
+            logs,
+            Timespan.fromMiliseconds(0).open(),
+            DataSize.fromBytes(396).open()
+        )
+        let expectedResult = Result.ok(data)
         let actualResult = await node.getLogs(filter)
-        actualResult._metadata = undefined
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('no address and topic filter, return logs', async() => {
@@ -83,13 +95,15 @@ describe('Node.getLogs', () => {
             })
         })
         let filter = new LogFilter({
-            fromBlock: new UInt64(14127894n),
-            toBlock: new UInt64(14127894n)
+            fromBlock: UInt64.fromNumber(1412789).open(),
+            toBlock: UInt64.fromNumber(1412789).open()
         })
         let actualResult = await node.getLogs(filter)
-        assert.strictEqual(actualResult.error, ErrorCode.NONE)
-        assert.strictEqual(Array.isArray(actualResult.data), true)
-        assert.strictEqual(actualResult.data.length, 494)
+        assert.strictEqual(actualResult.error, undefined)
+        let {data: nodeResponse} = actualResult
+        let {data: logs} = nodeResponse
+        assert.strictEqual(Array.isArray(logs), true)
+        assert.strictEqual(logs.length, 14)
     })
     it('return no logs because of not existed address', async() => {
         let node = new Node({
@@ -99,16 +113,20 @@ describe('Node.getLogs', () => {
         })
         let randomAddress = Address.fromHeximal('0x5e985727192314df7749976bfe4785a000908715').open()
         let filter = new LogFilter({
-            fromBlock: new UInt64(0n),
-            toBlock: new UInt64(0n),
+            fromBlock: UInt64.fromNumber(0).open(),
+            toBlock: UInt64.fromNumber(0).open(),
             addresses: [
                 randomAddress
             ]
         })
+        let nodeResponse = new NodeResponse(
+            [],
+            Timespan.fromMiliseconds(0).open(),
+            DataSize.fromBytes(36).open()
+        )
+        let expectedResult = Result.ok(nodeResponse)
         let actualResult = await node.getLogs(filter)
-        assert.strictEqual(actualResult.error, ErrorCode.NONE)
-        assert.strictEqual(Array.isArray(actualResult.data), true)
-        assert.strictEqual(actualResult.data.length, 0)
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('return no logs because of not existed topic', async() => {
         let node = new Node({
@@ -118,16 +136,20 @@ describe('Node.getLogs', () => {
         })
         let randomTopic = ByteData32.fromHeximal('0x2a41ddd08781e68b373a0872bbac4e7ae7aaeea0d02b7b107351f5e0f771a398').open()
         let filter = new LogFilter({
-            fromBlock: new UInt64(0n),
-            toBlock: new UInt64(0n),
+            fromBlock: UInt64.fromNumber(0).open(),
+            toBlock: UInt64.fromNumber(0).open(),
             topics: new LogTopicFilter([
                 randomTopic
             ])
         })
+        let nodeResponse = new NodeResponse(
+            [],
+            Timespan.fromMiliseconds(0).open(),
+            DataSize.fromBytes(36).open()
+        )
+        let expectedResult = Result.ok(nodeResponse)
         let actualResult = await node.getLogs(filter)
-        assert.strictEqual(actualResult.error, ErrorCode.NONE)
-        assert.strictEqual(Array.isArray(actualResult.data), true)
-        assert.strictEqual(actualResult.data.length, 0)
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('responds out of range, throws error', async() => {
         let node = new Node({
@@ -137,15 +159,18 @@ describe('Node.getLogs', () => {
         })
         let randomTopic = ByteData32.fromHeximal('0x2a41ddd08781e68b373a0872bbac4e7ae7aaeea0d02b7b107351f5e0f771a398').open()
         let filter = new LogFilter({
-            fromBlock: new UInt64(0n),
-            toBlock: new UInt64(5001n),
+            fromBlock: UInt64.fromNumber(0).open(),
+            toBlock: UInt64.fromNumber(5001).open(),
             topics: new LogTopicFilter([
                 randomTopic
             ])
         })
-        let expectedResult = Result.error(ErrorCode.ETH_BAD_REQUEST, 'exceed maximum block range: 5000')
+        let expectedResult = Result.badError(
+            NODE_BAD_REQUEST,
+            'exceed maximum block range: 5000'
+        )
         let actualResult = await node.getLogs(filter)
-        actualResult._metadata = undefined
-        assert.deepStrictEqual(actualResult, expectedResult)
+        assert.strictEqual(actualResult.error.code, expectedResult.error.code)
+        assert.strictEqual(actualResult.error.messsage, expectedResult.error.messsage)
     })
 })

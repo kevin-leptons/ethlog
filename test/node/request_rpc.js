@@ -5,16 +5,27 @@
 
 const assert = require('assert')
 const AxiosMock = require('axios-mock-adapter')
-const {Node} = require('../../lib/node')
+const mockDate = require('mockdate')
+const {Timespan, DataSize} = require('minitype')
+const {Node, RpcResponse, JsonResponse} = require('../../lib/node')
 const {
-    ErrorCode,
     Result,
     HttpUrl,
     HttpEndpoint
 } = require('../../lib/type')
+const {
+    NODE_BAD_REQUEST,
+    NODE_BAD_RESPONSE
+} = require('../../lib/type').ErrorCode
 
 describe('Node._requestRpc', () => {
-    it('method=eth_getBlockByNumber, params=["0x1b4", false]', async() => {
+    before(() => {
+        mockDate.set(0)
+    })
+    after(() => {
+        mockDate.reset()
+    })
+    it('response valid RPC data', async() => {
         let node = new Node({
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://foo.bar')
@@ -23,18 +34,24 @@ describe('Node._requestRpc', () => {
         let method = 'eth_getBlockByNumber'
         let params = ['0x1b4', false]
         let httpMock = new AxiosMock(node._httpClient)
-        let httpBody = JSON.stringify({
+        let httpResponseBody = JSON.stringify({
             result: {
                 number: '0x1b4'
             }
         })
-        httpMock.onPost('/').reply(200, httpBody)
+        httpMock.onPost('/').reply(200, httpResponseBody)
+        let rpcResponse = new RpcResponse({
+            data: {
+                number: '0x1b4'
+            },
+            size: DataSize.fromBytes(29).open(),
+            time: Timespan.fromMiliseconds(0).open()
+        })
+        let expectedResult = Result.ok(rpcResponse)
         let actualResult = await node._requestRpc(method, params)
-        let expectedResult = Result.ok({number: '0x1b4'})
-        actualResult._metadata = undefined
         assert.deepStrictEqual(actualResult, expectedResult)
     })
-    it('method=undefined, params=undefined, return error', async() => {
+    it('respnose error message, return error', async() => {
         let node = new Node({
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://foo.bar')
@@ -43,42 +60,28 @@ describe('Node._requestRpc', () => {
         let method = undefined
         let params = undefined
         let httpMock = new AxiosMock(node._httpClient)
-        let httpBody = JSON.stringify({
+        let httpResponseBody = JSON.stringify({
             error: {
                 message: 'error message from server'
             }
         })
-        httpMock.onPost('/').reply(200, httpBody)
-        let actualResult = await node._requestRpc(method, params)
-        let expectedResult = Result.error(
-            ErrorCode.ETH_BAD_REQUEST, 'error message from server'
+        httpMock.onPost('/').reply(200, httpResponseBody)
+        let jsonResponse = new JsonResponse({
+            data: {
+                error: {
+                    message: 'error message from server'
+                }
+            },
+            size: DataSize.fromBytes(49).open(),
+            time: Timespan.fromMiliseconds(0).open()
+        })
+        let expectedResult = Result.badError(
+            NODE_BAD_REQUEST, 'error message from server', jsonResponse
         )
-        actualResult._metadata = undefined
+        let actualResult = await node._requestRpc(method, params)
         assert.deepStrictEqual(actualResult, expectedResult)
     })
-    it('method=eth_getTransactionByHash, params=undefined, return error', async() => {
-        let node = new Node({
-            endpoint: new HttpEndpoint({
-                url: new HttpUrl('http://foo.bar')
-            })
-        })
-        let method = 'eth_getTransactionByHash'
-        let params = undefined
-        let httpMock = new AxiosMock(node._httpClient)
-        let httpBody = JSON.stringify({
-            error: {
-                message: 'error message from server'
-            }
-        })
-        httpMock.onPost('/').reply(200, httpBody)
-        let actualResult = await node._requestRpc(method, params)
-        actualResult._metadata = undefined
-        let expectedResult = Result.error(
-            ErrorCode.ETH_BAD_REQUEST, 'error message from server'
-        )
-        assert.deepStrictEqual(actualResult, expectedResult)
-    })
-    it('responds invalid JSON RPC data, return error', async() => {
+    it('response no error or result, return error', async() => {
         let node = new Node({
             endpoint: new HttpEndpoint({
                 url: new HttpUrl('http://foo.bar')
@@ -87,12 +90,16 @@ describe('Node._requestRpc', () => {
         let method = 'eth_getBlockByNumber'
         let params = ['0x357', false]
         let httpMock = new AxiosMock(node._httpClient)
-        httpMock.onPost('/').reply(200, '"this is invalid RPC response object"')
-        let actualResult = await node._requestRpc(method, params)
-        actualResult._metadata = undefined
-        let expectedResult = Result.error(
-            ErrorCode.ETH_BAD_RESPONSE, 'json rpc v2: invalid response'
+        httpMock.onPost('/').reply(200, '{}')
+        let jsonResponse = new JsonResponse({
+            data: {},
+            size: DataSize.fromBytes(2).open(),
+            time: Timespan.fromMiliseconds(0).open()
+        })
+        let expectedResult = Result.badError(
+            NODE_BAD_RESPONSE, 'no error or result from RPC', jsonResponse
         )
+        let actualResult = await node._requestRpc(method, params)
         assert.deepStrictEqual(actualResult, expectedResult)
     })
 })

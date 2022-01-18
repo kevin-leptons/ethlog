@@ -5,19 +5,28 @@
 
 const assert = require('assert')
 const AxiosMock = require('axios-mock-adapter')
-const {Node} = require('../../lib/node')
+const {UInt64, Timespan, Timestamp, DataSize} = require('minitype')
+const mockDate = require('mockdate')
+const {Node, NodeResponse, RpcResponse} = require('../../lib/node')
 const {
-    ErrorCode,
     Result,
-    UInt64,
-    Timestamp,
     HttpUrl,
     HttpEndpoint,
     ByteData32,
     Block
 } = require('../../lib/type')
+const {
+    NODE_NO_BLOCK,
+    NODE_BAD_RESPONSE
+} = require('../../lib/type').ErrorCode
 
 describe('Node.getBlockByNumber', () => {
+    before(() => {
+        mockDate.set(0)
+    })
+    after(() => {
+        mockDate.reset()
+    })
     it('return a block', async() => {
         let node = new Node({
             endpoint: new HttpEndpoint({
@@ -36,15 +45,19 @@ describe('Node.getBlockByNumber', () => {
         })
         httpMock.onPost('/').reply(200, responseBody)
         let block = new Block({
-            number: new UInt64(13458853n),
-            timestamp: new Timestamp(0x61B82374n),
+            number: UInt64.fromNumber(13458853).open(),
+            timestamp: Timestamp.fromSeconds(0x61B82374).open(),
             transactions: [
                 ByteData32.fromHeximal('0xabe913f1c2dfe5a759e301d6d27e20766a78fc11a4e0298a6a50c52ff06e95bb').open()
             ]
         })
-        let expectedResult = Result.ok(block)
+        let data = new NodeResponse(
+            block,
+            Timespan.fromMiliseconds(0).open(),
+            DataSize.fromBytes(143).open()
+        )
+        let expectedResult = Result.ok(data)
         let actualResult = await node.getBlockByNumber(block.number)
-        actualResult._metadata = undefined
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('block is not existed, return error', async() => {
@@ -58,8 +71,10 @@ describe('Node.getBlockByNumber', () => {
             result: null
         })
         httpMock.onPost('/').reply(200, responseBody)
-        let blockNumber = new UInt64(0xffffffffffffffn)
-        let expectedResult = Result.error(ErrorCode.ETH_NO_BLOCK, 'missing or not mined yet')
+        let expectedResult = Result.badError(
+            NODE_NO_BLOCK, 'missing or not mined yet'
+        )
+        let blockNumber = UInt64.fromBigInt(0xffffffffffffffn).open()
         let actualResult = await node.getBlockByNumber(blockNumber)
         assert.deepStrictEqual(actualResult, expectedResult)
     })
@@ -69,13 +84,20 @@ describe('Node.getBlockByNumber', () => {
                 url: new HttpUrl('http://0.0.0.0')
             })
         })
-        let blockNumber = new UInt64(0x1n)
         let httpMock = new AxiosMock(node._httpClient)
         let responseBody = JSON.stringify({
             result: '0x'
         })
         httpMock.onPost('/').reply(200, responseBody)
-        let expectedResult = Result.error(ErrorCode.ETH_BAD_RESPONSE, 'bad block')
+        let rpcResponse = new RpcResponse({
+            data: '0x',
+            time: Timespan.fromMiliseconds(0).open(),
+            size: DataSize.fromBytes(15).open()
+        })
+        let expectedResult = Result.badError(
+            NODE_BAD_RESPONSE, 'expect an object', rpcResponse
+        )
+        let blockNumber = UInt64.fromNumber(0xff).open()
         let actualResult = await node.getBlockByNumber(blockNumber)
         assert.deepStrictEqual(actualResult, expectedResult)
     })
