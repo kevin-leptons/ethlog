@@ -35,10 +35,9 @@ async function main() {
         Address.fromHeximal('0x3114c0b418c3798339a765d32391440355da9dde').open()
     ]
     let fromBlock = UInt64.fromNumber(10124609).open()
-    await LogStream
-        .create({handler, client, addresses, fromBlock})
+    await LogStream.create({client, addresses, fromBlock})
         .open()
-        .start()
+        .start(handler)
 }
 
 main().catch(console.error)
