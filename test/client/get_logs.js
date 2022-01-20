@@ -3,10 +3,9 @@
 /* eslint-disable max-len */
 /* eslint-disable max-lines-per-function */
 
-const {Log: StdioLog} = require('stdio_log')
 const assert = require('assert')
-const {UInt, UInt64, Timespan} = require('minitype')
-const {SafeNode} = require('../../lib/safe_node')
+const {UInt64} = require('minitype')
+const {Client} = require('../../lib/client')
 const {
     Result,
     HttpUrl,
@@ -14,22 +13,18 @@ const {
     Address,
     ByteData32,
     LogTopicFilter,
-    LogFilter,
-    EndpointQuota
+    LogFilter
 } = require('../../lib/type')
 
-describe('SafeNode.getLogs', () => {
-    let node = SafeNode.create({
-        endpoint: EthEndpoint.create({
-            url: HttpUrl.fromString('https://bsc-dataseed.binance.org').open(),
-            quota: EndpointQuota.create({
-                batchLimit: UInt.fromNumber(60).open(),
-                batchTimespan: Timespan.fromSeconds(60).open()
-            }).open()
-        }).open(),
-        log: new StdioLog()
-    }).open()
+describe('Client.getLogs', () => {
     it('return a log segment', async() => {
+        let client = Client.create({
+            mainEndpoints: [
+                EthEndpoint.create({
+                    url: HttpUrl.fromString('https://bsc-dataseed.binance.org').open()
+                }).open()
+            ]
+        }).open()
         let filter = LogFilter.create({
             fromBlock: UInt64.fromNumber(14098157).open(),
             toBlock: UInt64.fromNumber(14098157).open(),
@@ -40,7 +35,7 @@ describe('SafeNode.getLogs', () => {
                 ByteData32.fromHeximal('0xd78ad95fa46c994b6551d0da85fc275fe613ce37657fb8d5e3d130840159d822').open()
             ]).open()
         }).open()
-        let actualResult = await node.getLogs(filter)
+        let actualResult = await client.getLogs(filter)
         assert.strictEqual(actualResult instanceof Result, true)
         assert.strictEqual(actualResult.error, undefined)
         let {data: nodeResponse} = actualResult

@@ -29,32 +29,32 @@ describe('Node.getBlockNumber', () => {
         mockDate.reset()
     })
     it('return correct result', async() => {
-        let node = new Node({
-            endpoint: new HttpEndpoint({
-                url: new HttpUrl('http://0.0.0.0')
-            })
-        })
+        let node = Node.create({
+            endpoint: HttpEndpoint.create({
+                url: HttpUrl.fromString('http://0.0.0.0').open()
+            }).open()
+        }).open()
         let httpMock = new AxiosMock(node._httpClient)
         let responseBody = JSON.stringify({
             result: '0x453'
         })
         httpMock.onPost('/').reply(200, responseBody)
         let blockNumber = UInt64.fromNumber(0x453).open()
-        let data = new NodeResponse(
-            blockNumber,
-            Timespan.fromMiliseconds(0).open(),
-            DataSize.fromBytes(18).open()
-        )
+        let data = NodeResponse.create({
+            data: blockNumber,
+            time: Timespan.fromMiliseconds(0).open(),
+            size: DataSize.fromBytes(18).open()
+        }).open()
         let expectedResult = Result.ok(data)
         let actualResult = await node.getBlockNumber()
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('bad RPC data, return error', async() => {
-        let node = new Node({
-            endpoint: new HttpEndpoint({
-                url: new HttpUrl('http://0.0.0.0')
-            })
-        })
+        let node = Node.create({
+            endpoint: HttpEndpoint.create({
+                url: HttpUrl.fromString('http://0.0.0.0').open()
+            }).open()
+        }).open()
         let httpMock = new AxiosMock(node._httpClient)
         let responseBody = JSON.stringify({
             result: '0x'

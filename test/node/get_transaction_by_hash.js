@@ -29,11 +29,11 @@ describe('Node.getTransactionByHash', () => {
         mockDate.reset()
     })
     it('return a transaction', async() => {
-        let node = new Node({
-            endpoint: new HttpEndpoint({
-                url: new HttpUrl('http://foo.bar')
-            })
-        })
+        let node = Node.create({
+            endpoint: HttpEndpoint.create({
+                url: HttpUrl.fromString('http://foo.bar').open()
+            }).open()
+        }).open()
         let httpMock = new AxiosMock(node._httpClient)
         let responseBody = JSON.stringify({
             result: {
@@ -52,21 +52,21 @@ describe('Node.getTransactionByHash', () => {
             blockNumber: UInt64.fromNumber(13495100).open(),
             transactionIndex: UInt16.fromNumber(368).open()
         })
-        let data = new NodeResponse(
-            transaction,
-            Timespan.fromMiliseconds(0).open(),
-            DataSize.fromBytes(242).open()
-        )
+        let data = NodeResponse.create({
+            data: transaction,
+            time: Timespan.fromMiliseconds(0).open(),
+            size: DataSize.fromBytes(242).open()
+        }).open()
         let expectedResult = Result.ok(data)
         let actualResult = await node.getTransactionByHash(transaction.hash)
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('not existed transaction, return error', async() => {
-        let node = new Node({
-            endpoint: new HttpEndpoint({
-                url: new HttpUrl('http://foo.bar')
-            })
-        })
+        let node = Node.create({
+            endpoint: HttpEndpoint.create({
+                url: HttpUrl.fromString('http://foo.bar').open()
+            }).open()
+        }).open()
         let httpMock = new AxiosMock(node._httpClient)
         let responseBody = JSON.stringify({
             result: null
@@ -80,11 +80,11 @@ describe('Node.getTransactionByHash', () => {
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('bad RPC data, return error', async() => {
-        let node = new Node({
-            endpoint: new HttpEndpoint({
-                url: new HttpUrl('http://foo.bar')
-            })
-        })
+        let node = Node.create({
+            endpoint: HttpEndpoint.create({
+                url: HttpUrl.fromString('http://foo.bar').open()
+            }).open()
+        }).open()
         let httpMock = new AxiosMock(node._httpClient)
         let responseBody = JSON.stringify({
             result: {}

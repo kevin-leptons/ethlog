@@ -25,11 +25,11 @@ describe('Node._requestHttp', () => {
         mockDate.reset()
     })
     it('IP address that does not listen, return error ', async() => {
-        let node = new Node({
-            endpoint: new HttpEndpoint({
-                url: new HttpUrl('http://0.0.0.0')
-            })
-        })
+        let node = Node.create({
+            endpoint: HttpEndpoint.create({
+                url: HttpUrl.fromString('http://0.0.0.0').open()
+            }).open()
+        }).open()
         let expectedResult = Result.badError(
             NODE_OVERLOADING,
             'connect ECONNREFUSED 0.0.0.0:80'
@@ -52,11 +52,11 @@ describe('Node._requestHttp', () => {
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('not existed domain, return error ', async() => {
-        let node = new Node({
-            endpoint: new HttpEndpoint({
-                url: new HttpUrl('https://foo.bar')
-            })
-        })
+        let node = Node.create({
+            endpoint: HttpEndpoint.create({
+                url: HttpUrl.fromString('https://foo.bar').open()
+            }).open()
+        }).open()
         let expectedResult = Result.badError(
             NODE_OVERLOADING,
             'getaddrinfo ENOTFOUND foo.bar'
@@ -97,11 +97,11 @@ describe('Node._requestHttp', () => {
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('response no body, return ok', async() => {
-        let node = new Node({
-            endpoint: new HttpEndpoint({
-                url: new HttpUrl('http://foo.bar')
-            })
-        })
+        let node = Node.create({
+            endpoint: HttpEndpoint.create({
+                url: HttpUrl.fromString('http://foo.bar').open()
+            }).open()
+        }).open()
         let httpMock = new AxiosMock(node._httpClient)
         httpMock.onPost('/').reply(200, undefined)
         let response = new HttpResponse({

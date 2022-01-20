@@ -28,11 +28,11 @@ describe('Node.getBlockByNumber', () => {
         mockDate.reset()
     })
     it('return a block', async() => {
-        let node = new Node({
-            endpoint: new HttpEndpoint({
-                url: new HttpUrl('http://0.0.0.0')
-            })
-        })
+        let node = Node.create({
+            endpoint: HttpEndpoint.create({
+                url: HttpUrl.fromString('http://0.0.0.0').open()
+            }).open()
+        }).open()
         let httpMock = new AxiosMock(node._httpClient)
         let responseBody = JSON.stringify({
             result: {
@@ -51,21 +51,21 @@ describe('Node.getBlockByNumber', () => {
                 ByteData32.fromHeximal('0xabe913f1c2dfe5a759e301d6d27e20766a78fc11a4e0298a6a50c52ff06e95bb').open()
             ]
         })
-        let data = new NodeResponse(
-            block,
-            Timespan.fromMiliseconds(0).open(),
-            DataSize.fromBytes(143).open()
-        )
+        let data = NodeResponse.create({
+            data: block,
+            time: Timespan.fromMiliseconds(0).open(),
+            size: DataSize.fromBytes(143).open()
+        }).open()
         let expectedResult = Result.ok(data)
         let actualResult = await node.getBlockByNumber(block.number)
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('block is not existed, return error', async() => {
-        let node = new Node({
-            endpoint: new HttpEndpoint({
-                url: new HttpUrl('http://0.0.0.0')
-            })
-        })
+        let node = Node.create({
+            endpoint: HttpEndpoint.create({
+                url: HttpUrl.fromString('http://0.0.0.0').open()
+            }).open()
+        }).open()
         let httpMock = new AxiosMock(node._httpClient)
         let responseBody = JSON.stringify({
             result: null
@@ -79,21 +79,21 @@ describe('Node.getBlockByNumber', () => {
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('bad RPC data, return error', async() => {
-        let node = new Node({
-            endpoint: new HttpEndpoint({
-                url: new HttpUrl('http://0.0.0.0')
-            })
-        })
+        let node = Node.create({
+            endpoint: HttpEndpoint.create({
+                url: HttpUrl.fromString('http://0.0.0.0').open()
+            }).open()
+        }).open()
         let httpMock = new AxiosMock(node._httpClient)
         let responseBody = JSON.stringify({
             result: '0x'
         })
         httpMock.onPost('/').reply(200, responseBody)
-        let rpcResponse = new RpcResponse({
+        let rpcResponse = RpcResponse.create({
             data: '0x',
             time: Timespan.fromMiliseconds(0).open(),
             size: DataSize.fromBytes(15).open()
-        })
+        }).open()
         let expectedResult = Result.badError(
             NODE_BAD_RESPONSE, 'expect an object', rpcResponse
         )

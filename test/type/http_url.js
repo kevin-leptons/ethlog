@@ -3,46 +3,41 @@
 /* eslint-disable max-lines-per-function */
 
 const assert = require('assert')
-const {ResultError, ErrorCode, HttpUrl} = require('../../lib/type')
+const {Result, HttpUrl} = require('../../lib/type')
 
-describe('type.HttpUrl.constructor', () => {
+describe('type.HttpUrl.fromString', () => {
     it('protocol http, return correct result', () => {
-        let actualResult = new HttpUrl('http://foo.bar/jazz?x=1')
-        let expectedValue = new URL('http://foo.bar/jazz?x=1')
-        assert.deepStrictEqual(actualResult.value, expectedValue)
+        let input = 'http://foo.bar/jazz?x=1'
+        let expectedResult = new HttpUrl(
+            new URL(input)
+        )
+        let actualResult = HttpUrl.fromString(input).open()
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('protocol https, return correct result', () => {
-        let actualResult = new HttpUrl('https://foo.bar/jazz?x=1')
-        let expectedValue = new URL('https://foo.bar/jazz?x=1')
-        assert.deepStrictEqual(actualResult.value, expectedValue)
-    })
-    it('not a URL, throws error', () => {
-        assert.throws(
-            () => new HttpUrl('abcxyz'),
-            {
-                constructor: ResultError,
-                error: ErrorCode.TYPE_URL_STRING
-            }
+        let input = 'https://foo.bar/jazz?x=1'
+        let expectedResult = new HttpUrl(
+            new URL(input)
         )
+        let actualResult = HttpUrl.fromString(input).open()
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
-    it('invalid protocol, throws error', () => {
-        assert.throws(
-            () => new HttpUrl('ssh://foo.bar'),
-            {
-                constructor: ResultError,
-                error: ErrorCode.TYPE_PROTOCOL_HTTP,
-                hint: 'expected: http or https'
-            }
-        )
+    it('not a URL, return error', () => {
+        let input = 'abcxyz'
+        let expectedResult = Result.typeError('expect a URL')
+        let actualResult = HttpUrl.fromString(input)
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
-    it('has username and password, throws error', () => {
-        assert.throws(
-            () => new HttpUrl('http://zoo:baz@foo.bar'),
-            {
-                constructor: ResultError,
-                error: ErrorCode.TYPE_URL_NO_AUTHENTICATION,
-                hint: 'expected: no username or password'
-            }
-        )
+    it('invalid protocol, return error', () => {
+        let input = 'ssh://foo.bar'
+        let expectedResult = Result.typeError('expect protocol http or https')
+        let actualResult = HttpUrl.fromString(input)
+        assert.deepStrictEqual(actualResult, expectedResult)
+    })
+    it('has username and password, return error', () => {
+        let input = 'http://zoo:baz@foo.bar'
+        let expectedResult = Result.typeError('expect no username or password')
+        let actualResult = HttpUrl.fromString(input)
+        assert.deepStrictEqual(actualResult, expectedResult)
     })
 })

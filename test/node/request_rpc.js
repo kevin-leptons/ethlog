@@ -26,11 +26,11 @@ describe('Node._requestRpc', () => {
         mockDate.reset()
     })
     it('response valid RPC data', async() => {
-        let node = new Node({
-            endpoint: new HttpEndpoint({
-                url: new HttpUrl('http://foo.bar')
-            })
-        })
+        let node = Node.create({
+            endpoint: HttpEndpoint.create({
+                url: HttpUrl.fromString('http://foo.bar').open()
+            }).open()
+        }).open()
         let method = 'eth_getBlockByNumber'
         let params = ['0x1b4', false]
         let httpMock = new AxiosMock(node._httpClient)
@@ -52,11 +52,11 @@ describe('Node._requestRpc', () => {
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('respnose error message, return error', async() => {
-        let node = new Node({
-            endpoint: new HttpEndpoint({
-                url: new HttpUrl('http://foo.bar')
-            })
-        })
+        let node = Node.create({
+            endpoint: HttpEndpoint.create({
+                url: HttpUrl.fromString('http://foo.bar').open()
+            }).open()
+        }).open()
         let method = undefined
         let params = undefined
         let httpMock = new AxiosMock(node._httpClient)
@@ -82,11 +82,11 @@ describe('Node._requestRpc', () => {
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('response no error or result, return error', async() => {
-        let node = new Node({
-            endpoint: new HttpEndpoint({
-                url: new HttpUrl('http://foo.bar')
-            })
-        })
+        let node = Node.create({
+            endpoint: HttpEndpoint.create({
+                url: HttpUrl.fromString('http://foo.bar').open()
+            }).open()
+        }).open()
         let method = 'eth_getBlockByNumber'
         let params = ['0x357', false]
         let httpMock = new AxiosMock(node._httpClient)

@@ -28,11 +28,11 @@ describe('Node._requestHttpJson', () => {
         mockDate.reset()
     })
     it('respond 1xx status, return error NODE_BAD_RESPONSE', async() => {
-        let node = new Node({
-            endpoint: new HttpEndpoint({
-                url: new HttpUrl('http://foo.bar')
-            })
-        })
+        let node = Node.create({
+            endpoint: HttpEndpoint.create({
+                url: HttpUrl.fromString('http://foo.bar').open()
+            }).open()
+        }).open()
         let httpMock = new AxiosMock(node._httpClient)
         httpMock.onPost('/').reply(100, 'message from server')
         let httpResponse = new HttpResponse({
@@ -50,11 +50,11 @@ describe('Node._requestHttpJson', () => {
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('respond 4xx status, return error NODE_BAD_REQUEST', async() => {
-        let node = new Node({
-            endpoint: new HttpEndpoint({
-                url: new HttpUrl('http://foo.bar')
-            })
-        })
+        let node = Node.create({
+            endpoint: HttpEndpoint.create({
+                url: HttpUrl.fromString('http://foo.bar').open()
+            }).open()
+        }).open()
         let httpMock = new AxiosMock(node._httpClient)
         httpMock.onPost('/').reply(400, 'message from server')
         let response = new HttpResponse({
@@ -72,11 +72,11 @@ describe('Node._requestHttpJson', () => {
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('respond 5xx status, return error NODE_BAD_SERVER', async() => {
-        let node = new Node({
-            endpoint: new HttpEndpoint({
-                url: new HttpUrl('http://foo.bar')
-            })
-        })
+        let node = Node.create({
+            endpoint: HttpEndpoint.create({
+                url: HttpUrl.fromString('http://foo.bar').open()
+            }).open()
+        }).open()
         let httpMock = new AxiosMock(node._httpClient)
         httpMock.onPost('/').reply(500, 'message from server')
         let response = new HttpResponse({
@@ -94,11 +94,11 @@ describe('Node._requestHttpJson', () => {
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('respond status 429, return error NODE_OVERLOADING', async() => {
-        let node = new Node({
-            endpoint: new HttpEndpoint({
-                url: new HttpUrl('http://foo.bar')
-            })
-        })
+        let node = Node.create({
+            endpoint: HttpEndpoint.create({
+                url: HttpUrl.fromString('http://foo.bar').open()
+            }).open()
+        }).open()
         let httpMock = new AxiosMock(node._httpClient)
         httpMock.onPost('/').reply(429, 'message from server')
         let response = new HttpResponse({
@@ -116,11 +116,11 @@ describe('Node._requestHttpJson', () => {
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('respond status 503, return error NODE_OVERLOADING', async() => {
-        let node = new Node({
-            endpoint: new HttpEndpoint({
-                url: new HttpUrl('http://foo.bar')
-            })
-        })
+        let node = Node.create({
+            endpoint: HttpEndpoint.create({
+                url: HttpUrl.fromString('http://foo.bar').open()
+            }).open()
+        }).open()
         let httpMock = new AxiosMock(node._httpClient)
         httpMock.onPost('/').reply(503, 'message from server')
         let response = new HttpResponse({
@@ -138,11 +138,11 @@ describe('Node._requestHttpJson', () => {
         assert.deepStrictEqual(actualResult, expectedResult)
     })
     it('respond invalid JSON format, return error ETH_BAD_RESPONSE', async() => {
-        let node = new Node({
-            endpoint: new HttpEndpoint({
-                url: new HttpUrl('http://foo.bar')
-            })
-        })
+        let node = Node.create({
+            endpoint: HttpEndpoint.create({
+                url: HttpUrl.fromString('http://foo.bar').open()
+            }).open()
+        }).open()
         let httpMock = new AxiosMock(node._httpClient)
         httpMock.onPost('/').reply(200, '{invalid: json_format}')
         let response = new HttpResponse({
