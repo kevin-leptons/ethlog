@@ -1,6 +1,6 @@
 {
   "name": "ethlog",
-  "version": "0.12.1",
+  "version": "0.12.2",
   "description": "Best effort for retrive logs from ETH-like JSON RPC endpoints",
   "engines": {
     "node": "14"
@@ -46,7 +46,7 @@
     "@ethersproject/bignumber": "5.6.0",
     "@trop/gear": "0.4.2",
     "axios": "0.24.0",
-    "minitype": "0.16.0",
+    "minitype": "0.16.1",
     "stdio_log": "0.10.0"
   }
 }
