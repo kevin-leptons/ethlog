@@ -97,7 +97,7 @@ describe('Node.getTransactionByHash', () => {
             size: DataSize.fromBytes(13).open()
         })
         let expectedResult = Result.badError(
-            NODE_BAD_RESPONSE, 'hash: expect a heximal', rpcResponse
+            NODE_BAD_RESPONSE, 'hash: expect Heximal', rpcResponse
         )
         let actualResult = await node.getTransactionByHash(hash)
         assert.deepStrictEqual(actualResult, expectedResult)

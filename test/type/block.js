@@ -42,7 +42,7 @@ describe('type.Block.fromRpcResult', () => {
                 '0xe085e95d71717c8a054ac838bc7fdb6c64607adc7b9f8dfaee12d3cd8e8e03af'
             ]
         }
-        let expectedResult = Result.typeError('number: expect a heximal')
+        let expectedResult = Result.typeError('number: expect Heximal')
         let actualResult = Block.fromRpcResult(rpcResult)
         assert.deepStrictEqual(actualResult, expectedResult)
     })
@@ -54,7 +54,7 @@ describe('type.Block.fromRpcResult', () => {
                 '0xe085e95d71717c8a054ac838bc7fdb6c64607adc7b9f8dfaee12d3cd8e8e03af'
             ]
         }
-        let expectedResult = Result.typeError('timestamp: expect a heximal')
+        let expectedResult = Result.typeError('timestamp: expect Heximal')
         let actualResult = Block.fromRpcResult(rpcResult)
         assert.deepStrictEqual(actualResult, expectedResult)
     })
@@ -76,7 +76,7 @@ describe('type.Block.fromRpcResult', () => {
                 '0xf712befa13df56c5c11799078b793c49fe121XXX'
             ]
         }
-        let expectedResult = Result.typeError('transactions: [0]: expect a heximal')
+        let expectedResult = Result.typeError('transactions: [0]: expect Heximal')
         let actualResult = Block.fromRpcResult(rpcResult)
         assert.deepStrictEqual(actualResult, expectedResult)
     })

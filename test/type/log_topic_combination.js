@@ -49,7 +49,7 @@ describe('type.LogTopicCombination.fromHeximals', () => {
             '0x1fb709da01417bfb547bdf65b90d25549fd26c9abaa4d6c0a9249b8d579a3286',
             '0xZZZ'
         ]
-        let expectedResult = Result.typeError('[1]: expect a heximal')
+        let expectedResult = Result.typeError('[1]: expect Heximal')
         let actualResult = LogTopicCombination.fromHeximals(input)
         assert.deepStrictEqual(actualResult, expectedResult)
     })

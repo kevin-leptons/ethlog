@@ -74,7 +74,7 @@ describe('Node.getLogs', () => {
                 topics: new LogTopicCombination([
                     ByteData32.fromHeximal('0xd78ad95fa46c994b6551d0da85fc275fe613ce37657fb8d5e3d130840159d822').open()
                 ]),
-                data: ByteData.fromBadHeximal('0x').open(),
+                data: ByteData.fromHeximal('0x').open(),
                 blockHash: ByteData32.fromHeximal('0x75994653ace9123068017f67b72c660d05cc011caced9fa2edc73f82114440f4').open(),
                 transactionHash: ByteData32.fromHeximal('0x6c08b5ef6a44c677216e971c38b6d273ba38875d98b27127dd61bb3366cafef2').open()
             })

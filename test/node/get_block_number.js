@@ -66,7 +66,7 @@ describe('Node.getBlockNumber', () => {
             size: DataSize.fromBytes(15).open()
         })
         let expectedResult = Result.badError(
-            NODE_BAD_RESPONSE, 'expect a heximal', rpcResponse
+            NODE_BAD_RESPONSE, 'expect Heximal', rpcResponse
         )
         let actualResult = await node.getBlockNumber()
         assert.deepStrictEqual(actualResult, expectedResult)
